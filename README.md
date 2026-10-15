@@ -47,17 +47,17 @@ Just paste the following URL in your profile readme and you are good to go.
 **Pass your `username` in the URL**
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=Ashutosh00710)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 ### [Attention ⚠](#deploy-on-your-own-replit-instance)
 
 ## Use themes
 
-_`username=ashutosh00710&theme=theme_name`_
+_`username=rodriaum&theme=theme_name`_
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=Ashutosh00710&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 [Manual Customization](#customization) is also available
@@ -114,13 +114,13 @@ Example:
 **`custom_title=This%20is%20a%20title`**
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=ashutosh00710&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 **Example:**
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=ashutosh00710&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 ## Deploy on your own Replit instance
