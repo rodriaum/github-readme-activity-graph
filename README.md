@@ -47,7 +47,7 @@ Just paste the following URL in your profile readme and you are good to go.
 **Pass your `username` in the URL**
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Ashutosh00710)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=Ashutosh00710)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 ### [Attention ⚠](#deploy-on-your-own-replit-instance)
@@ -57,7 +57,7 @@ Just paste the following URL in your profile readme and you are good to go.
 _`username=ashutosh00710&theme=theme_name`_
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Ashutosh00710&theme=dracula)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=Ashutosh00710&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 [Manual Customization](#customization) is also available
@@ -78,7 +78,7 @@ _`username=ashutosh00710&theme=theme_name`_
 |      **tokyo-night**       |  <img src="./asset/tokyo-night.png" height=250 alt="graph"/>   |
 |     **high-contrast**      | <img src="./asset/high-contrast.png" height=250 alt="graph"/>  |
 
-For more themes click [here](https://github.com/Ashutosh00710/github-readme-activity-graph/blob/main/THEMES.md)
+For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
 
 ## Customization
 
@@ -114,13 +114,13 @@ Example:
 **`custom_title=This%20is%20a%20title`**
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=ashutosh00710&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 **Example:**
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=ashutosh00710&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 ## Deploy on your own Replit instance
@@ -185,7 +185,7 @@ Example:
 
 Alternatively, click the button below and follow the instructions.
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Ashutosh00710/github-readme-activity-graph)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/rodriaum/github-readme-activity-graph)
 
 After the deployment is complete:
 
@@ -208,7 +208,7 @@ Now just add the following to your profile readme and you're good to go.
 
 ## Contributing
 
-Please read through our [contributing guidelines](https://github.com/Ashutosh00710/github-readme-activity-graph/blob/main/CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
+Please read through our [contributing guidelines](https://github.com/rodriaum/github-readme-activity-graph/blob/main/CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
 
 ## Core Team 💻
 
@@ -222,7 +222,7 @@ Please read through our [contributing guidelines](https://github.com/Ashutosh007
         </a>
         <br />
         <a href="#projectManagement" title="Project Management">📆</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=ashutosh00710" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=ashutosh00710" title="Code">💻</a>
         <a href="#documentation" title="Documentation">📖</a>
         <a href="#ideas" title="Ideas & Planning">🤔</a>
         <a href="#testing" title="Testing">⚠</a>
@@ -235,7 +235,7 @@ Please read through our [contributing guidelines](https://github.com/Ashutosh007
         </a>
         <br />
         <a href="#projectManagement" title="Project Management">📆</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=kshitij978" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=kshitij978" title="Code">💻</a>
         <a href="#documentation" title="Documentation">📖</a>
         <a href="#design" title="Design">🎨</a>
     </td>
@@ -258,7 +258,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Upamanyu Das</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=tintindas" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=tintindas" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/DenverCoder1">
@@ -267,8 +267,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Jonah Lawrence</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DenverCoder1" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DenverCoder1" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=DenverCoder1" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=DenverCoder1" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/MilindModi">
@@ -277,7 +277,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Milind Modi</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=MilindModi" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=MilindModi" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/Vaibhav-afk">
@@ -286,8 +286,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Vaibhav</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=Vaibhav-afk" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=Vaibhav-afk" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=Vaibhav-afk" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=Vaibhav-afk" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/jgphilpott">
@@ -296,8 +296,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Jacob Philpott</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=jgphilpott" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=jgphilpott" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=jgphilpott" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=jgphilpott" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/SonuKumar81800">
@@ -306,8 +306,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Sonu Kumar</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=SonuKumar81800" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=SonuKumar81800" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=SonuKumar81800" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=SonuKumar81800" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/andinoriel">
@@ -316,7 +316,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Mykola Symon</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=andinoriel" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=andinoriel" title="Code">💻</a>
     </td>
   </tr>
   <tr>
@@ -327,7 +327,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Sreyan Ghosh</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=sreyan-ghosh" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=sreyan-ghosh" title="Style">🎨</a>
     </td>
     <td align="center">
         <a href="https://github.com/Anant-mishra1729">
@@ -336,7 +336,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Anant Mishra</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=Anant-mishra1729" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=Anant-mishra1729" title="Style">🎨</a>
     </td>
     <td align="center">
         <a href="https://github.com/SKewLinez">
@@ -345,7 +345,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Skyler</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=SKewLinez" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=SKewLinez" title="Style">🎨</a>
     </td>
     <td align="center">
         <a href="https://github.com/eliely">
@@ -354,7 +354,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Iryna Mykoliuk</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=eliely" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=eliely" title="Style">🎨</a>
     </td>
     <td align="center">
         <a href="https://github.com/DalpatRathore">
@@ -363,8 +363,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Dalpat Rathore</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DalpatRathore" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DalpatRathore" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=DalpatRathore" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=DalpatRathore" title="Code">💻</a>
     </td>
     <td align="center">
         <a href="https://github.com/fishmandev">
@@ -373,7 +373,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>Dmitriy Fishman</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=fishmandev" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=fishmandev" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/MagicLike">
@@ -382,8 +382,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>MagicLike</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=MagicLike" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=MagicLike" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=MagicLike" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=MagicLike" title="Code">💻</a>
     </td>
   </tr>
   </tr>
@@ -394,7 +394,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>OnkarRuikar</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=OnkarRuikar" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=OnkarRuikar" title="Code">💻</a>
     </td>
     <td align="center">
         <a href="https://github.com/valetzx">
@@ -403,7 +403,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>valetzx</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=valetzx" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=valetzx" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/tranthaituananh">
@@ -412,8 +412,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>tranthaituananh</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=tranthaituananh" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=tranthaituananh" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=tranthaituananh" title="Style">🎨</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=tranthaituananh" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/polekstulod">
@@ -422,7 +422,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>polekstulod</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=polekstulod" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=polekstulod" title="Documentation">📖</a>
     </td>
     <td align="center">
         <a href="https://github.com/jmloudis">
@@ -431,7 +431,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>jmloudis</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/pulls?q=author%3Ajmloudis+" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/pulls?q=author%3Ajmloudis+" title="Code">💻</a>
     </td>
     <td align="center">
         <a href="https://github.com/fabianocouto">
@@ -440,8 +440,17 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>fabianocouto</b></sub>
         </a>
         <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=fabianocouto" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=fabianocouto" title="Documentation">📖</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=fabianocouto" title="Code">💻</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=fabianocouto" title="Documentation">📖</a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/rodriaum">
+            <img src="https://avatars.githubusercontent.com/u/119365213?v=4" width="100px;" alt=""/>
+            <br />
+            <sub><b>rodriaum</b></sub>
+        </a>
+        <br />
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=rodriaum" title="Documentation">📖</a>
     </td>
   </tr>
 </table>
@@ -464,6 +473,19 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Ashutosh00710/github-readme-activity-graph&type=Timeline)](https://star-history.com/#Ashutosh00710/github-readme-activity-graph&Timeline)
+<table>
+  <tr>
+    <td>
+      <a href="https://star-history.com/#Ashutosh00710/github-readme-activity-graph&Timeline">
+        <img src="https://api.star-history.com/svg?repos=Ashutosh00710/github-readme-activity-graph&type=Timeline" width="400">
+      </a>
+    </td>
+    <td>
+      <a href="https://star-history.com/#rodriaum/github-readme-activity-graph&Timeline">
+        <img src="https://api.star-history.com/svg?repos=rodriaum/github-readme-activity-graph&type=Timeline" width="400">
+      </a>
+    </td>
+  </tr>
+</table>
 
 ### Made with ❤ and TypeScript <img src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" width="25">
