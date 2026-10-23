@@ -47,7 +47,7 @@ Just paste the following URL in your profile readme and you are good to go.
 **Pass your `username` in the URL**
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 ### [Attention ⚠](#deploy-on-your-own-replit-instance)
@@ -57,7 +57,7 @@ Just paste the following URL in your profile readme and you are good to go.
 _`username=rodriaum&theme=theme_name`_
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 [Manual Customization](#customization) is also available
