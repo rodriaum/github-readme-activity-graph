@@ -347,121 +347,122 @@ inputElements.pointInput.addEventListener('input', changePointColor);
 elements.themeSelect.addEventListener('change', onThemeChange);
 
 
-// Custom shadcn-inspired theme select. Keep the native select as the source of truth.
+// Apply the same custom select design to all picker controls.
 (() => {
-    const select = elements.themeSelect;
-    if (!select || select.dataset.customized === 'true') return;
+    document.querySelectorAll('select.picker').forEach((select) => {
+        if (select.dataset.customized === 'true') return;
 
-    const shell = document.createElement('div');
-    shell.className = 'theme-select';
-    select.parentNode.insertBefore(shell, select);
-    shell.appendChild(select);
-    select.dataset.customized = 'true';
-    select.classList.add('theme-select__native');
-    select.setAttribute('aria-hidden', 'true');
-    select.tabIndex = -1;
+        const shell = document.createElement('div');
+        shell.className = 'theme-select';
+        select.parentNode.insertBefore(shell, select);
+        shell.appendChild(select);
+        select.dataset.customized = 'true';
+        select.classList.add('theme-select__native');
+        select.setAttribute('aria-hidden', 'true');
+        select.tabIndex = -1;
 
-    const trigger = document.createElement('button');
-    trigger.type = 'button';
-    trigger.className = 'theme-select__trigger';
-    trigger.setAttribute('aria-haspopup', 'listbox');
-    trigger.setAttribute('aria-expanded', 'false');
-    trigger.setAttribute('aria-label', 'Choose graph theme');
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'theme-select__trigger';
+        trigger.setAttribute('aria-haspopup', 'listbox');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.setAttribute('aria-label', select.getAttribute('aria-label') || select.labels?.[0]?.textContent || 'Choose an option');
 
-    const value = document.createElement('span');
-    value.className = 'theme-select__value';
-    const chevron = document.createElement('span');
-    chevron.className = 'theme-select__chevron';
-    chevron.setAttribute('aria-hidden', 'true');
-    trigger.append(value, chevron);
+        const value = document.createElement('span');
+        value.className = 'theme-select__value';
+        const chevron = document.createElement('span');
+        chevron.className = 'theme-select__chevron';
+        chevron.setAttribute('aria-hidden', 'true');
+        trigger.append(value, chevron);
 
-    const menu = document.createElement('div');
-    menu.className = 'theme-select__menu';
-    menu.setAttribute('role', 'listbox');
-    menu.setAttribute('aria-label', 'Graph themes');
-    menu.hidden = true;
+        const menu = document.createElement('div');
+        menu.className = 'theme-select__menu';
+        menu.setAttribute('role', 'listbox');
+        menu.setAttribute('aria-label', select.getAttribute('aria-label') || 'Options');
+        menu.hidden = true;
 
-    const options = Array.from(select.options).map((option, index) => {
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = 'theme-select__option';
-        item.setAttribute('role', 'option');
-        item.dataset.value = option.value;
-        item.textContent = option.textContent;
-        item.tabIndex = -1;
-        item.addEventListener('click', () => {
-            select.value = option.value;
-            select.dispatchEvent(new Event('change', { bubbles: true }));
-            closeMenu();
-            trigger.focus();
+        const options = Array.from(select.options).map((option) => {
+            const item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'theme-select__option';
+            item.setAttribute('role', 'option');
+            item.dataset.value = option.value;
+            item.textContent = option.textContent;
+            item.tabIndex = -1;
+            item.addEventListener('click', () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                closeMenu();
+                trigger.focus();
+            });
+            menu.appendChild(item);
+            return item;
         });
-        menu.appendChild(item);
-        return item;
-    });
 
-    const syncOptions = () => {
-        const selected = select.options[select.selectedIndex];
-        value.textContent = selected ? selected.textContent : 'Select a theme';
-        options.forEach((item) => {
-            const active = item.dataset.value === select.value;
-            item.setAttribute('aria-selected', String(active));
-            item.classList.toggle('is-selected', active);
-            item.querySelector('.theme-select__check')?.remove();
-            if (active) {
-                const check = document.createElement('span');
-                check.className = 'theme-select__check';
-                check.setAttribute('aria-hidden', 'true');
-                check.textContent = '✓';
-                item.appendChild(check);
+        const syncOptions = () => {
+            const selected = select.options[select.selectedIndex];
+            value.textContent = selected ? selected.textContent : 'Select an option';
+            options.forEach((item) => {
+                const active = item.dataset.value === select.value;
+                item.setAttribute('aria-selected', String(active));
+                item.classList.toggle('is-selected', active);
+                item.querySelector('.theme-select__check')?.remove();
+                if (active) {
+                    const check = document.createElement('span');
+                    check.className = 'theme-select__check';
+                    check.setAttribute('aria-hidden', 'true');
+                    check.textContent = '✓';
+                    item.appendChild(check);
+                }
+            });
+        };
+
+        const openMenu = () => {
+            menu.hidden = false;
+            shell.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+            const active = options.find((item) => item.dataset.value === select.value) || options[0];
+            active?.focus();
+            active?.scrollIntoView({ block: 'nearest' });
+        };
+
+        function closeMenu() {
+            menu.hidden = true;
+            shell.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+        }
+
+        trigger.addEventListener('click', () => menu.hidden ? openMenu() : closeMenu());
+        trigger.addEventListener('keydown', (event) => {
+            if (['ArrowDown', 'Enter', ' '].includes(event.key)) {
+                event.preventDefault();
+                openMenu();
             }
         });
-    };
 
-    const openMenu = () => {
-        menu.hidden = false;
-        shell.classList.add('is-open');
-        trigger.setAttribute('aria-expanded', 'true');
-        const active = options.find((item) => item.dataset.value === select.value) || options[0];
-        active?.focus();
-        active?.scrollIntoView({ block: 'nearest' });
-    };
+        menu.addEventListener('keydown', (event) => {
+            const current = options.indexOf(document.activeElement);
+            if (event.key === 'Escape' || event.key === 'Tab') {
+                closeMenu();
+                trigger.focus();
+            } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const delta = event.key === 'ArrowDown' ? 1 : -1;
+                options[(current + delta + options.length) % options.length]?.focus();
+            } else if (event.key === 'Home' || event.key === 'End') {
+                event.preventDefault();
+                options[event.key === 'Home' ? 0 : options.length - 1]?.focus();
+            } else if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                document.activeElement?.click();
+            }
+        });
 
-    function closeMenu() {
-        menu.hidden = true;
-        shell.classList.remove('is-open');
-        trigger.setAttribute('aria-expanded', 'false');
-    }
-
-    trigger.addEventListener('click', () => menu.hidden ? openMenu() : closeMenu());
-    trigger.addEventListener('keydown', (event) => {
-        if (['ArrowDown', 'Enter', ' '].includes(event.key)) {
-            event.preventDefault();
-            openMenu();
-        }
+        document.addEventListener('pointerdown', (event) => {
+            if (!shell.contains(event.target)) closeMenu();
+        });
+        select.addEventListener('change', syncOptions);
+        shell.append(trigger, menu);
+        syncOptions();
     });
-
-    menu.addEventListener('keydown', (event) => {
-        const current = options.indexOf(document.activeElement);
-        if (event.key === 'Escape' || event.key === 'Tab') {
-            closeMenu();
-            trigger.focus();
-        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-            event.preventDefault();
-            const delta = event.key === 'ArrowDown' ? 1 : -1;
-            options[(current + delta + options.length) % options.length]?.focus();
-        } else if (event.key === 'Home' || event.key === 'End') {
-            event.preventDefault();
-            options[event.key === 'Home' ? 0 : options.length - 1]?.focus();
-        } else if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            document.activeElement?.click();
-        }
-    });
-
-    document.addEventListener('pointerdown', (event) => {
-        if (!shell.contains(event.target)) closeMenu();
-    });
-    select.addEventListener('change', syncOptions);
-    shell.append(trigger, menu);
-    syncOptions();
 })();
