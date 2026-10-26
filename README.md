@@ -29,8 +29,6 @@ Please refer to the updated link [here](#how-to-use)
 - [Available Themes](#available-themes)
 - [Customization](#customization)
     - [Common Options](#common-options)
-- [Deploy on your own Replit instance](#deploy-on-your-own-replit-instance)
-    - [Follow the steps](#follow-the-steps)
 - [Deploy on your own Vercel instance](#deploy-on-your-own-vercel-instance)
     - [First Method](#first-method)
     - [Second Method](#second-method)
@@ -79,8 +77,6 @@ Set the OAuth App's **Authorization callback URL** to `<APP_URL>/auth/github/cal
 After signing in, private activity is available in that browser session. To include private stats in a README image, explicitly select **Include private stats in the README link**. The generated link contains signed daily contribution counts, not the OAuth token, repository names, or source code. Anyone who can view or copy that link can see those counts. The counts are embedded in the link, so changing `PRIVATE_SHARE_SECRET` invalidates existing private links. Private share links are limited to the contribution data fetched when the link is generated; regenerate the link to refresh it.
 
 Private access is optional. Without OAuth, user graphs use the configured `TOKEN` (if present) and organization graphs use public repositories only.
-
-### [Attention ⚠](#deploy-on-your-own-replit-instance)
 
 ## Use themes
 
@@ -159,39 +155,6 @@ Example:
 [![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
-## Deploy on your own Replit instance
-
-<details>
-<summary><b>Step-by-step instructions for deploying to Replit (from UI)</b></summary>
-
-#### Follow the steps
-
-1. Sign in to Replit or create a new account at https://replit.com
-2. Click the Deploy button below
-
- <a href="https://repl.it/github/Ashutosh00710/github-readme-activity-graph">
-   <img alt="Run on Repl.it" src="https://repl.it/badge/github/Ashutosh00710/github-readme-activity-graph" style="height: 40px; width: 190px;" />
- </a>
-
-3. On the page that comes up, choose language as `Node.js` and then click `Import from GitHub` Button
-
-    ![Replit](./asset/replit1.png)
-
-4. Visit [this link](https://github.com/settings/tokens/new?description=GitHub%20Readme%20Activity%20Graph) to create a new Personal Access Token
-5. Scroll to the bottom and click "**Generate token**"
-6. Wait clone done and add `Secrets` with your `Github token`
-
-    ![Secrets](./asset/replit2.png)
-
-7. Click the green `RUN` button on top, the console will run and at last the url will shows on the right
-8. Now just add the following to your profile readme and you're good to go
-
-```
-![Github Activity Graph](<url from step 5>/graph?username=<username>)
-```
-
-</details>
-
 ## Deploy on your own Vercel instance
 
 <details>
@@ -213,9 +176,19 @@ Example:
     ![image](https://user-images.githubusercontent.com/3431285/235332373-3f28309c-d70b-490e-aa40-4d55ad429d5a.png)
 9.  Create a personal access token (PAT) [here](https://github.com/settings/tokens/new) and enable the `repo` permissions (this allows access to see private repo stats).
     ![image](https://user-images.githubusercontent.com/3431285/235332420-df83a424-009b-4f69-bbb2-54e807bff701.png)
-10. Add the PAT as an environment variable named `TOKEN`.
+10. Add the PAT as an environment variable named `TOKEN` (optional if you only need public activity and plan to use OAuth for private activity).
     ![image](https://user-images.githubusercontent.com/3431285/235332471-6915abf8-04fe-4f5e-b734-191388a77140.png)
-11. Click deploy, and you're good to go. See your domains to use the API!
+11. To enable private contribution statistics, create a [GitHub OAuth App](https://github.com/settings/developers). Set its callback URL to `https://YOUR_DEPLOYMENT_DOMAIN/auth/github/callback`.
+12. In Vercel **Settings → Environment Variables**, add:
+    - `GITHUB_OAUTH_CLIENT_ID`: the OAuth App's Client ID.
+    - `GITHUB_OAUTH_CLIENT_SECRET`: the OAuth App's Client Secret.
+    - `APP_URL`: your deployment's public base URL, without a trailing slash (for example, `https://your-project.vercel.app`).
+    - `OAUTH_COOKIE_SECRET`: a random secret of at least 32 characters.
+    - `PRIVATE_SHARE_SECRET`: a different random secret of at least 32 characters.
+13. Redeploy the project after adding or changing environment variables.
+14. Click deploy, and you're good to go. See your domains to use the API!
+
+**Security note:** GitHub OAuth requests the `repo` scope, which can grant broad read/write access to private repositories. Only authorize a deployment you trust. Private contribution links expose contribution counts to anyone who can view the link, but do not include repository names, source code, or the OAuth token.
 
 #### Second Method
 
@@ -227,7 +200,7 @@ After the deployment is complete:
 
 1. Click the `Continue to Dashboard` button
    ![image](https://user-images.githubusercontent.com/3431285/235332677-addafd5f-dce8-4823-9927-05657eec2084.png)
-2. In the `Settings` tab, click on `Environment Variables` and follow steps `9.` and `10.` of `First Method`.
+2. In the `Settings` tab, click on `Environment Variables` and configure the variables listed in `First Method` (including the OAuth variables if you want private contribution statistics).
    ![image](https://user-images.githubusercontent.com/3431285/235332731-03207969-b16e-42e4-858a-67b05af7bcc8.png)
 3. Go to `Deployments` tab and redeploy the project.
    ![image](https://user-images.githubusercontent.com/3431285/235332761-1d3ae9c5-0138-447f-a41a-601c73ef3104.png)
