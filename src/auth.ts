@@ -103,7 +103,7 @@ function decryptToken(storedToken: string): string {
     if (!tokenKey) throw new Error('OAUTH_TOKEN_ENCRYPTION_KEY is not configured.');
     const [, , ivPart, tagPart, encryptedPart] = storedToken.split(':');
     const key = crypto.createHash('sha256').update(tokenKey).digest();
-    const decipher = crypto.createDecipheriv('aes-256-gcm', Buffer.from(ivPart, 'base64url'), key);
+    const decipher = crypto.createDecipheriv('aes-256-gcm', key, Buffer.from(ivPart, 'base64url'));
     decipher.setAuthTag(Buffer.from(tagPart, 'base64url'));
     return Buffer.concat([decipher.update(Buffer.from(encryptedPart, 'base64url')), decipher.final()]).toString('utf8');
 }
