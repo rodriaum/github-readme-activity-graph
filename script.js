@@ -341,14 +341,26 @@ const refreshAuthStatus = async () => {
     try {
         const response = await axios.get('/auth/status', { withCredentials: true, headers: { 'Cache-Control': 'no-store' } });
         const auth = response.data;
+        const isAuthenticated = auth.authenticated === true;
         elements.authButton.dataset.csrfToken = auth.csrfToken || '';
-        elements.authButton.href = auth.authenticated ? '#logout' : '/auth/github';
-        elements.authButton.querySelector('span').textContent = auth.authenticated ? `Logout (${auth.login})` : 'Login with GitHub';
+        elements.authButton.href = isAuthenticated ? '#logout' : '/auth/github';
+        elements.authButton.querySelector('span').textContent = isAuthenticated ? `Logout (${auth.login})` : 'Login with GitHub';
+        elements.includePrivate.disabled = !isAuthenticated;
+        if (!isAuthenticated) {
+            elements.includePrivate.checked = false;
+            valueToCopy.includePrivate = false;
+        }
+        elements.includePrivate.title = isAuthenticated
+            ? ''
+            : 'Sign in with GitHub to include private activity.';
     } catch (error) {
         console.error('Could not check GitHub login status:', error);
         elements.authButton.href = '/auth/github';
         elements.authButton.querySelector('span').textContent = 'Login status unavailable';
         elements.authButton.title = 'Could not verify your GitHub session. Check the deployment configuration and server logs.';
+        elements.includePrivate.disabled = true;
+        elements.includePrivate.checked = false;
+        valueToCopy.includePrivate = false;
     }
 };
 elements.authButton.addEventListener('click', async (event) => {
@@ -364,6 +376,7 @@ elements.authButton.addEventListener('click', async (event) => {
     }
 });
 elements.includePrivate.addEventListener('change', () => {
+    if (elements.includePrivate.disabled) return;
     valueToCopy.includePrivate = elements.includePrivate.checked;
     generateLink();
     if (valueToCopy.username) { setLoader(); getGraph(valueToCopy.username, elements.entityType.value); }
