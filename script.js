@@ -197,7 +197,8 @@ const getGraph = (username, type) => {
                 series: [{ value: days.map((day) => day.contributionCount) }],
             };
 
-            new Chartist.Line('.ct-chart', data, options); //Create chart
+            document.querySelector('.ct-chart').innerHTML = '';
+            new Chartist.Line('.ct-chart', data, options);
 
             removeLoader();
             removePlaceholder();
@@ -333,7 +334,10 @@ elements.entityType.addEventListener('change', () => {
     elements.username.placeholder = elements.entityType.value === 'organization'
         ? 'Enter GitHub organization'
         : 'Enter your GitHub username';
-    if (valueToCopy.username) generateLink();
+    if (valueToCopy.username) {
+        setLoader();
+        getGraph(valueToCopy.username, elements.entityType.value);
+    }
 });
 elements.copyText.addEventListener('click', copyLink);
 inputElements.bgInput.addEventListener('input', changeBgColor);
