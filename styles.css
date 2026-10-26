@@ -932,3 +932,72 @@ a:focus-visible {
         gap: 7px;
     }
 }
+
+/* Keep the username input integrated with its surrounding field. */
+.username-field .form__field,
+.username-field .form__field:focus,
+.username-field .form__field:focus-visible,
+.username-field .form__field:active {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+}
+
+.username-field:focus-within {
+    border-color: var(--ring);
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(161 161 170 / 15%);
+}
+
+/* Consistent shadcn-inspired select controls. */
+#themeSelect,
+.control-group select,
+select.picker {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 34px 0 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid var(--input);
+    border-radius: 8px;
+    background-color: var(--background);
+    color: var(--foreground);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.4;
+    box-shadow: none;
+    cursor: pointer;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+#themeSelect:hover,
+.control-group select:hover,
+select.picker:hover {
+    border-color: var(--ring);
+}
+
+#themeSelect:focus,
+#themeSelect:focus-visible,
+.control-group select:focus,
+.control-group select:focus-visible,
+select.picker:focus,
+select.picker:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px rgb(161 161 170 / 15%);
+}
+
+#themeSelect option,
+.control-group select option,
+select.picker option {
+    background: var(--background);
+    color: var(--foreground);
+}
+
+.bg-color.active #themeSelect,
+.bg-color.active .control-group select,
+.bg-color.active select.picker {
+    color-scheme: dark;
+}
+
