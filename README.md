@@ -456,6 +456,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
             <sub><b>rodriaum</b></sub>
         </a>
         <br />
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=rodriaum" title="Code">💻</a>
         <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=rodriaum" title="Documentation">📖</a>
     </td>
   </tr>
