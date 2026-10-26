@@ -23,6 +23,10 @@ app.use('/asset', express.static(path.resolve(rootDir, 'asset'), { dotfiles: 'de
 const handlers = new Handlers();
 
 app.get('/', handlers.getRoot);
+app.get('/auth/github', handlers.beginOAuth.bind(handlers));
+app.get('/auth/github/callback', handlers.finishOAuth.bind(handlers));
+app.get('/auth/status', handlers.getAuthStatus.bind(handlers));
+app.post('/auth/logout', handlers.logout.bind(handlers));
 // Get Graph
 app.get('/graph', handlers.getGraph);
 
