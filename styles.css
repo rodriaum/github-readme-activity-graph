@@ -90,7 +90,6 @@ a:focus-visible {
     border: 0;
 }
 
-/* Theme toggle retains the existing script's active-state contract. */
 .bg-color.active {
     --background: #09090b;
     --foreground: #fafafa;
@@ -933,7 +932,6 @@ a:focus-visible {
     }
 }
 
-/* Keep the username input integrated with its surrounding field. */
 .username-field .form__field,
 .username-field .form__field:focus,
 .username-field .form__field:focus-visible,
@@ -949,7 +947,6 @@ a:focus-visible {
     box-shadow: 0 0 0 3px rgb(161 161 170 / 15%);
 }
 
-/* Consistent shadcn-inspired select controls. */
 #themeSelect,
 .control-group select,
 select.picker {
@@ -1009,13 +1006,11 @@ select.picker option {
     color-scheme: dark;
 }
 
-
-
-/* Custom theme menu: native option popups cannot be styled consistently across browsers. */
 .theme-select {
     position: relative;
     width: 100%;
 }
+
 .theme-select__native {
     position: absolute !important;
     width: 1px !important;
@@ -1027,6 +1022,7 @@ select.picker option {
     white-space: nowrap !important;
     border: 0 !important;
 }
+
 .theme-select__trigger {
     display: flex;
     align-items: center;
@@ -1045,15 +1041,18 @@ select.picker option {
     cursor: pointer;
     transition: border-color .15s ease, box-shadow .15s ease;
 }
+
 .theme-select__trigger:hover,
 .theme-select.is-open .theme-select__trigger {
     border-color: var(--ring);
 }
+
 .theme-select__trigger:focus-visible {
     outline: none;
     border-color: var(--ring);
     box-shadow: 0 0 0 3px rgb(161 161 170 / 15%);
 }
+
 .theme-select__chevron {
     flex: 0 0 7px;
     width: 7px;
@@ -1063,9 +1062,11 @@ select.picker option {
     transform: rotate(45deg) translateY(-2px);
     transition: transform .15s ease;
 }
+
 .theme-select.is-open .theme-select__chevron {
     transform: rotate(225deg) translate(-1px, -1px);
 }
+
 .theme-select__menu {
     position: absolute;
     z-index: 30;
@@ -1082,9 +1083,11 @@ select.picker option {
     box-shadow: 0 8px 24px rgb(0 0 0 / 10%), 0 2px 6px rgb(0 0 0 / 5%);
     overscroll-behavior: contain;
 }
+
 .theme-select__menu[hidden] {
     display: none;
 }
+
 .theme-select__option {
     display: flex;
     align-items: center;
@@ -1102,18 +1105,22 @@ select.picker option {
     text-align: left;
     cursor: pointer;
 }
+
 .theme-select__option:hover,
 .theme-select__option:focus-visible {
     outline: none;
     background: var(--muted);
 }
+
 .theme-select__option.is-selected {
     font-weight: 500;
 }
+
 .theme-select__check {
     color: var(--foreground);
     font-size: 13px;
 }
+
 .bg-color.active .theme-select__menu {
     color-scheme: dark;
     box-shadow: 0 8px 24px rgb(0 0 0 / 35%), 0 2px 6px rgb(0 0 0 / 20%);
