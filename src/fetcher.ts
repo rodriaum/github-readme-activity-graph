@@ -45,7 +45,9 @@ export class Fetcher {
         const token = accessToken || process.env.TOKEN;
 
         if (!token) {
-            throw new Error('GitHub API token is not configured. Set the TOKEN environment variable.');
+            throw new Error(
+                'GitHub API token is not configured. Set the TOKEN environment variable.',
+            );
         }
 
         return axios({
