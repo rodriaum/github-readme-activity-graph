@@ -171,7 +171,31 @@
                                     <p>See how your graph will look in your README.</p>
                                 </div>
                             </div>
-                            <div class="rect">
+                            <div class="rect" aria-busy="false">
+                                <div class="graph-skeleton" aria-hidden="true">
+                                    <div class="skeleton-chart-heading">
+                                        <span class="skeleton-shimmer skeleton-heading-line"></span>
+                                        <span class="skeleton-shimmer skeleton-heading-line skeleton-heading-line--short"></span>
+                                    </div>
+                                    <div class="skeleton-plot">
+                                        <div class="skeleton-y-labels">
+                                            <span class="skeleton-shimmer"></span>
+                                            <span class="skeleton-shimmer"></span>
+                                            <span class="skeleton-shimmer"></span>
+                                            <span class="skeleton-shimmer"></span>
+                                        </div>
+                                        <div class="skeleton-graph-area">
+                                            <div class="skeleton-gridlines"><i></i><i></i><i></i><i></i></div>
+                                            <svg class="skeleton-graph" viewBox="0 0 600 220" preserveAspectRatio="none">
+                                                <path class="skeleton-graph-fill" d="M0 180 L45 150 L90 165 L135 105 L180 130 L225 80 L270 115 L315 60 L360 95 L405 45 L450 75 L495 35 L540 60 L600 20 L600 220 L0 220 Z"></path>
+                                                <path class="skeleton-graph-line" d="M0 180 L45 150 L90 165 L135 105 L180 130 L225 80 L270 115 L315 60 L360 95 L405 45 L450 75 L495 35 L540 60 L600 20"></path>
+                                            </svg>
+                                            <div class="skeleton-x-labels">
+                                                <span class="skeleton-shimmer"></span><span class="skeleton-shimmer"></span><span class="skeleton-shimmer"></span><span class="skeleton-shimmer"></span><span class="skeleton-shimmer"></span><span class="skeleton-shimmer"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="chart_placeholder active">
                                     <p class="placeholder_text">Your graph preview will appear here.</p>
                                     <span>Enter a GitHub username or organization above to get started.</span>
