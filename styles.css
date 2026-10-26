@@ -1146,3 +1146,16 @@ select.picker option {
         width: 100%;
     }
 }
+
+
+.form > .theme-select {
+    flex: 0 0 150px;
+    width: 150px;
+}
+
+@media (max-width: 480px) {
+    .form > .theme-select {
+        flex: auto;
+        width: 100%;
+    }
+}
