@@ -190,7 +190,12 @@ export async function finishOAuth(req: Request, res: Response): Promise<void> {
                 cipher.final(),
             ]);
 
-            storedToken = `enc:v1:${iv.toString('base64url')}:${cipher.getAuthTag().toString('base64url')}:${encrypted.toString('base64url')}`;
+            storedToken = [
+                'enc:v1',
+                iv.toString('base64url'),
+                cipher.getAuthTag().toString('base64url'),
+                encrypted.toString('base64url'),
+            ].join(':');
             tokenEncrypted = true;
         } else if (process.env.NODE_ENV === 'production') {
             throw new Error('OAUTH_TOKEN_ENCRYPTION_KEY is required in production.');
