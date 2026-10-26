@@ -331,10 +331,13 @@ const copyLink = () => {
 elements.toggleBtn.addEventListener('click', handleDarkMode);
 elements.submitButton.addEventListener('click', onSubmit);
 elements.entityType.addEventListener('change', () => {
-    elements.username.placeholder = elements.entityType.value === 'organization'
+    const isOrganization = elements.entityType.value === 'organization';
+    elements.username.placeholder = isOrganization
         ? 'Enter GitHub organization'
         : 'Enter your GitHub username';
+
     if (valueToCopy.username) {
+        generateLink();
         setLoader();
         getGraph(valueToCopy.username, elements.entityType.value);
     }
