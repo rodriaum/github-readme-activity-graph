@@ -153,7 +153,7 @@ You can deploy your own instance using the button below or by importing this rep
 
 ### Public activity (default)
 
-No additional environment variables are required for public activity graphs. After deployment, use your Vercel domain:
+For public activity graphs, configure the `TOKEN` environment variable in **Vercel → Settings → Environment Variables** with a GitHub Personal Access Token. This is required for the graph to retrieve GitHub activity. After adding the variable, redeploy the project. Then use your Vercel domain:
 
 ```md
 ![GitHub Activity Graph](https://<your-vercel-domain>/graph?username=<username>)
@@ -165,11 +165,11 @@ Private activity is **optional**. To enable it on your own deployment, configure
 
 - `GITHUB_OAUTH_CLIENT_ID`
 - `GITHUB_OAUTH_CLIENT_SECRET`
-- `OAUTH_CALLBACK_URL` — the exact deployed OAuth callback URL registered in your GitHub OAuth App
+- `OAUTH_CALLBACK_URL`: the exact deployed OAuth callback URL registered in your GitHub OAuth App
 - `MONGODB_URI`
 - `MONGODB_DATABASE`
-- `OAUTH_TOKEN_ENCRYPTION_KEY` — a long, random secret used to encrypt stored OAuth tokens
-- `APP_ORIGIN` — your deployed app's origin
+- `OAUTH_TOKEN_ENCRYPTION_KEY`: a long, random secret used to encrypt stored OAuth tokens
+- `APP_ORIGIN`: your deployed app's origin
 
 Register the callback URL in your GitHub OAuth App settings and make sure `APP_ORIGIN` matches your deployment's origin. Redeploy after changing environment variables.
 
