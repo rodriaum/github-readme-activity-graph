@@ -10,6 +10,8 @@ const elements = {
     username: document.getElementById('username'),
     entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
+    privateAccessButton: document.getElementById('privateAccessButton'),
+    privateAccessStatus: document.getElementById('privateAccessStatus'),
 };
 // Theme definitions
 const themes = {
@@ -349,6 +351,60 @@ elements.entityType.addEventListener('change', () => {
     }
 });
 elements.copyText.addEventListener('click', copyLink);
+
+elements.privateAccessButton.addEventListener('click', () => {
+    if (elements.entityType.value) {
+        sessionStorage.setItem('privateAccessEntityType', elements.entityType.value);
+    }
+    if (elements.username.value.trim()) {
+        sessionStorage.setItem('privateAccessUsername', elements.username.value.trim());
+    }
+});
+
+const initializePrivateAccess = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('private_access_error');
+    const connected = params.get('private_access') === 'connected';
+
+    if (error) {
+        elements.privateAccessStatus.textContent = error;
+    }
+
+    if (connected) {
+        elements.privateAccessStatus.textContent = 'GitHub connected. Private activity can be previewed in this browser session.';
+    }
+
+    try {
+        const response = await axios.get('/auth/status');
+        if (response.data?.authenticated) {
+            elements.privateAccessButton.textContent = 'Disconnect private access';
+            elements.privateAccessButton.href = '/auth/logout';
+            elements.privateAccessStatus.textContent = 'Private access enabled for this browser session. Public README image links cannot use this session; they require server-side storage for a private share link.';
+            const savedUsername = sessionStorage.getItem('privateAccessUsername');
+            const savedType = sessionStorage.getItem('privateAccessEntityType');
+            if (savedType && ['user', 'organization'].includes(savedType)) {
+                elements.entityType.value = savedType;
+                elements.entityType.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            if (savedUsername) {
+                elements.username.value = savedUsername;
+                valueToCopy.username = savedUsername;
+                setLoader();
+                getGraph(savedUsername, elements.entityType.value);
+                sessionStorage.removeItem('privateAccessUsername');
+                sessionStorage.removeItem('privateAccessEntityType');
+            }
+        }
+    } catch (error) {
+        console.error('Unable to check GitHub authorization:', error);
+    }
+
+    if (error || connected) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+};
+
+initializePrivateAccess();
 inputElements.bgInput.addEventListener('input', changeBgColor);
 inputElements.lineInput.addEventListener('input', changeLineColor);
 inputElements.ltgInput.addEventListener('input', changeLabelsAndGridColor);
