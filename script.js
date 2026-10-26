@@ -2,6 +2,7 @@ const elements = {
     toggleBtn: document.querySelector('.toggle-btn'),
     bgColor: document.querySelector('.bg-color'),
     loader: document.querySelector('.loader'),
+    preview: document.querySelector('.rect'),
     placeholder: document.querySelector('.chart_placeholder'),
     copyContainer: document.querySelector('.copy_container'),
     textArea: document.querySelector('.text'),
@@ -158,11 +159,15 @@ const valueToCopy = {
 
 //For displaying loading animation
 
-const setLoader = () => {
-    elements.loader.classList.add('active');
+const setGraphLoading = (loading) => {
+    elements.preview.classList.toggle('is-loading', loading);
+    elements.preview.setAttribute('aria-busy', String(loading));
+    elements.submitButton.disabled = loading;
+    elements.submitButton.setAttribute('aria-busy', String(loading));
 };
 const removeLoader = () => {
     elements.loader.classList.remove('active');
+    setGraphLoading(false);
 };
 
 const removePlaceholder = () => {
@@ -193,6 +198,9 @@ const generateLink = () => {
 // Fetch user data and create graph
 
 const getGraph = (username, type) => {
+    setGraphLoading(true);
+    elements.placeholder.classList.remove('active');
+
     // Graph Configuration
 
     const options = {
@@ -277,6 +285,9 @@ const getGraph = (username, type) => {
         .catch((err) => {
             console.error('Failed to load activity graph:', err);
             removeLoader();
+            if (!document.querySelector('.ct-chart svg')) {
+                elements.placeholder.classList.add('active');
+            }
             showToast(
                 err.response?.data?.error || err.message || 'Sorry, something went wrong.',
             );
@@ -291,7 +302,6 @@ const onSubmit = (event) => {
     const username = elements.username.value;
     if (username.length > 0) {
         valueToCopy.username = username.trim();
-        setLoader();
         getGraph(valueToCopy.username, elements.entityType.value);
     } else {
         showToast('Enter a GitHub username or organization name.');
@@ -455,7 +465,6 @@ elements.includePrivate.addEventListener('change', () => {
     valueToCopy.includePrivate = elements.includePrivate.checked;
     generateLink();
     if (valueToCopy.username) {
-        setLoader();
         getGraph(valueToCopy.username, elements.entityType.value);
     }
 });
