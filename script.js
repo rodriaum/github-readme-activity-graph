@@ -130,7 +130,12 @@ const generateLink = () => {
         ? `${valueToCopy.username} organization activity graph`
         : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
-    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true&include_private=${valueToCopy.includePrivate ? 'true' : 'false'})](${profileUrl})`;
+    const graphUrl =
+        `https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}` +
+        `&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}` +
+        `&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}` +
+        `&area=true&hide_border=true&include_private=${valueToCopy.includePrivate ? 'true' : 'false'}`;
+    const link = `[![${label}](${graphUrl})](${profileUrl})`;
     elements.textArea.value = link;
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
     return link;
@@ -191,8 +196,13 @@ const getGraph = (username, type) => {
         ],
     };
 
+    const parameter = type === 'organization' ? 'organization' : 'username';
+    const query =
+        `${parameter}=${encodeURIComponent(username)}` +
+        `&include_private=${valueToCopy.includePrivate ? 'true' : 'false'}`;
+
     axios({
-        url: `/data?${type === 'organization' ? 'organization' : 'username'}=${encodeURIComponent(username)}&include_private=${valueToCopy.includePrivate ? 'true' : 'false'}`,
+        url: `/data?${query}`,
         method: 'GET',
     })
         .then((contributionData) => {
