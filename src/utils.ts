@@ -7,7 +7,9 @@ import { QueryOption, ParsedQs, UserDetails } from './interfaces/interface';
 
 export class Utilities {
     public username: string;
+    public includePrivate: boolean;
     constructor(private readonly queryString: ParsedQs) {
+        this.includePrivate = queryString.include_private === 'true';
         this.username = String(this.queryString.username);
     }
 
@@ -161,7 +163,7 @@ export class Utilities {
             return {
                 finalGraph: getChart,
                 header: {
-                    maxAge: 'public, max-age=1800',
+                    maxAge: this.includePrivate ? 'private, no-store, max-age=0' : 'public, max-age=1800',
                 },
             };
         } else {
