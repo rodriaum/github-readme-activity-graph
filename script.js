@@ -93,6 +93,55 @@ const inputElements = {
     pointInput: document.getElementById('point'),
 };
 
+/*-----------------------------------------
+                Toast notifications
+-------------------------------------------*/
+
+const showToast = (message, type = 'error') => {
+    let container = document.querySelector('.toast-container');
+
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        container.setAttribute('aria-label', 'Notifications');
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast--${type}`;
+    toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    toast.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+
+    const icon = document.createElement('span');
+    icon.className = 'toast__icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = type === 'error' ? '!' : type === 'success' ? '✓' : 'i';
+
+    const text = document.createElement('p');
+    text.className = 'toast__message';
+    text.textContent = message;
+
+    const closeButton = document.createElement('button');
+    closeButton.className = 'toast__close';
+    closeButton.type = 'button';
+    closeButton.setAttribute('aria-label', 'Dismiss notification');
+    closeButton.textContent = '×';
+
+    let timeoutId;
+    const dismiss = () => {
+        clearTimeout(timeoutId);
+        toast.classList.add('toast--leaving');
+        toast.addEventListener('animationend', () => toast.remove(), { once: true });
+        setTimeout(() => toast.remove(), 250);
+    };
+
+    closeButton.addEventListener('click', dismiss);
+    toast.append(icon, text, closeButton);
+    container.appendChild(toast);
+
+    timeoutId = setTimeout(dismiss, 5000);
+};
+
 const valueToCopy = {
     username: '',
     bgColor: '#ffcfe9',
@@ -228,7 +277,9 @@ const getGraph = (username, type) => {
         .catch((err) => {
             console.error('Failed to load activity graph:', err);
             removeLoader();
-            alert(err.response?.data?.error || err.message || 'Sorry! something went wrong.');
+            showToast(
+                err.response?.data?.error || err.message || 'Sorry, something went wrong.',
+            );
         });
 };
 
@@ -243,7 +294,7 @@ const onSubmit = (event) => {
         setLoader();
         getGraph(valueToCopy.username, elements.entityType.value);
     } else {
-        alert('Enter a GitHub username or organization name');
+        showToast('Enter a GitHub username or organization name.');
         return;
     }
 };
@@ -395,7 +446,7 @@ elements.authButton.addEventListener('click', async (event) => {
             await refreshAuthStatus();
             if (valueToCopy.username) getGraph(valueToCopy.username, elements.entityType.value);
         } catch {
-            alert('Could not log out safely. Please retry.');
+            showToast('Could not log out safely. Please retry.');
         }
     }
 });
