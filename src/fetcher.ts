@@ -38,12 +38,12 @@ export class Fetcher {
         };
     }
 
-    private async fetch(graphQLQuery: Query): Promise<AxiosResponse<ResponseOfApi>> {
+    private async fetch(graphQLQuery: Query, accessToken?: string): Promise<AxiosResponse<ResponseOfApi>> {
         return axios({
             url: 'https://api.github.com/graphql',
             method: 'POST',
             headers: {
-                Authorization: `bearer ${process.env.TOKEN}`,
+                Authorization: `bearer ${accessToken || process.env.TOKEN}`,
             },
             data: graphQLQuery,
         });
@@ -53,6 +53,7 @@ export class Fetcher {
         days: number,
         customFromDate?: string,
         customToDate?: string,
+        accessToken?: string,
     ): Promise<UserDetails | string> {
         let from = '',
             to = '';
@@ -67,7 +68,7 @@ export class Fetcher {
         }
 
         try {
-            const apiResponse = await this.fetch(this.getGraphQLQuery(from, to));
+            const apiResponse = await this.fetch(this.getGraphQLQuery(from, to), accessToken);
 
             if (apiResponse.data.errors) {
                 console.error('API Error: ', apiResponse.data.errors);
@@ -125,6 +126,7 @@ export class Fetcher {
         days: number,
         customFromDate?: string,
         customToDate?: string,
+        accessToken?: string,
     ): Promise<UserDetails | string> {
         const toDate = customToDate ? moment(customToDate).utc() : moment().utc();
         const fromDate = customFromDate
@@ -134,10 +136,11 @@ export class Fetcher {
         const until = toDate.clone().endOf('day').toISOString();
 
         try {
-            const headers = {
+            const headers: Record<string, string> = {
                 Accept: 'application/vnd.github+json',
                 'X-GitHub-Api-Version': '2022-11-28',
             };
+            if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
             const repositories: Array<{ name: string; full_name: string }> = [];
             let repositoryPage = 1;
 
@@ -146,7 +149,7 @@ export class Fetcher {
                     `https://api.github.com/orgs/${encodeURIComponent(this.username)}/repos`,
                     {
                         headers,
-                        params: { type: 'public', per_page: 100, page: repositoryPage },
+                        params: { type: accessToken ? 'all' : 'public', per_page: 100, page: repositoryPage },
                     },
                 );
                 repositories.push(...response.data);
