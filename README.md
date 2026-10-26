@@ -114,13 +114,13 @@ Example:
 **`custom_title=This%20is%20a%20title`**
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 **Example:**
 
 ```md
-[![Ashutosh's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 ## Deploy on your own Replit instance
