@@ -63,9 +63,9 @@ You can use the existing graph customization parameters, such as `theme`, `days`
 
 ## Optional Private Activity
 
-Public activity works without signing in. To include private activity, simply sign in with GitHub on an instance where private activity support has already been configured. You do not need to deploy the application again if this setup is already enabled.
+Public activity is displayed without requiring users to log in. To include private activity, simply sign in with GitHub on the `github-act-graph.rodriaum.com` instance.
 
-After signing in, add `include_private=true` to the graph URL. The graph will include private activity that the signed-in GitHub account is authorized to access. The parameter defaults to `false`, so existing public graphs continue to work without login. Private graph responses must not be cached by shared caches.
+After logging in, add `include_private=true` to the graph URL. The graph will then include the private activity that the authenticated GitHub account has permission to access. The parameter defaults to `false`, so existing public graphs continue to work without requiring users to log in.
 
 ## Use themes
 
