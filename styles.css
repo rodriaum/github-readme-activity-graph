@@ -1159,3 +1159,9 @@ select.picker option {
         width: 100%;
     }
 }
+
+.auth-control { padding: 12px; border: 1px solid var(--border); border-radius: 9px; }
+.checkbox-control { display: flex; align-items: center; gap: 9px; cursor: pointer; font-size: 13px; font-weight: 500; }
+.checkbox-control input { width: 16px; height: 16px; accent-color: var(--primary); }
+.auth-description { margin: 0; color: var(--muted-foreground); font-size: 12px; line-height: 1.5; }
+@media (max-width: 640px) { .auth-link span { max-width: 110px; overflow-wrap: anywhere; } }
