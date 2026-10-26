@@ -74,7 +74,7 @@ The customizer supports GitHub OAuth so a user can preview activity from private
 - `OAUTH_COOKIE_SECRET`: a random secret of at least 32 characters used to encrypt the short-lived browser session cookie.
 - `PRIVATE_SHARE_SECRET`: a separate random secret of at least 32 characters used to sign shareable contribution data.
 
-Set the OAuth App's **Authorization callback URL** to `<APP_URL>/auth/github/callback`, then redeploy. The authorization flow requests `read:user` and `repo` scopes; the `repo` scope grants access to private repositories available to the authorizing account. Only enable this on a deployment you trust.
+Set the OAuth App's **Authorization callback URL** to `<APP_URL>/auth/github/callback`, then redeploy. The authorization flow requests `read:user` and `repo` scopes. The `repo` scope is broad and can grant read/write access to private repositories available to the authorizing account, not just read-only statistics. Only authorize a deployment you trust.
 
 After signing in, private activity is available in that browser session. To include private stats in a README image, explicitly select **Include private stats in the README link**. The generated link contains signed daily contribution counts, not the OAuth token, repository names, or source code. Anyone who can view or copy that link can see those counts. The counts are embedded in the link, so changing `PRIVATE_SHARE_SECRET` invalidates existing private links. Private share links are limited to the contribution data fetched when the link is generated; regenerate the link to refresh it.
 
