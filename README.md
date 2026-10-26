@@ -22,8 +22,9 @@ Please refer to the updated link [here](#how-to-use)
 
 - [Table of contents](#table-of-contents)
 - [How to Use](#how-to-use)
-    - [Organization Activity Graph](#organization-activity-graph)
     - [Attention ⚠](#attention-)
+    - [Organization Activity Graph](#organization-activity-graph)
+    - [Optional Private Activity](#optional-private-activity)
 - [Use themes](#use-themes)
 - [Available Themes](#available-themes)
 - [Customization](#customization)
@@ -46,6 +47,8 @@ Just paste the following URL in your profile readme and you are good to go.
 [![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
+### [Attention ⚠](#deploy-on-your-own-vercel-instance)
+
 ### Organization Activity Graph
 
 You can also generate an activity graph for a GitHub organization. Use the `organization` parameter with the organization's GitHub login:
@@ -58,8 +61,11 @@ The organization graph counts commits across the organization's **public reposit
 
 You can use the existing graph customization parameters, such as `theme`, `days`, and `custom_title`, with the `organization` parameter as well.
 
+## Optional Private Activity
 
-### [Attention ⚠](#deploy-on-your-own-replit-instance)
+Public activity works without signing in. To include private activity, simply sign in with GitHub on an instance where private activity support has already been configured. You do not need to deploy the application again if this setup is already enabled.
+
+After signing in, add `include_private=true` to the graph URL. The graph will include private activity that the signed-in GitHub account is authorized to access. The parameter defaults to `false`, so existing public graphs continue to work without login. Private graph responses must not be cached by shared caches.
 
 ## Use themes
 
@@ -90,14 +96,6 @@ _`username=rodriaum&theme=theme_name`_
 |     **high-contrast**      | <img src="./asset/high-contrast.png" height=250 alt="graph"/>  |
 
 For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
-
-## Optional Private Activity
-
-Public activity works without signing in. To include private activity, simply sign in with GitHub on an instance where private activity support has already been configured. You do not need to deploy the application again if this setup is already enabled.
-
-After signing in, add `include_private=true` to the graph URL. The graph will include private activity that the signed-in GitHub account is authorized to access. The parameter defaults to `false`, so existing public graphs continue to work without login. Private graph responses must not be cached by shared caches.
-
-For administrators setting up their own instance, private activity requires a GitHub OAuth App and MongoDB configuration. Set `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `OAUTH_CALLBACK_URL`, `MONGODB_URI`, `MONGODB_DATABASE`, `OAUTH_TOKEN_ENCRYPTION_KEY` (a long random secret), and `APP_ORIGIN`. Register the exact callback URL in the OAuth App settings. The OAuth App requests the `repo` and `read:org` scopes. Tokens are stored in MongoDB and encrypted with AES-256-GCM; production refuses OAuth token storage when `OAUTH_TOKEN_ENCRYPTION_KEY` is missing.
 
 ## Customization
 
