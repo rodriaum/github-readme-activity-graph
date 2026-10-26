@@ -50,6 +50,12 @@ Just paste the following URL in your profile readme and you are good to go.
 [![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
+To generate a graph based on commits across an organization's repositories, use the `organization` parameter:
+
+```md
+[![StudioLoad organization activity graph](https://github-act-graph.rodriaum.com/graph?organization=StudioLoad)](https://github.com/StudioLoad)
+```
+
 ### [Attention ⚠](#deploy-on-your-own-replit-instance)
 
 ## Use themes
