@@ -27,6 +27,7 @@
                     <span>Activity Graph</span>
                 </a>
                 <div class="topbar-actions">
+                    <a class="nav-link auth-link" id="auth-button" href="/auth/github"><i class="fab fa-github" aria-hidden="true"></i><span>Login with GitHub</span></a>
                     <a class="nav-link" href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer">
                         <i class="fab fa-github" aria-hidden="true"></i>
                         <span>GitHub</span>
@@ -76,6 +77,11 @@
                         <div class="panel-heading">
                             <h3>Appearance</h3>
                             <p>Fine-tune the colors and theme.</p>
+                        </div>
+
+                        <div class="control-group auth-control">
+                            <label class="checkbox-control" for="includePrivate"><input type="checkbox" id="includePrivate" name="include_private" /><span>Incluir atividade privada</span></label>
+                            <p class="auth-description">Inicia sessão no GitHub para incluir a atividade a que tens acesso.</p>
                         </div>
 
                         <div class="control-group">
