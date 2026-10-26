@@ -33,6 +33,7 @@ app.get('/data', handlers.getData);
 app.get('/auth/github', (req, res) => githubOAuth.start(req, res));
 app.get('/auth/github/callback', (req, res) => githubOAuth.callback(req, res));
 app.get('/auth/status', (req, res) => githubOAuth.status(req, res));
+app.get('/auth/private-share', (req, res) => handlers.getPrivateShare(req, res));
 app.get('/auth/logout', (req, res) => githubOAuth.logout(req, res));
 
 app.listen(port, (): void => {
