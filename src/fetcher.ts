@@ -283,3 +283,4 @@ export class Fetcher {
             return `Can't fetch activity for GitHub organization '${this.username}'. Check the organization name, token permissions, and API rate limit.`;
         }
     }
+}
