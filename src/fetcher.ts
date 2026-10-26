@@ -155,10 +155,6 @@ export class Fetcher {
                 repositoryPage += 1;
             }
 
-            if (repositories.length === 0) {
-                return `No repositories found for GitHub organization '${this.username}'.`;
-            }
-
             const totals = new Map<string, number>();
             for (
                 let date = fromDate.clone().startOf('day');
