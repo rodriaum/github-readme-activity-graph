@@ -50,6 +50,7 @@ export class ParsedQs {
     from?: string;
     to?: string;
     grid?: string;
+    include_private?: string;
 }
 
 export class GraphArgs {
