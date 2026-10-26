@@ -131,7 +131,7 @@ export class Fetcher {
                 throw new Error('Unexpected API response structure');
             }
         } catch (error) {
-            console.log('error: ', error);
+            console.error('Failed to fetch user activity:', error instanceof Error ? error.message : 'Unknown error');
             return `Can't fetch any contribution. Please check your username.`;
         }
     }
@@ -279,7 +279,7 @@ export class Fetcher {
                 return `💥 GitHub API rate limit exceeded.${resetMessage}`;
             }
 
-            console.error('Failed to fetch organization activity:', error);
+            console.error('Failed to fetch organization activity:', error instanceof Error ? error.message : 'Unknown error');
             return `Can't fetch activity for GitHub organization '${this.username}'. Check the organization name, token permissions, and API rate limit.`;
         }
     }
