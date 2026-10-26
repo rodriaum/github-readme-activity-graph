@@ -550,7 +550,7 @@ a:focus-visible {
     gap: 22px;
     padding: 18px 16px 24px;
     border-radius: 6px;
-    background: var(--background);
+    background: var(--skeleton-background, var(--background));
 }
 
 .rect.is-loading .graph-skeleton {
@@ -569,7 +569,7 @@ a:focus-visible {
     overflow: hidden;
     position: relative;
     border-radius: 5px;
-    background: var(--muted);
+    background: color-mix(in srgb, var(--skeleton-text, var(--foreground)) 12%, var(--skeleton-background, var(--background)));
 }
 
 .skeleton-shimmer::after {
@@ -577,7 +577,7 @@ a:focus-visible {
     inset: 0;
     content: '';
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgb(161 161 170 / 18%), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--skeleton-text, var(--foreground)) 22%, transparent), transparent);
     animation: skeleton-shimmer 1.4s ease-in-out infinite;
 }
 
@@ -627,7 +627,7 @@ a:focus-visible {
 .skeleton-gridlines i {
     display: block;
     width: 100%;
-    border-top: 1px dashed var(--border);
+    border-top: 1px dashed color-mix(in srgb, var(--skeleton-line, var(--border)) 45%, transparent);
 }
 
 .skeleton-graph {
@@ -639,16 +639,17 @@ a:focus-visible {
 }
 
 .skeleton-graph-fill {
-    fill: var(--muted);
+    fill: color-mix(in srgb, var(--skeleton-line, var(--muted)) 22%, var(--skeleton-background, var(--background)));
     opacity: 0.8;
 }
 
 .skeleton-graph-line {
     fill: none;
-    stroke: var(--border);
+    stroke: var(--skeleton-line, var(--border));
     stroke-width: 4;
     stroke-linecap: round;
     stroke-linejoin: round;
+    opacity: 0.9;
 }
 
 .skeleton-x-labels {
