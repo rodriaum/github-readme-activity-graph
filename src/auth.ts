@@ -89,7 +89,8 @@ export async function finishOAuth(req: Request, res: Response): Promise<void> {
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         await (await getCollection<OAuthSession>('oauth_sessions')).insertOne({ sessionId, githubId, csrfToken, expiresAt });
         await (await getCollection<OAuthSession>('oauth_sessions')).createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
-        res.setHeader('Set-Cookie', [clearState, cookie('activity_session', sessionId, 30 * 24 * 60 * 60)]);
+        res.append('Set-Cookie', clearState);
+        res.append('Set-Cookie', cookie('activity_session', sessionId, 30 * 24 * 60 * 60));
         res.redirect(302, '/');
     } catch (error) {
         console.error('GitHub OAuth callback failed:', error instanceof Error ? error.message : 'unknown error');
