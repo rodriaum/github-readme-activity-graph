@@ -45,11 +45,13 @@ export class Handlers {
     public async getData(req: Request, res: Response) {
         try {
             const utils = new Utilities(req.query);
-
-            const fetcher = new Fetcher(utils.username);
-            const fetchCalendarData: UserDetails | string = await fetcher.fetchContributions(
-                utils.queryOptions().days,
-            );
+            const organization = typeof req.query.organization === 'string'
+                ? req.query.organization.trim()
+                : '';
+            const fetcher = new Fetcher(organization || utils.username);
+            const fetchCalendarData: UserDetails | string = organization
+                ? await fetcher.fetchOrganizationActivity(utils.queryOptions().days)
+                : await fetcher.fetchContributions(utils.queryOptions().days);
 
             if (typeof fetchCalendarData === 'object') {
                 res.status(200).send(fetchCalendarData);
