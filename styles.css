@@ -1009,3 +1009,112 @@ select.picker option {
     color-scheme: dark;
 }
 
+
+
+/* Custom theme menu: native option popups cannot be styled consistently across browsers. */
+.theme-select {
+    position: relative;
+    width: 100%;
+}
+.theme-select__native {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+.theme-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--input);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--foreground);
+    font: inherit;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.theme-select__trigger:hover,
+.theme-select.is-open .theme-select__trigger {
+    border-color: var(--ring);
+}
+.theme-select__trigger:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px rgb(161 161 170 / 15%);
+}
+.theme-select__chevron {
+    flex: 0 0 7px;
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid var(--muted-foreground);
+    border-bottom: 1.5px solid var(--muted-foreground);
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform .15s ease;
+}
+.theme-select.is-open .theme-select__chevron {
+    transform: rotate(225deg) translate(-1px, -1px);
+}
+.theme-select__menu {
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--popover, var(--card));
+    color: var(--foreground);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 10%), 0 2px 6px rgb(0 0 0 / 5%);
+    overscroll-behavior: contain;
+}
+.theme-select__menu[hidden] {
+    display: none;
+}
+.theme-select__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 34px;
+    padding: 7px 9px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--foreground);
+    font: inherit;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+.theme-select__option:hover,
+.theme-select__option:focus-visible {
+    outline: none;
+    background: var(--muted);
+}
+.theme-select__option.is-selected {
+    font-weight: 500;
+}
+.theme-select__check {
+    color: var(--foreground);
+    font-size: 13px;
+}
+.bg-color.active .theme-select__menu {
+    color-scheme: dark;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 35%), 0 2px 6px rgb(0 0 0 / 20%);
+}
