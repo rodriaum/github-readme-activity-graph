@@ -12,6 +12,7 @@ const elements = {
     themeSelect: document.getElementById('themeSelect'),
     privateAccessButton: document.getElementById('privateAccessButton'),
     privateAccessStatus: document.getElementById('privateAccessStatus'),
+    includePrivateInEmbed: document.getElementById('includePrivateInEmbed'),
 };
 // Theme definitions
 const themes = {
@@ -101,6 +102,9 @@ const valueToCopy = {
     point: '#403d3d',
 };
 
+let privateDataToken = '';
+let isOAuthAuthenticated = false;
+
 /*-----------------------------------------
         Fetch user's contribution data
         and generate graph link
@@ -127,10 +131,48 @@ const generateLink = () => {
     const parameter = isOrganization ? 'organization' : 'username';
     const label = isOrganization ? `${valueToCopy.username} organization activity graph` : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
-    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true)](${profileUrl})`;
+    const graphUrl = new URL('/graph', window.location.origin);
+    graphUrl.searchParams.set(parameter, valueToCopy.username);
+    graphUrl.searchParams.set('bg_color', valueToCopy.bgColor.slice(1));
+    graphUrl.searchParams.set('color', valueToCopy.color.slice(1));
+    graphUrl.searchParams.set('line', valueToCopy.line.slice(1));
+    graphUrl.searchParams.set('point', valueToCopy.point.slice(1));
+    graphUrl.searchParams.set('area', 'true');
+    graphUrl.searchParams.set('hide_border', 'true');
+    if (elements.includePrivateInEmbed.checked && privateDataToken) {
+        graphUrl.searchParams.set('private_data', privateDataToken);
+    }
+    const link = `[![${label}](${graphUrl.toString()})](${profileUrl})`;
     elements.textArea.value = link;
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
     return link;
+};
+
+const createPrivateShare = async () => {
+    if (!elements.includePrivateInEmbed.checked || !valueToCopy.username) {
+        privateDataToken = '';
+        generateLink();
+        return;
+    }
+    if (!isOAuthAuthenticated) {
+        elements.includePrivateInEmbed.checked = false;
+        alert('Connect your GitHub account before including private stats.');
+        return;
+    }
+
+    const params = new URLSearchParams();
+    params.set(elements.entityType.value === 'organization' ? 'organization' : 'username', valueToCopy.username);
+    params.set('days', '31');
+    try {
+        const response = await axios.get(`/auth/private-share?${params.toString()}`);
+        privateDataToken = response.data.privateData;
+        generateLink();
+    } catch (error) {
+        privateDataToken = '';
+        elements.includePrivateInEmbed.checked = false;
+        generateLink();
+        alert(error.response?.data?.error || 'Unable to create a private stats link.');
+    }
 };
 
 // Fetch user data and create graph
@@ -210,7 +252,12 @@ const getGraph = (username, type) => {
 
             removeLoader();
             removePlaceholder();
-            generateLink();
+            if (elements.includePrivateInEmbed.checked) {
+                createPrivateShare();
+            } else {
+                privateDataToken = '';
+                generateLink();
+            }
         })
         .catch((err) => {
             console.error('Failed to load activity graph:', err);
@@ -351,6 +398,7 @@ elements.entityType.addEventListener('change', () => {
     }
 });
 elements.copyText.addEventListener('click', copyLink);
+elements.includePrivateInEmbed.addEventListener('change', createPrivateShare);
 
 elements.privateAccessButton.addEventListener('click', () => {
     if (elements.entityType.value) {
@@ -377,9 +425,11 @@ const initializePrivateAccess = async () => {
     try {
         const response = await axios.get('/auth/status');
         if (response.data?.authenticated) {
+            isOAuthAuthenticated = true;
+            elements.includePrivateInEmbed.disabled = false;
             elements.privateAccessButton.textContent = 'Disconnect private access';
             elements.privateAccessButton.href = '/auth/logout';
-            elements.privateAccessStatus.textContent = 'Private access enabled for this browser session. Public README image links cannot use this session; they require server-side storage for a private share link.';
+            elements.privateAccessStatus.textContent = 'GitHub connected. Preview private activity, or opt in to include only daily contribution counts in a shareable link.';
             const savedUsername = sessionStorage.getItem('privateAccessUsername');
             const savedType = sessionStorage.getItem('privateAccessEntityType');
             if (savedType && ['user', 'organization'].includes(savedType)) {
