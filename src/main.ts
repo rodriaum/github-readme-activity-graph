@@ -10,8 +10,6 @@ const rootDir = process.cwd();
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-// Serve the static files used by the frontend. The Vercel rewrite sends
-// requests through this Express application, so these routes must be explicit.
 app.get('/styles.css', (_req, res) => {
     res.sendFile(path.resolve(rootDir, 'styles.css'));
 });

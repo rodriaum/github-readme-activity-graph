@@ -9,10 +9,10 @@ import { expectedQuery } from './fakeInputs';
 import { UserDetails } from '../src/interfaces/interface';
 
 describe('Fetching Tests', () => {
-    const fetcher = new Fetcher('ashutosh00710');
+    const fetcher = new Fetcher('rodriaum');
     it('Query Test', () => {
         const expected = expectedQuery(
-            'ashutosh00710',
+            'rodriaum',
             '2022-05-01T00:00:00.000+00:00',
             '2022-06-01T00:00:00.000+00:00',
         );

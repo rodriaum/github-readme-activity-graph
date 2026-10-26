@@ -20,7 +20,7 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
 
 3. Set your streams so you can sync your clone with the original repo (get the latest updates)
 
-   - `git remote add upstream https://github.com/Ashutosh00710/github-readme-activity-graph`
+   - `git remote add upstream https://github.com/rodriaum/github-readme-activity-graph`
    - `git pull upstream main`
    - The above 2 commands will synchronize your forked version of the project with the actual repository.
 
@@ -28,7 +28,7 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
 
 5. [Generate your personal access token](https://github.com/settings/tokens)
 
-6. Create a `.env` file in the root directory and in there write  
+6. Create a `.env` file in the root directory and in there write
    `TOKEN=<your_generated_token>`
 
    Now, open your terminal and write the following commands:

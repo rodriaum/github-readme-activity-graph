@@ -14,14 +14,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Ashutosh00710/github-readme-activity-graph.git"
+        "url": "git+https://github.com/rodriaum/github-readme-activity-graph.git"
     },
     "author": "Ashutosh Dwivedi",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Ashutosh00710/github-readme-activity-graph/issues"
+        "url": "https://github.com/rodriaum/github-readme-activity-graph/issues"
     },
-    "homepage": "https://github.com/Ashutosh00710/github-readme-activity-graph#readme",
+    "homepage": "https://github.com/rodriaum/github-readme-activity-graph#readme",
     "dependencies": {
         "@types/body-parser": "1.19.6",
         "@types/cors": "2.8.19",
