@@ -3,10 +3,11 @@ import { Request, Response } from 'express';
 import { Fetcher } from './fetcher';
 import { invalidUserSvg } from './svgs';
 import { UserDetails } from './interfaces/interface';
+import path from 'path';
 
 export class Handlers {
     public getRoot(_req: Request, res: Response) {
-        res.send(`<h1>GitHub Readme Activity Graph 📈</h1>`);
+        res.sendFile(path.resolve(process.cwd(), 'index.html'));
     }
 
     public async getGraph(req: Request, res: Response) {
