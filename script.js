@@ -339,14 +339,16 @@ const copyLink = () => {
 
 const refreshAuthStatus = async () => {
     try {
-        const response = await axios.get('/auth/status', { headers: { 'Cache-Control': 'no-store' } });
+        const response = await axios.get('/auth/status', { withCredentials: true, headers: { 'Cache-Control': 'no-store' } });
         const auth = response.data;
         elements.authButton.dataset.csrfToken = auth.csrfToken || '';
         elements.authButton.href = auth.authenticated ? '#logout' : '/auth/github';
         elements.authButton.querySelector('span').textContent = auth.authenticated ? `Logout (${auth.login})` : 'Login with GitHub';
-    } catch {
+    } catch (error) {
+        console.error('Could not check GitHub login status:', error);
         elements.authButton.href = '/auth/github';
-        elements.authButton.querySelector('span').textContent = 'Login with GitHub';
+        elements.authButton.querySelector('span').textContent = 'Login status unavailable';
+        elements.authButton.title = 'Could not verify your GitHub session. Check the deployment configuration and server logs.';
     }
 };
 elements.authButton.addEventListener('click', async (event) => {
