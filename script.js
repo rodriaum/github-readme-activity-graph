@@ -8,6 +8,7 @@ const elements = {
     copyText: document.querySelector('.copy_text'),
     submitButton: document.getElementById('submit-button'),
     username: document.getElementById('username'),
+    entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
 };
 // Theme definitions
@@ -120,13 +121,11 @@ const removePlaceholder = () => {
 // Generate chart link with user data
 
 const generateLink = () => {
-    let link = `[![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=${
-        valueToCopy.username
-    }&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(
-        1
-    )}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(
-        1
-    )}&area=true&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)`;
+    const isOrganization = elements.entityType.value === 'organization';
+    const parameter = isOrganization ? 'organization' : 'username';
+    const label = isOrganization ? `${valueToCopy.username} organization activity graph` : `${valueToCopy.username}'s GitHub activity graph`;
+    const profileUrl = `https://github.com/${valueToCopy.username}`;
+    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true)](${profileUrl})`;
     elements.textArea.value = link;
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
     return link;
@@ -134,7 +133,7 @@ const generateLink = () => {
 
 // Fetch user data and create graph
 
-const getGraph = (username) => {
+const getGraph = (username, type) => {
     // Graph Configuration
 
     const options = {
@@ -188,7 +187,7 @@ const getGraph = (username) => {
     };
 
     axios({
-        url: `https://github-act-graph.rodriaum.com/data?username=${username}`,
+        url: `https://github-act-graph.rodriaum.com/data?${type === 'organization' ? 'organization' : 'username'}=${encodeURIComponent(username)}`,
         method: 'GET',
     })
         .then((contributionData) => {
@@ -218,11 +217,11 @@ const onSubmit = (event) => {
     //get username
     const username = elements.username.value;
     if (username.length > 0) {
-        valueToCopy.username = username;
+        valueToCopy.username = username.trim();
         setLoader();
-        getGraph(username);
+        getGraph(valueToCopy.username, elements.entityType.value);
     } else {
-        alert('Enter your Username');
+        alert('Enter a GitHub username or organization name');
         return;
     }
 };
@@ -330,6 +329,12 @@ const copyLink = () => {
 
 elements.toggleBtn.addEventListener('click', handleDarkMode);
 elements.submitButton.addEventListener('click', onSubmit);
+elements.entityType.addEventListener('change', () => {
+    elements.username.placeholder = elements.entityType.value === 'organization'
+        ? 'Enter GitHub organization'
+        : 'Enter your GitHub username';
+    if (valueToCopy.username) generateLink();
+});
 elements.copyText.addEventListener('click', copyLink);
 inputElements.bgInput.addEventListener('input', changeBgColor);
 inputElements.lineInput.addEventListener('input', changeLineColor);
