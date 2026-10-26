@@ -532,6 +532,147 @@ a:focus-visible {
     min-width: 0;
 }
 
+.rect.is-loading .chart_placeholder {
+    display: none;
+}
+
+.rect.is-loading .ct-chart {
+    visibility: hidden;
+}
+
+.graph-skeleton {
+    position: absolute;
+    inset: 12px;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding: 18px 16px 24px;
+    border-radius: 6px;
+    background: var(--background);
+}
+
+.rect.is-loading .graph-skeleton {
+    display: flex;
+}
+
+.skeleton-chart-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.skeleton-shimmer {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    background: var(--muted);
+}
+
+.skeleton-shimmer::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgb(161 161 170 / 18%), transparent);
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-heading-line {
+    width: 118px;
+    height: 10px;
+}
+
+.skeleton-heading-line--short {
+    width: 64px;
+}
+
+.skeleton-plot {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 12px;
+    min-height: 190px;
+}
+
+.skeleton-y-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 4px 0 22px;
+}
+
+.skeleton-y-labels span {
+    width: 18px;
+    height: 6px;
+}
+
+.skeleton-graph-area {
+    position: relative;
+    min-width: 0;
+    padding-bottom: 22px;
+}
+
+.skeleton-gridlines {
+    position: absolute;
+    inset: 0 0 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.skeleton-gridlines i {
+    display: block;
+    width: 100%;
+    border-top: 1px dashed var(--border);
+}
+
+.skeleton-graph {
+    position: absolute;
+    inset: 0 0 22px;
+    width: 100%;
+    height: calc(100% - 22px);
+    overflow: visible;
+}
+
+.skeleton-graph-fill {
+    fill: var(--muted);
+    opacity: 0.8;
+}
+
+.skeleton-graph-line {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.skeleton-x-labels {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.skeleton-x-labels span {
+    width: 28px;
+    height: 6px;
+}
+
+@keyframes skeleton-shimmer {
+    to {
+        transform: translateX(100%);
+    }
+}
+
+
 .chart_placeholder {
     position: absolute;
     inset: 0;
