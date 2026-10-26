@@ -652,6 +652,10 @@ a:focus-visible {
     opacity: 0.9;
 }
 
+.skeleton-graph-points circle {
+    fill: var(--skeleton-point, var(--skeleton-line, var(--border)));
+}
+
 .skeleton-x-labels {
     position: absolute;
     right: 0;
