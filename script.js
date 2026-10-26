@@ -187,7 +187,7 @@ const getGraph = (username, type) => {
     };
 
     axios({
-        url: `https://github-act-graph.rodriaum.com/data?${type === 'organization' ? 'organization' : 'username'}=${encodeURIComponent(username)}`,
+        url: `/data?${type === 'organization' ? 'organization' : 'username'}=${encodeURIComponent(username)}`,
         method: 'GET',
     })
         .then((contributionData) => {
