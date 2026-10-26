@@ -47,7 +47,7 @@ describe('Fetching Tests', () => {
 
         // @ts-ignore: this will always return a string
         fetcher.fetchContributions().then((data: string) => {
-            expect(data).toEqual(`Can't fetch any contribution. Please check your username 😬`);
+            expect(data).toEqual(`Can't fetch any contribution. Please check your username.`);
         });
     });
 });

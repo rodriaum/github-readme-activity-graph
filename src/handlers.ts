@@ -92,7 +92,7 @@ export class Handlers {
         } catch {
             res.setHeader('Cache-Control', 'no-store, max-age=0');
             res.set('Content-Type', 'image/svg+xml');
-            res.send(invalidUserSvg('Something unexpected happened 💥'));
+            res.send(invalidUserSvg('Something unexpected happened. Please try again later.'));
         }
     }
 

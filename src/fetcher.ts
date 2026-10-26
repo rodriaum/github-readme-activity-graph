@@ -74,13 +74,13 @@ export class Fetcher {
                 console.error('API Error: ', apiResponse.data.errors);
                 if (apiResponse.data.errors[0].type === 'RATE_LIMITED') {
                     console.log('GraphQL Error: API rate limit exceeded');
-                    return '💥 API rate limit exceeded. Please deploy your own instance.';
+                    return 'API rate limit exceeded. Please deploy your own instance.';
                 } else {
-                    return `Can't fetch any contribution. Please check your username 😬`;
+                    return `Can't fetch any contribution. Please check your username.`;
                 }
             } else if (apiResponse.data.data) {
                 if (apiResponse.data.data.user === null)
-                    return `Can't fetch any contribution. Please check your username 😬`;
+                    return `Can't fetch any contribution. Please check your username.`;
                 else {
                     const userData: UserDetails = {
                         contributions: [],
@@ -119,7 +119,7 @@ export class Fetcher {
             }
         } catch (error) {
             console.log('error: ', error);
-            return `Can't fetch any contribution. Please check your username 😬`;
+            return `Can't fetch any contribution. Please check your username.`;
         }
     }
     public async fetchOrganizationActivity(

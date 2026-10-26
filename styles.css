@@ -1167,7 +1167,6 @@ select.picker option {
 @media (max-width: 640px) { .auth-link span { max-width: 110px; overflow-wrap: anywhere; } }
 
 
-/* Toast notifications, inspired by shadcn/ui */
 .toast-container {
     position: fixed;
     z-index: 1000;
