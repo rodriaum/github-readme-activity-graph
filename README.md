@@ -96,6 +96,12 @@ _`username=rodriaum&theme=theme_name`_
 
 For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
 
+## Optional Private Activity
+
+Public activity continues to work without login. To include private activity, deploy an instance with a GitHub OAuth App and MongoDB configured. Set `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `OAUTH_CALLBACK_URL`, `MONGODB_URI`, `MONGODB_DATABASE`, `OAUTH_TOKEN_ENCRYPTION_KEY` (a long random secret), and `APP_ORIGIN`. Register the exact callback URL in the OAuth App settings. The GitHub OAuth App scopes requested are `repo` and `read:org`; access remains limited to what the authenticated account can actually access. Add `include_private=true` to the graph URL only when a browser session is signed in. Private graph responses are not cacheable by shared caches.
+
+`include_private` defaults to `false`. Tokens are stored in MongoDB and encrypted with AES-256-GCM when `OAUTH_TOKEN_ENCRYPTION_KEY` is configured; production refuses OAuth token storage when this key is missing.
+
 ## Customization
 
 Personalize your GitHub activity graph using the [online customizer](https://github-act-graph.rodriaum.com/). Adjust its appearance and generate a graph URL ready to use in your profile README.
