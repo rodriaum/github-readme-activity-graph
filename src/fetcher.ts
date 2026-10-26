@@ -121,4 +121,95 @@ export class Fetcher {
             return `Can't fetch any contribution. Please check your username 😬`;
         }
     }
+    public async fetchOrganizationActivity(
+        days: number,
+        customFromDate?: string,
+        customToDate?: string,
+    ): Promise<UserDetails | string> {
+        const toDate = customToDate ? moment(customToDate).utc() : moment().utc();
+        const fromDate = customFromDate
+            ? moment(customFromDate).utc()
+            : moment(toDate).subtract(days - 1, 'days').startOf('day');
+        const since = fromDate.clone().startOf('day').toISOString();
+        const until = toDate.clone().endOf('day').toISOString();
+
+        try {
+            const headers = {
+                Accept: 'application/vnd.github+json',
+                'X-GitHub-Api-Version': '2022-11-28',
+            };
+            const repositories: Array<{ name: string; full_name: string }> = [];
+            let repositoryPage = 1;
+
+            while (true) {
+                const response = await axios.get(
+                    `https://api.github.com/orgs/${encodeURIComponent(this.username)}/repos`,
+                    {
+                        headers,
+                        params: { type: 'public', per_page: 100, page: repositoryPage },
+                    },
+                );
+                repositories.push(...response.data);
+                if (response.data.length < 100) break;
+                repositoryPage += 1;
+            }
+
+            const totals = new Map<string, number>();
+            for (
+                let date = fromDate.clone().startOf('day');
+                date.isSameOrBefore(toDate, 'day');
+                date.add(1, 'day')
+            ) {
+                totals.set(date.format('YYYY-MM-DD'), 0);
+            }
+
+            const countRepositoryCommits = async (repository: {
+                name: string;
+                full_name: string;
+            }) => {
+                let page = 1;
+                while (true) {
+                    const response = await axios.get(
+                        `https://api.github.com/repos/${repository.full_name}/commits`,
+                        {
+                            headers,
+                            params: { since, until, per_page: 100, page },
+                        },
+                    );
+                    const commits: Array<{
+                        commit: {
+                            committer?: { date?: string };
+                            author?: { date?: string };
+                        };
+                    }> = response.data;
+
+                    for (const item of commits) {
+                        const commitDate = item.commit.committer?.date ?? item.commit.author?.date;
+                        if (!commitDate) continue;
+                        const key = moment(commitDate).utc().format('YYYY-MM-DD');
+                        if (totals.has(key)) totals.set(key, (totals.get(key) ?? 0) + 1);
+                    }
+
+                    if (commits.length < 100) break;
+                    page += 1;
+                }
+            };
+
+            for (let index = 0; index < repositories.length; index += 5) {
+                await Promise.all(repositories.slice(index, index + 5).map(countRepositoryCommits));
+            }
+
+            return {
+                name: this.username,
+                contributions: Array.from(totals.entries()).map(([date, contributionCount]) => ({
+                    date: moment(date, 'YYYY-MM-DD').date().toString(),
+                    contributionCount,
+                })),
+            };
+        } catch (error) {
+            console.error('Failed to fetch organization activity:', error);
+            return `Can't fetch activity for GitHub organization '${this.username}'. Check the organization name, token permissions, and API rate limit.`;
+        }
+    }
+
 }

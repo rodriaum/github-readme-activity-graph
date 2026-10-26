@@ -22,6 +22,7 @@ Please refer to the updated link [here](#how-to-use)
 
 - [Table of contents](#table-of-contents)
 - [How to Use](#how-to-use)
+    - [Organization Activity Graph](#organization-activity-graph)
     - [Attention ⚠](#attention-)
 - [Use themes](#use-themes)
 - [Available Themes](#available-themes)
@@ -49,6 +50,19 @@ Just paste the following URL in your profile readme and you are good to go.
 ```md
 [![Rodrigo's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
+
+### Organization Activity Graph
+
+You can also generate an activity graph for a GitHub organization. Use the `organization` parameter with the organization's GitHub login:
+
+```md
+[![StudioLoad organization activity graph](https://github-act-graph.rodriaum.com/graph?organization=StudioLoad)](https://github.com/StudioLoad)
+```
+
+The organization graph counts commits across the organization's **public repositories only**. It does not include private repositories and does not require access to them. Anyone can embed the graph in a README by replacing `StudioLoad` with the organization's login.
+
+You can use the existing graph customization parameters, such as `theme`, `days`, and `custom_title`, with the `organization` parameter as well.
+
 
 ### [Attention ⚠](#deploy-on-your-own-replit-instance)
 

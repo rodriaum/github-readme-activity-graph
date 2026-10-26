@@ -139,6 +139,8 @@ export class Utilities {
             if (!options.hide_title) {
                 if (options.custom_title) {
                     title = options.custom_title;
+                } else if (this.queryString.organization) {
+                    title = `${this.queryString.organization}'s Organization Activity Graph`;
                 } else {
                     title = `${
                         fetchCalendarData.name !== null ? fetchCalendarData.name : options.username

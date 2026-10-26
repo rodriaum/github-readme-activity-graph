@@ -31,6 +31,7 @@ export class QueryOption {
 
 export class ParsedQs {
     username?: string;
+    organization?: string;
     hide_title?: boolean;
     custom_title?: string;
     bg_color?: string;
