@@ -45,7 +45,7 @@
 
             <header class="header">
                 <h1 class="heading">GitHub Readme Activity Graph</h1>
-                <p class="description">Build a personalized activity graph and add it to your GitHub profile README.</p>
+                <p class="description">Build a personalized activity graph for your GitHub user profile or organization and add it to your README.</p>
             </header>
 
             <section class="builder-section" aria-labelledby="builder-title">
@@ -57,10 +57,15 @@
 
                 <div class="container__item">
                     <form class="form">
-                        <label class="sr-only" for="username">GitHub username</label>
+                        <label class="sr-only" for="entityType">Graph type</label>
+                        <select id="entityType" class="picker entity-type-select" aria-label="Graph type">
+                            <option value="user">User</option>
+                            <option value="organization">Organization</option>
+                        </select>
+                        <label class="sr-only" for="username">GitHub username or organization</label>
                         <div class="username-field">
                             <i class="fab fa-github" aria-hidden="true"></i>
-                            <input type="text" class="form__field" placeholder="Enter your GitHub username" id="username" name="username" autocomplete="off" spellcheck="false" />
+                            <input type="text" class="form__field" placeholder="Enter username or organization" id="username" name="username" autocomplete="off" spellcheck="false" />
                         </div>
                         <button type="submit" class="btn btn--primary" id="submit-button">Generate Graph</button>
                     </form>
@@ -166,7 +171,7 @@
                                         <svg viewBox="0 0 24 24"><path d="M3 18V5m0 13h18M6 15l4-5 3 3 5-7"></path></svg>
                                     </div>
                                     <p class="placeholder_text">Your graph preview will appear here.</p>
-                                    <span>Enter a username above to get started.</span>
+                                    <span>Enter a GitHub username or organization above to get started.</span>
                                 </div>
                                 <div class="ct-chart"><div class="ct-line-hook" aria-hidden="true"></div></div>
                             </div>
