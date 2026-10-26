@@ -85,6 +85,7 @@ const onThemeChange = () => {
     changeLineColor();
     changeLabelsAndGridColor();
     changePointColor();
+    syncSkeletonTheme();
 };
 
 const inputElements = {
@@ -174,6 +175,16 @@ const removePlaceholder = () => {
     elements.placeholder.classList.remove('active');
     elements.copyContainer.style.marginTop = '2rem';
 };
+
+const syncSkeletonTheme = () => {
+    const preview = elements.preview;
+    preview.style.setProperty('--skeleton-background', valueToCopy.bgColor);
+    preview.style.setProperty('--skeleton-line', valueToCopy.line);
+    preview.style.setProperty('--skeleton-point', valueToCopy.point);
+    preview.style.setProperty('--skeleton-text', valueToCopy.color);
+};
+
+
 
 // Generate chart link with user data
 
@@ -342,6 +353,7 @@ const handleDarkMode = () => {
 // Background Color
 const changeBgColor = () => {
     valueToCopy.bgColor = inputElements.bgInput.value;
+    syncSkeletonTheme();
     document.querySelector('.rect').style.backgroundColor = inputElements.bgInput.value;
     generateLink();
 };
@@ -349,6 +361,7 @@ const changeBgColor = () => {
 // Line Color
 const changeLineColor = () => {
     valueToCopy.line = inputElements.lineInput.value;
+    syncSkeletonTheme();
     document.querySelector('.ct-line').style.stroke = inputElements.lineInput.value;
     generateLink();
 };
@@ -357,6 +370,7 @@ const changeLineColor = () => {
 const changeLabelsAndGridColor = () => {
     const ltgValue = inputElements.ltgInput.value;
     valueToCopy.color = ltgValue;
+    syncSkeletonTheme();
 
     const allLables = document.querySelectorAll('.ct-label');
     const axisTitles = document.querySelectorAll('.ct-axis-title');
@@ -380,6 +394,7 @@ const changeLabelsAndGridColor = () => {
 // Point Color
 const changePointColor = () => {
     valueToCopy.point = inputElements.pointInput.value;
+    syncSkeletonTheme();
     const allPointLables = document.querySelectorAll('.ct-point');
     const len = allPointLables.length;
     for (let idx = 0; idx < len; idx++) {
@@ -468,6 +483,7 @@ elements.includePrivate.addEventListener('change', () => {
         getGraph(valueToCopy.username, elements.entityType.value);
     }
 });
+syncSkeletonTheme();
 refreshAuthStatus();
 elements.toggleBtn.addEventListener('click', handleDarkMode);
 elements.submitButton.addEventListener('click', onSubmit);
