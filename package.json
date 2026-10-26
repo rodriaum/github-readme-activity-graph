@@ -39,7 +39,8 @@
         "nodemon": "3.1.10",
         "supertest": "7.1.4",
         "ts-node": "10.9.2",
-        "typescript": "5.9.2"
+        "typescript": "5.9.2",
+        "mongodb": "^6.20.0"
     },
     "devDependencies": {
         "@types/jest": "30.0.0",
