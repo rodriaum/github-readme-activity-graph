@@ -14,13 +14,22 @@ export class Handlers {
         try {
             const utils = new Utilities(req.query);
 
-            const fetcher = new Fetcher(utils.username);
+            const organization = typeof req.query.organization === 'string'
+                ? req.query.organization.trim()
+                : '';
+            const fetcher = new Fetcher(organization || utils.username);
             const queryOptions = utils.queryOptions();
-            const fetchCalendarData = await fetcher.fetchContributions(
-                utils.queryOptions().days,
-                queryOptions.from,
-                queryOptions.to,
-            );
+            const fetchCalendarData = organization
+                ? await fetcher.fetchOrganizationActivity(
+                      queryOptions.days,
+                      queryOptions.from,
+                      queryOptions.to,
+                  )
+                : await fetcher.fetchContributions(
+                      queryOptions.days,
+                      queryOptions.from,
+                      queryOptions.to,
+                  );
 
             const { finalGraph, header } = await utils.buildGraph(fetchCalendarData);
             utils.setHttpHeader(res, header.maxAge);
