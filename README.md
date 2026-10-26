@@ -23,6 +23,7 @@ Please refer to the updated link [here](#how-to-use)
 - [Table of contents](#table-of-contents)
 - [How to Use](#how-to-use)
     - [Organization Activity Graph](#organization-activity-graph)
+    - [Private Activity Access](#private-activity-access)
     - [Attention ⚠](#attention-)
 - [Use themes](#use-themes)
 - [Available Themes](#available-themes)
@@ -63,6 +64,21 @@ The organization graph counts commits across the organization's **public reposit
 
 You can use the existing graph customization parameters, such as `theme`, `days`, and `custom_title`, with the `organization` parameter as well.
 
+### Private Activity Access
+
+The customizer supports GitHub OAuth so a user can preview activity from private repositories they can access. To enable it on your deployment, create a GitHub OAuth App and configure these environment variables:
+
+- `GITHUB_OAUTH_CLIENT_ID`: OAuth App client ID.
+- `GITHUB_OAUTH_CLIENT_SECRET`: OAuth App client secret.
+- `APP_URL`: the public base URL of your deployment, without a trailing slash.
+- `OAUTH_COOKIE_SECRET`: a random secret of at least 32 characters used to encrypt the short-lived browser session cookie.
+- `PRIVATE_SHARE_SECRET`: a separate random secret of at least 32 characters used to sign shareable contribution data.
+
+Set the OAuth App's **Authorization callback URL** to `<APP_URL>/auth/github/callback`, then redeploy. The authorization flow requests `read:user` and `repo` scopes; the `repo` scope grants access to private repositories available to the authorizing account. Only enable this on a deployment you trust.
+
+After signing in, private activity is available in that browser session. To include private stats in a README image, explicitly select **Include private stats in the README link**. The generated link contains signed daily contribution counts, not the OAuth token, repository names, or source code. Anyone who can view or copy that link can see those counts. The counts are embedded in the link, so changing `PRIVATE_SHARE_SECRET` invalidates existing private links. Private share links are limited to the contribution data fetched when the link is generated; regenerate the link to refresh it.
+
+Private access is optional. Without OAuth, user graphs use the configured `TOKEN` (if present) and organization graphs use public repositories only.
 
 ### [Attention ⚠](#deploy-on-your-own-replit-instance)
 
