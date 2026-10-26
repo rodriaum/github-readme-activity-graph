@@ -10,6 +10,8 @@ const elements = {
     username: document.getElementById('username'),
     entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
+    includePrivate: document.getElementById('includePrivate'),
+    authButton: document.getElementById('auth-button'),
 };
 // Theme definitions
 const themes = {
@@ -97,6 +99,7 @@ const valueToCopy = {
     color: '#9e4c98',
     line: '#9e4c98',
     point: '#403d3d',
+    includePrivate: false,
 };
 
 /*-----------------------------------------
@@ -125,7 +128,7 @@ const generateLink = () => {
     const parameter = isOrganization ? 'organization' : 'username';
     const label = isOrganization ? `${valueToCopy.username} organization activity graph` : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
-    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true)](${profileUrl})`;
+    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true&include_private=${valueToCopy.includePrivate ? 'true' : 'false'})](${profileUrl})`;
     elements.textArea.value = link;
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
     return link;
@@ -187,7 +190,7 @@ const getGraph = (username, type) => {
     };
 
     axios({
-        url: `/data?${type === 'organization' ? 'organization' : 'username'}=${encodeURIComponent(username)}`,
+        url: `/data?${type === 'organization' ? 'organization' : 'username'}=${encodeURIComponent(username)}&include_private=${valueToCopy.includePrivate ? 'true' : 'false'}`,
         method: 'GET',
     })
         .then((contributionData) => {
@@ -334,6 +337,36 @@ const copyLink = () => {
 
 //Event Handlers
 
+const refreshAuthStatus = async () => {
+    try {
+        const response = await axios.get('/auth/status', { headers: { 'Cache-Control': 'no-store' } });
+        const auth = response.data;
+        elements.authButton.dataset.csrfToken = auth.csrfToken || '';
+        elements.authButton.href = auth.authenticated ? '#logout' : '/auth/github';
+        elements.authButton.querySelector('span').textContent = auth.authenticated ? `Logout (${auth.login})` : 'Login with GitHub';
+    } catch {
+        elements.authButton.href = '/auth/github';
+        elements.authButton.querySelector('span').textContent = 'Login with GitHub';
+    }
+};
+elements.authButton.addEventListener('click', async (event) => {
+    if (elements.authButton.href.endsWith('#logout')) {
+        event.preventDefault();
+        try {
+            await axios.post('/auth/logout', {}, { headers: { 'X-CSRF-Token': elements.authButton.dataset.csrfToken || '' } });
+            valueToCopy.includePrivate = false;
+            elements.includePrivate.checked = false;
+            await refreshAuthStatus();
+            if (valueToCopy.username) getGraph(valueToCopy.username, elements.entityType.value);
+        } catch { alert('Could not log out safely. Please retry.'); }
+    }
+});
+elements.includePrivate.addEventListener('change', () => {
+    valueToCopy.includePrivate = elements.includePrivate.checked;
+    generateLink();
+    if (valueToCopy.username) { setLoader(); getGraph(valueToCopy.username, elements.entityType.value); }
+});
+refreshAuthStatus();
 elements.toggleBtn.addEventListener('click', handleDarkMode);
 elements.submitButton.addEventListener('click', onSubmit);
 elements.entityType.addEventListener('change', () => {
