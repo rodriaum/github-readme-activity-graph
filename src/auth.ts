@@ -45,6 +45,7 @@ export async function beginOAuth(_req: Request, res: Response): Promise<void> {
     const target = new URL('https://github.com/login/oauth/authorize');
     target.searchParams.set('client_id', clientId); target.searchParams.set('redirect_uri', callbackUrl);
     target.searchParams.set('scope', 'read:user,repo,read:org'); target.searchParams.set('state', state);
+    // GitHub OAuth Apps use state for callback binding; PKCE is not consistently supported for OAuth Apps.
     res.redirect(302, target.toString());
 }
 export async function finishOAuth(req: Request, res: Response): Promise<void> {
@@ -87,6 +88,7 @@ export async function finishOAuth(req: Request, res: Response): Promise<void> {
         const sessionId = crypto.randomBytes(32).toString('base64url'); const csrfToken = crypto.randomBytes(32).toString('base64url');
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         await (await getCollection<OAuthSession>('oauth_sessions')).insertOne({ sessionId, githubId, csrfToken, expiresAt });
+        await (await getCollection<OAuthSession>('oauth_sessions')).createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
         res.setHeader('Set-Cookie', [clearState, cookie('activity_session', sessionId, 30 * 24 * 60 * 60)]);
         res.redirect(302, '/');
     } catch (error) {
