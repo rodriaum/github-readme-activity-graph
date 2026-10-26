@@ -135,7 +135,6 @@ export class Fetcher {
 
         try {
             const headers = {
-                Authorization: `Bearer ${process.env.TOKEN}`,
                 Accept: 'application/vnd.github+json',
                 'X-GitHub-Api-Version': '2022-11-28',
             };
@@ -147,7 +146,7 @@ export class Fetcher {
                     `https://api.github.com/orgs/${encodeURIComponent(this.username)}/repos`,
                     {
                         headers,
-                        params: { type: 'all', per_page: 100, page: repositoryPage },
+                        params: { type: 'public', per_page: 100, page: repositoryPage },
                     },
                 );
                 repositories.push(...response.data);
