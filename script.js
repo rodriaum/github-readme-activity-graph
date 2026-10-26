@@ -36,6 +36,8 @@ const themes = {
     lucent: { bgColor: '#cccccc', line: '#ffd369', point: '#faf3e0', color: '#000000' },
     'chartreuse-dark': { bgColor: '#000000', line: '#00adfe', point: '#7ffe00', color: '#7ffe00' },
     minimal: { bgColor: '#ffffff', line: '#d3e6fa', point: '#3f99ed', color: '#000000' },
+    'shadcn-white': { bgColor: '#FFFFFF', line: '#18181B', point: '#18181B', color: '#09090B' },
+    'shadcn-dark': { bgColor: '#09090B', line: '#FAFAFA', point: '#FAFAFA', color: '#FAFAFA' },
     'material-palenight': {
         bgColor: '#292d3e',
         line: '#c792ea',
