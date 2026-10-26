@@ -4,6 +4,7 @@ import { Fetcher } from './fetcher';
 import { invalidUserSvg } from './svgs';
 import { UserDetails } from './interfaces/interface';
 import path from 'path';
+import { getOAuthToken } from './auth';
 
 export class Handlers {
     public getRoot(_req: Request, res: Response) {
@@ -19,16 +20,19 @@ export class Handlers {
                 : '';
             const fetcher = new Fetcher(organization || utils.username);
             const queryOptions = utils.queryOptions();
+            const accessToken = getOAuthToken(req);
             const fetchCalendarData = organization
                 ? await fetcher.fetchOrganizationActivity(
                       queryOptions.days,
                       queryOptions.from,
                       queryOptions.to,
+                      accessToken,
                   )
                 : await fetcher.fetchContributions(
                       queryOptions.days,
                       queryOptions.from,
                       queryOptions.to,
+                      accessToken,
                   );
 
             const { finalGraph, header } = await utils.buildGraph(fetchCalendarData);
@@ -49,9 +53,10 @@ export class Handlers {
                 ? req.query.organization.trim()
                 : '';
             const fetcher = new Fetcher(organization || utils.username);
+            const accessToken = getOAuthToken(req);
             const fetchCalendarData: UserDetails | string = organization
-                ? await fetcher.fetchOrganizationActivity(utils.queryOptions().days)
-                : await fetcher.fetchContributions(utils.queryOptions().days);
+                ? await fetcher.fetchOrganizationActivity(utils.queryOptions().days, undefined, undefined, accessToken)
+                : await fetcher.fetchContributions(utils.queryOptions().days, undefined, undefined, accessToken);
 
             if (typeof fetchCalendarData === 'object') {
                 res.status(200).json(fetchCalendarData);
