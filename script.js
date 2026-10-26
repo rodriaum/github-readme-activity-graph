@@ -148,26 +148,41 @@ const generateLink = () => {
     return link;
 };
 
+let privateShareRequestId = 0;
+
 const createPrivateShare = async () => {
+    const requestId = ++privateShareRequestId;
+
     if (!elements.includePrivateInEmbed.checked || !valueToCopy.username) {
         privateDataToken = '';
         generateLink();
         return;
     }
+
     if (!isOAuthAuthenticated) {
         elements.includePrivateInEmbed.checked = false;
-        alert('Connect your GitHub account before including private stats.');
+        privateDataToken = '';
+        generateLink();
+        alert('Connect your GitHub account to include private stats.');
         return;
     }
+
+    // Refresh the embed immediately; append the signed private data when ready.
+    privateDataToken = '';
+    generateLink();
 
     const params = new URLSearchParams();
     params.set(elements.entityType.value === 'organization' ? 'organization' : 'username', valueToCopy.username);
     params.set('days', '31');
     try {
         const response = await axios.get(`/auth/private-share?${params.toString()}`);
+        if (requestId !== privateShareRequestId || !elements.includePrivateInEmbed.checked) return;
+
         privateDataToken = response.data.privateData;
         generateLink();
     } catch (error) {
+        if (requestId !== privateShareRequestId) return;
+
         privateDataToken = '';
         elements.includePrivateInEmbed.checked = false;
         generateLink();
@@ -424,7 +439,7 @@ const initializePrivateAccess = async () => {
     }
 
     if (connected) {
-        elements.privateAccessStatus.textContent = 'GitHub connected. Private activity can be previewed in this browser session.';
+        elements.privateAccessStatus.textContent = 'Private activity preview enabled.';
     }
 
     try {
@@ -434,7 +449,7 @@ const initializePrivateAccess = async () => {
             elements.includePrivateInEmbed.disabled = false;
             elements.privateAccessButton.textContent = 'Disconnect private access';
             elements.privateAccessButton.href = '/auth/logout';
-            elements.privateAccessStatus.textContent = 'GitHub connected. Preview private activity, or opt in to include only daily contribution counts in a shareable link.';
+            elements.privateAccessStatus.textContent = 'Private activity is available for preview.';
             const savedUsername = sessionStorage.getItem('privateAccessUsername');
             const savedType = sessionStorage.getItem('privateAccessEntityType');
             if (savedType && ['user', 'organization'].includes(savedType)) {
