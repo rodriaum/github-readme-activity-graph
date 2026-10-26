@@ -126,7 +126,9 @@ const removePlaceholder = () => {
 const generateLink = () => {
     const isOrganization = elements.entityType.value === 'organization';
     const parameter = isOrganization ? 'organization' : 'username';
-    const label = isOrganization ? `${valueToCopy.username} organization activity graph` : `${valueToCopy.username}'s GitHub activity graph`;
+    const label = isOrganization
+        ? `${valueToCopy.username} organization activity graph`
+        : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
     const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true&include_private=${valueToCopy.includePrivate ? 'true' : 'false'})](${profileUrl})`;
     elements.textArea.value = link;
@@ -339,12 +341,17 @@ const copyLink = () => {
 
 const refreshAuthStatus = async () => {
     try {
-        const response = await axios.get('/auth/status', { withCredentials: true, headers: { 'Cache-Control': 'no-store' } });
+        const response = await axios.get('/auth/status', {
+            withCredentials: true,
+            headers: { 'Cache-Control': 'no-store' },
+        });
         const auth = response.data;
         const isAuthenticated = auth.authenticated === true;
         elements.authButton.dataset.csrfToken = auth.csrfToken || '';
         elements.authButton.href = isAuthenticated ? '#logout' : '/auth/github';
-        elements.authButton.querySelector('span').textContent = isAuthenticated ? `Logout (${auth.login})` : 'Login with GitHub';
+        elements.authButton.querySelector('span').textContent = isAuthenticated
+            ? `Logout (${auth.login})`
+            : 'Login with GitHub';
         elements.includePrivate.disabled = !isAuthenticated;
         if (!isAuthenticated) {
             elements.includePrivate.checked = false;
@@ -357,7 +364,8 @@ const refreshAuthStatus = async () => {
         console.error('Could not check GitHub login status:', error);
         elements.authButton.href = '/auth/github';
         elements.authButton.querySelector('span').textContent = 'Login status unavailable';
-        elements.authButton.title = 'Could not verify your GitHub session. Check the deployment configuration and server logs.';
+        elements.authButton.title =
+            'Could not verify your GitHub session. Check the deployment configuration and server logs.';
         elements.includePrivate.disabled = true;
         elements.includePrivate.checked = false;
         valueToCopy.includePrivate = false;
@@ -367,19 +375,28 @@ elements.authButton.addEventListener('click', async (event) => {
     if (elements.authButton.href.endsWith('#logout')) {
         event.preventDefault();
         try {
-            await axios.post('/auth/logout', {}, { headers: { 'X-CSRF-Token': elements.authButton.dataset.csrfToken || '' } });
+            await axios.post(
+                '/auth/logout',
+                {},
+                { headers: { 'X-CSRF-Token': elements.authButton.dataset.csrfToken || '' } },
+            );
             valueToCopy.includePrivate = false;
             elements.includePrivate.checked = false;
             await refreshAuthStatus();
             if (valueToCopy.username) getGraph(valueToCopy.username, elements.entityType.value);
-        } catch { alert('Could not log out safely. Please retry.'); }
+        } catch {
+            alert('Could not log out safely. Please retry.');
+        }
     }
 });
 elements.includePrivate.addEventListener('change', () => {
     if (elements.includePrivate.disabled) return;
     valueToCopy.includePrivate = elements.includePrivate.checked;
     generateLink();
-    if (valueToCopy.username) { setLoader(); getGraph(valueToCopy.username, elements.entityType.value); }
+    if (valueToCopy.username) {
+        setLoader();
+        getGraph(valueToCopy.username, elements.entityType.value);
+    }
 });
 refreshAuthStatus();
 elements.toggleBtn.addEventListener('click', handleDarkMode);
@@ -427,7 +444,10 @@ elements.themeSelect.addEventListener('change', onThemeChange);
         trigger.className = 'theme-select__trigger';
         trigger.setAttribute('aria-haspopup', 'listbox');
         trigger.setAttribute('aria-expanded', 'false');
-        trigger.setAttribute('aria-label', select.getAttribute('aria-label') || select.labels?.[0]?.textContent || 'Choose an option');
+        trigger.setAttribute(
+            'aria-label',
+            select.getAttribute('aria-label') || select.labels?.[0]?.textContent || 'Choose an option',
+        );
 
         const value = document.createElement('span');
         value.className = 'theme-select__value';
@@ -493,7 +513,7 @@ elements.themeSelect.addEventListener('change', onThemeChange);
             trigger.setAttribute('aria-expanded', 'false');
         }
 
-        trigger.addEventListener('click', () => menu.hidden ? openMenu() : closeMenu());
+        trigger.addEventListener('click', () => (menu.hidden ? openMenu() : closeMenu()));
         trigger.addEventListener('keydown', (event) => {
             if (['ArrowDown', 'Enter', ' '].includes(event.key)) {
                 event.preventDefault();
