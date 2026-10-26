@@ -191,7 +191,13 @@ const getGraph = (username, type) => {
         method: 'GET',
     })
         .then((contributionData) => {
-            const days = contributionData.data.contributions;
+            const days = contributionData.data?.contributions;
+            if (!Array.isArray(days)) {
+                throw new Error(
+                    contributionData.data?.error || 'The server did not return valid contribution data.',
+                );
+            }
+
             const data = {
                 labels: days.map((day) => day.date),
                 series: [{ value: days.map((day) => day.contributionCount) }],
@@ -205,9 +211,9 @@ const getGraph = (username, type) => {
             generateLink();
         })
         .catch((err) => {
-            console.error(err);
+            console.error('Failed to load activity graph:', err);
             removeLoader();
-            alert('Sorry! something went wrong.');
+            alert(err.response?.data?.error || err.message || 'Sorry! something went wrong.');
         });
 };
 
