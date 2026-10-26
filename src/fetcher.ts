@@ -38,12 +38,23 @@ export class Fetcher {
         };
     }
 
-    private async fetch(graphQLQuery: Query, accessToken?: string): Promise<AxiosResponse<ResponseOfApi>> {
+    private async fetch(
+        graphQLQuery: Query,
+        accessToken?: string,
+    ): Promise<AxiosResponse<ResponseOfApi>> {
+        const token = accessToken || process.env.TOKEN;
+
+        if (!token) {
+            throw new Error('GitHub API token is not configured. Set the TOKEN environment variable.');
+        }
+
         return axios({
             url: 'https://api.github.com/graphql',
             method: 'POST',
             headers: {
-                Authorization: `bearer ${accessToken || process.env.TOKEN}`,
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/vnd.github+json',
+                'X-GitHub-Api-Version': '2022-11-28',
             },
             data: graphQLQuery,
         });
