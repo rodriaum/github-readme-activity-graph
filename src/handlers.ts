@@ -54,12 +54,13 @@ export class Handlers {
                 : await fetcher.fetchContributions(utils.queryOptions().days);
 
             if (typeof fetchCalendarData === 'object') {
-                res.status(200).send(fetchCalendarData);
+                res.status(200).json(fetchCalendarData);
             } else {
-                res.send(invalidUserSvg(fetchCalendarData));
+                res.status(502).json({ error: fetchCalendarData });
             }
         } catch (error) {
-            res.send(invalidUserSvg('Something unexpected happened 💥'));
+            console.error('Failed to fetch graph data:', error);
+            res.status(500).json({ error: 'Something unexpected happened while fetching graph data.' });
         }
     }
 }
