@@ -70,6 +70,8 @@ _`username=rodriaum&theme=theme_name`_
 |         **react**          |     <img src="./asset/react.png" height=250 alt="graph"/>      |
 |       **react-dark**       |   <img src="./asset/react-dark.svg" height=250 alt="graph"/>   |
 |         **github**         |     <img src="./asset/github.svg" height=250 alt="graph"/>     |
+|      **shadcn-white**      | <img src="./asset/shadcn-white.png" height=250 alt="graph"/>   |
+|       **shadcn-dark**      | <img src="./asset/shadcn-dark.png" height=250 alt="graph"/>    |
 |     **github-compact**     | <img src="./asset/github-compact.svg" height=250 alt="graph"/> |
 |         **xcode**          |     <img src="./asset/xcode.svg" height=250 alt="graph"/>      |
 |         **rogue**          |     <img src="./asset/rogue.svg" height=250 alt="graph"/>      |

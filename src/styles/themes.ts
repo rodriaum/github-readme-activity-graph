@@ -186,6 +186,26 @@ export const selectColors = (queryString: string): Colors => {
                 lineColor: 'd3e6fa',
                 pointColor: '3f99ed',
             };
+        case 'shadcn-white':
+            return {
+                areaColor: '18181B',
+                bgColor: 'FFFFFF',
+                borderColor: 'E4E4E7',
+                color: '09090B',
+                titleColor: '09090B',
+                lineColor: '18181B',
+                pointColor: '18181B',
+            };
+        case 'shadcn-dark':
+            return {
+                areaColor: 'FAFAFA',
+                bgColor: '09090B',
+                borderColor: '27272A',
+                color: 'FAFAFA',
+                titleColor: 'FAFAFA',
+                lineColor: 'FAFAFA',
+                pointColor: 'FAFAFA',
+            };
         case 'material-palenight':
             return {
                 areaColor: 'c792ea',

@@ -4,202 +4,209 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="description" content="Customize a GitHub activity graph for your profile README." />
         <title>GitHub Readme Activity Graph</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap"
-            rel="stylesheet"
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/457a315592.js" crossorigin="anonymous"></script>
         <link href="./styles.css" rel="stylesheet" />
         <link rel="icon" href="asset/logo.png" />
         <script defer src="/_vercel/insights/script.js"></script>
     </head>
-
     <body class="bg-color">
-        <!-- Dark Theme Mode -->
-        <button class="toggle-btn">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                class="svg-sun"
-            >
-                <path
-                    d="M 11 0 L 11 3 L 13 3 L 13 0 L 11 0 z M 4.2226562 2.8085938 L 2.8085938 4.2226562 L 4.9296875 6.34375 L 6.34375 4.9296875 L 4.2226562 2.8085938 z M 19.777344 2.8085938 L 17.65625 4.9296875 L 19.070312 6.34375 L 21.191406 4.2226562 L 19.777344 2.8085938 z M 12 5 C 8.1458514 5 5 8.1458514 5 12 C 5 15.854149 8.1458514 19 12 19 C 15.854149 19 19 15.854149 19 12 C 19 8.1458514 15.854149 5 12 5 z M 12 7 C 14.773268 7 17 9.2267316 17 12 C 17 14.773268 14.773268 17 12 17 C 9.2267316 17 7 14.773268 7 12 C 7 9.2267316 9.2267316 7 12 7 z M 0 11 L 0 13 L 3 13 L 3 11 L 0 11 z M 21 11 L 21 13 L 24 13 L 24 11 L 21 11 z M 4.9296875 17.65625 L 2.8085938 19.777344 L 4.2226562 21.191406 L 6.34375 19.070312 L 4.9296875 17.65625 z M 19.070312 17.65625 L 17.65625 19.070312 L 19.777344 21.191406 L 21.191406 19.777344 L 19.070312 17.65625 z M 11 21 L 11 24 L 13 24 L 13 21 L 11 21 z"
-                ></path>
-            </svg>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="30"
-                height="30"
-                viewBox="0 0 172 172"
-                class="svg-moon"
-            >
-                <path
-                    d="M126.13333,120.4c-37.9948,0 -68.8,-30.8052 -68.8,-68.8c0,-11.18 2.72333,-21.70067 7.45333,-31.0288c-27.606,8.944 -47.58667,34.84147 -47.58667,65.4288c0,37.9948 30.8052,68.8 68.8,68.8c26.82053,0 49.99467,-15.3768 61.34667,-37.7712c-6.68507,2.1672 -13.80587,3.3712 -21.21333,3.3712z"
-                ></path>
-            </svg>
-        </button>
+        <div class="loader" aria-live="polite" aria-label="Loading graph">
+            <span></span>
+        </div>
 
         <main class="container">
-            <!-- Loader -->
-            <div class="loader">
-                <span></span>
-            </div>
-            <!-- Header - Logo & Text -->
-            <header class="header">
-                <div class="title_container">
-                    <img src="./asset/logo.svg" alt="logo" />
-                    <h1 class="heading">GitHub Readme Activity Graph</h1>
-                </div>
-                <p class="description">
-                    A dynamically generated activity graph to show your GitHub activities of last 31
-                    days.
-                </p>
-            </header>
-            <!-- Form - Input & Submit button for  Username -->
-            <div class="container__item">
-                <form class="form">
-                    <input
-                        type="username"
-                        class="form__field"
-                        placeholder="Enter Your GitHub Username"
-                        id="username"
-                    />
-                    <button type="submit" class="btn btn--primary" id="submit-button">
-                        Build Graph
-                    </button>
-                </form>
-            </div>
-            <!-- Split Container Contains - Color Pickers , Chart, & Copy Button -->
-            <div class="split_container">
-                <section class="left">
-                    <div>
-                        <input
-                            type="color"
-                            class="picker"
-                            name="bgColor"
-                            value="#ffcfe9"
-                            id="bgColor"
-                        />
-                        <label for="bgColor">Background Color</label>
-                    </div>
-                    <div>
-                        <input type="color" class="picker" name="line" value="#9e4c98" id="line" />
-                        <label for="line">Line Color</label>
-                    </div>
-                    <div>
-                        <input
-                            type="color"
-                            class="picker"
-                            name="point"
-                            value="#403d3d"
-                            id="point"
-                        />
-                        <label for="point">Point Color</label>
-                    </div>
-                    <div>
-                        <label for="themeSelect"><b>Theme</b></label>
-                        <select id="themeSelect" class="picker">
-                            <option value="default">Default</option>
-                            <option value="github">GitHub</option>
-                            <option value="github-light">GitHub Light</option>
-                            <option value="github-compact">GitHub Compact</option>
-                            <option value="github-dark">GitHub Dark</option>
-                            <option value="github-dark-dimmed">GitHub Dark Dimmed</option>
-                            <option value="dracula">Dracula</option>
-                            <option value="gruvbox">Gruvbox</option>
-                            <option value="gotham">Gotham</option>
-                            <option value="rogue">Rogue</option>
-                            <option value="xcode">Xcode</option>
-                            <option value="radical">Radical</option>
-                            <option value="coral">Coral</option>
-                            <option value="react">React</option>
-                            <option value="react-dark">React Dark</option>
-                            <option value="nord">Nord</option>
-                            <option value="lucent">Lucent</option>
-                            <option value="chartreuse-dark">Chartreuse Dark</option>
-                            <option value="minimal">Minimal</option>
-                            <option value="material-palenight">Material Palenight</option>
-                            <option value="green">Green</option>
-                            <option value="noctis-minimus">Noctis Minimus</option>
-                            <option value="one-dark">One Dark</option>
-                            <option value="monokai">Monokai</option>
-                            <option value="elegant">Elegant</option>
-                            <option value="aqua">Aqua</option>
-                            <option value="synthwave-84">Synthwave-84</option>
-                            <option value="merko">Merko</option>
-                            <option value="vue">Vue</option>
-                            <option value="tokyo-day">Tokyo Day</option>
-                            <option value="tokyo-night">Tokyo Night</option>
-                            <option value="high-contrast">High Contrast</option>
-                            <option value="cobalt">Cobalt</option>
-                            <option value="material">Material</option>
-                            <option value="nightowl">Night Owl</option>
-                            <option value="modern-lilac">Modern Lilac</option>
-                            <option value="arctic">Arctic</option>
-                        </select>
-                    </div>
-                    <div>
-                        <input
-                            type="color"
-                            class="picker"
-                            name="color"
-                            value="#9e4c98"
-                            id="color"
-                        />
-                        <label for="color">Text Color</label>
-                    </div>
-                </section>
-                <section class="right">
-                    <div class="rect">
-                        <div class="chart_placeholder active">
-                            <p class="placeholder_text">Your graph will be visible here.</p>
-                        </div>
-                        <div class="ct-chart"></div>
-                    </div>
-
-                    <div class="copy_container">
-                        <div class="copy_text">
-                            <input
-                                type="text"
-                                class="text"
-                                placeholder="Build your graph to generate the link."
-                                value=""
-                                disabled
-                            />
-                            <button>
-                                <img
-                                    height="20px"
-                                    width="20px"
-                                    src="https://clipboardjs.com/assets/images/clippy.svg"
-                                    alt="copy-text"
-                                />
-                            </button>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <!-- Footer - Text & Link -->
-            <footer class="footer">
-                <p><b>More Info : </b></p>
-                <a
-                    class="link github"
-                    href="https://github.com/rodriaum/github-readme-activity-graph"
-                >
-                    <i class="fab fa-2x fa-github"></i>
+            <nav class="topbar" aria-label="Main navigation">
+                <a class="brand" href="/" aria-label="GitHub Readme Activity Graph home">
+                    <img src="./asset/logo.svg" alt="" />
+                    <span>Activity Graph</span>
                 </a>
+                <div class="topbar-actions">
+                    <a class="nav-link" href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <button class="toggle-btn" type="button" aria-label="Toggle dark mode" title="Toggle appearance">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-sun" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-moon" aria-hidden="true">
+                            <path d="M20.9 13A8.5 8.5 0 0 1 11 3.1 8.6 8.6 0 1 0 20.9 13Z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <header class="header">
+                <h1 class="heading">GitHub Readme Activity Graph</h1>
+                <p class="description">Build a personalized activity graph and add it to your GitHub profile README.</p>
+            </header>
+
+            <section class="builder-section" aria-labelledby="builder-title">
+                <div class="section-heading">
+                    <div>
+                        <h2 id="builder-title">Graph builder</h2>
+                    </div>
+                </div>
+
+                <div class="container__item">
+                    <form class="form">
+                        <label class="sr-only" for="username">GitHub username</label>
+                        <div class="username-field">
+                            <i class="fab fa-github" aria-hidden="true"></i>
+                            <input type="text" class="form__field" placeholder="Enter your GitHub username" id="username" name="username" autocomplete="off" spellcheck="false" />
+                        </div>
+                        <button type="submit" class="btn btn--primary" id="submit-button">Generate Graph</button>
+                    </form>
+                </div>
+
+                <div class="split_container">
+                    <section class="left" aria-label="Graph customization">
+                        <div class="panel-heading">
+                            <h3>Appearance</h3>
+                            <p>Fine-tune the colors and theme.</p>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="themeSelect">Theme</label>
+                            <select id="themeSelect" class="picker">
+                                <option value="default">Default</option>
+                                <option value="github">GitHub</option>
+                                <option value="github-light">GitHub Light</option>
+                                <option value="github-compact">GitHub Compact</option>
+                                <option value="github-dark">GitHub Dark</option>
+                                <option value="github-dark-dimmed">GitHub Dark Dimmed</option>
+                                <option value="dracula">Dracula</option>
+                                <option value="gruvbox">Gruvbox</option>
+                                <option value="gotham">Gotham</option>
+                                <option value="rogue">Rogue</option>
+                                <option value="xcode">Xcode</option>
+                                <option value="radical">Radical</option>
+                                <option value="coral">Coral</option>
+                                <option value="react">React</option>
+                                <option value="react-dark">React Dark</option>
+                                <option value="nord">Nord</option>
+                                <option value="lucent">Lucent</option>
+                                <option value="chartreuse-dark">Chartreuse Dark</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="shadcn-white">Shadcn White</option>
+                                <option value="shadcn-dark">Shadcn Dark</option>
+                                <option value="material-palenight">Material Palenight</option>
+                                <option value="green">Green</option>
+                                <option value="noctis-minimus">Noctis Minimus</option>
+                                <option value="one-dark">One Dark</option>
+                                <option value="monokai">Monokai</option>
+                                <option value="elegant">Elegant</option>
+                                <option value="aqua">Aqua</option>
+                                <option value="synthwave-84">Synthwave-84</option>
+                                <option value="merko">Merko</option>
+                                <option value="vue">Vue</option>
+                                <option value="tokyo-day">Tokyo Day</option>
+                                <option value="tokyo-night">Tokyo Night</option>
+                                <option value="high-contrast">High Contrast</option>
+                                <option value="cobalt">Cobalt</option>
+                                <option value="material">Material</option>
+                                <option value="nightowl">Night Owl</option>
+                                <option value="modern-lilac">Modern Lilac</option>
+                                <option value="arctic">Arctic</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="bgColor">Background</label>
+                            <div class="color-control">
+                                <input type="color" class="picker color-picker" name="bgColor" value="#ffcfe9" id="bgColor" />
+                                <span class="color-value" data-color-value="bgColor">#FFCFE9</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="line">Line color</label>
+                            <div class="color-control">
+                                <input type="color" class="picker color-picker" name="line" value="#9e4c98" id="line" />
+                                <span class="color-value" data-color-value="line">#9E4C98</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="point">Point color</label>
+                            <div class="color-control">
+                                <input type="color" class="picker color-picker" name="point" value="#403d3d" id="point" />
+                                <span class="color-value" data-color-value="point">#403D3D</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="color">Text color</label>
+                            <div class="color-control">
+                                <input type="color" class="picker color-picker" name="color" value="#9e4c98" id="color" />
+                                <span class="color-value" data-color-value="color">#9E4C98</span>
+                            </div>
+                        </div>
+                        <div class="settings-note">
+                            <span class="settings-icon" aria-hidden="true">i</span>
+                            <p>Changes update the generated Markdown link.</p>
+                        </div>
+                    </section>
+
+                    <section class="right" aria-label="Graph preview and embed link">
+                        <div class="preview-card">
+                            <div class="preview-header">
+                                <div>
+                                    <h3>Preview</h3>
+                                    <p>See how your graph will look in your README.</p>
+                                </div>
+                            </div>
+                            <div class="rect">
+                                <div class="chart_placeholder active">
+                                    <div class="placeholder-mark" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24"><path d="M3 18V5m0 13h18M6 15l4-5 3 3 5-7"></path></svg>
+                                    </div>
+                                    <p class="placeholder_text">Your graph preview will appear here.</p>
+                                    <span>Enter a username above to get started.</span>
+                                </div>
+                                <div class="ct-chart"><div class="ct-line-hook" aria-hidden="true"></div></div>
+                            </div>
+                            <div class="copy_container">
+                                <div class="embed-heading">
+                                    <div>
+                                        <h3>Embed in your README</h3>
+                                        <p>Copy the Markdown snippet below.</p>
+                                    </div>
+                                </div>
+                                <div class="copy_text">
+                                    <input type="text" class="text" placeholder="Your Markdown link will appear here after generating a graph." value="" disabled aria-label="Generated Markdown" />
+                                    <button type="button" aria-label="Copy Markdown" title="Copy Markdown">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>Built for GitHub profile READMEs.</span>
+                <a href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer">View source on GitHub <span aria-hidden="true">↗</span></a>
             </footer>
         </main>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-axistitle@0.0.7/dist/chartist-plugin-axistitle.min.js"></script>
+        <script src="./script.js"></script>
+        <script>
+            document.querySelectorAll('[data-color-value]').forEach((label) => {
+                const input = document.getElementById(label.dataset.colorValue);
+                if (!input) return;
+                const updateValue = () => { label.textContent = input.value.toUpperCase(); };
+                input.addEventListener('input', updateValue);
+                updateValue();
+            });
+        </script>
     </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-axistitle@0.0.7/dist/chartist-plugin-axistitle.min.js"></script>
-    <script src="./script.js"></script>
 </html>
