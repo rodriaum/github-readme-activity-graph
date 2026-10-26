@@ -401,6 +401,11 @@ elements.copyText.addEventListener('click', copyLink);
 elements.includePrivateInEmbed.addEventListener('change', createPrivateShare);
 
 elements.privateAccessButton.addEventListener('click', () => {
+    if (elements.privateAccessButton.href.endsWith('/auth/logout')) {
+        sessionStorage.removeItem('privateAccessUsername');
+        sessionStorage.removeItem('privateAccessEntityType');
+        return;
+    }
     if (elements.entityType.value) {
         sessionStorage.setItem('privateAccessEntityType', elements.entityType.value);
     }
