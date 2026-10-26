@@ -152,7 +152,8 @@ export class Fetcher {
                         params: { type: accessToken ? 'all' : 'public', per_page: 100, page: repositoryPage },
                     },
                 );
-                repositories.push(...response.data);
+                const listed = response.data as Array<{ name: string; full_name: string; permissions?: { pull?: boolean } }>;
+                repositories.push(...listed.filter((repository) => !accessToken || repository.permissions?.pull === true));
                 if (response.data.length < 100) break;
                 repositoryPage += 1;
             }
@@ -166,24 +167,23 @@ export class Fetcher {
                 totals.set(date.format('YYYY-MM-DD'), 0);
             }
 
-            const countRepositoryCommits = async (repository: {
-                name: string;
-                full_name: string;
-            }) => {
+            const countRepositoryCommits = async (repository: { name: string; full_name: string }) => {
                 let page = 1;
                 while (true) {
-                    const response = await axios.get(
-                        `https://api.github.com/repos/${repository.full_name}/commits`,
-                        {
-                            headers,
-                            params: { since, until, per_page: 100, page },
-                        },
-                    );
+                    let response;
+                    try {
+                        response = await axios.get(
+                            `https://api.github.com/repos/${repository.full_name}/commits`,
+                            { headers, params: { since, until, per_page: 100, page } },
+                        );
+                    } catch (error) {
+                        if (accessToken && axios.isAxiosError(error) && [403, 404].includes(error.response?.status || 0)) {
+                            break;
+                        }
+                        throw error;
+                    }
                     const commits: Array<{
-                        commit: {
-                            committer?: { date?: string };
-                            author?: { date?: string };
-                        };
+                        commit: { committer?: { date?: string }; author?: { date?: string } };
                     }> = response.data;
 
                     for (const item of commits) {
@@ -192,7 +192,6 @@ export class Fetcher {
                         const key = moment(commitDate).utc().format('YYYY-MM-DD');
                         if (totals.has(key)) totals.set(key, (totals.get(key) ?? 0) + 1);
                     }
-
                     if (commits.length < 100) break;
                     page += 1;
                 }
