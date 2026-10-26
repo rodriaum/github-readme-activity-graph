@@ -147,7 +147,7 @@ export class Fetcher {
                     `https://api.github.com/orgs/${encodeURIComponent(this.username)}/repos`,
                     {
                         headers,
-                        params: { type: 'sources', per_page: 100, page: repositoryPage },
+                        params: { type: 'all', per_page: 100, page: repositoryPage },
                     },
                 );
                 repositories.push(...response.data);
