@@ -1,17 +1,31 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import path from 'path';
 import { Handlers } from './handlers';
 
 const app: Application = express();
 const port = process.env.PORT || 5100;
+const rootDir = process.cwd();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
+// Serve the static files used by the frontend. The Vercel rewrite sends
+// requests through this Express application, so these routes must be explicit.
+app.get('/styles.css', (_req, res) => {
+    res.sendFile(path.resolve(rootDir, 'styles.css'));
+});
+
+app.get('/script.js', (_req, res) => {
+    res.sendFile(path.resolve(rootDir, 'script.js'));
+});
+
+app.use('/asset', express.static(path.resolve(rootDir, 'asset'), { dotfiles: 'deny' }));
+
 const handlers = new Handlers();
 
 app.get('/', handlers.getRoot);
-//Get Graph
+// Get Graph
 app.get('/graph', handlers.getGraph);
 
 app.get('/data', handlers.getData);
