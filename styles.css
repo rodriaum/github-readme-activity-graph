@@ -1216,3 +1216,31 @@ select.picker option {
         width: 100%;
     }
 }
+
+
+.private-share-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 12px;
+    color: var(--foreground);
+    font-size: 12px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.private-share-option input {
+    flex: 0 0 auto;
+    margin: 2px 0 0;
+    accent-color: var(--primary);
+}
+
+.private-share-option input:disabled {
+    cursor: not-allowed;
+}
+
+.private-share-warning {
+    max-width: 620px;
+    font-size: 11px !important;
+    line-height: 1.5;
+}
