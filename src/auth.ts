@@ -119,7 +119,10 @@ export async function getSessionUser(req: Request): Promise<{ githubId: number; 
 export async function authStatus(req: Request, res: Response): Promise<void> {
     res.setHeader('Cache-Control', 'no-store');
     try { const user = await getSessionUser(req); res.json(user ? { authenticated: true, login: user.login, csrfToken: user.csrfToken } : { authenticated: false }); }
-    catch { res.status(503).json({ authenticated: false, error: 'Authentication storage unavailable.' }); }
+    catch (error) {
+        console.error('GitHub auth status failed:', error instanceof Error ? error.stack || error.message : error);
+        res.status(503).json({ authenticated: false, error: 'Authentication storage unavailable.' });
+    }
 }
 export async function logout(req: Request, res: Response): Promise<void> {
     res.setHeader('Cache-Control', 'no-store');
