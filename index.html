@@ -57,10 +57,15 @@
 
                 <div class="container__item">
                     <form class="form">
-                        <label class="sr-only" for="username">GitHub username</label>
+                        <label class="sr-only" for="entityType">Graph type</label>
+                        <select id="entityType" class="picker entity-type-select" aria-label="Graph type">
+                            <option value="user">User</option>
+                            <option value="organization">Organization</option>
+                        </select>
+                        <label class="sr-only" for="username">GitHub username or organization</label>
                         <div class="username-field">
                             <i class="fab fa-github" aria-hidden="true"></i>
-                            <input type="text" class="form__field" placeholder="Enter your GitHub username" id="username" name="username" autocomplete="off" spellcheck="false" />
+                            <input type="text" class="form__field" placeholder="Enter username or organization" id="username" name="username" autocomplete="off" spellcheck="false" />
                         </div>
                         <button type="submit" class="btn btn--primary" id="submit-button">Generate Graph</button>
                     </form>
