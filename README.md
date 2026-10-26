@@ -93,9 +93,11 @@ For more themes click [here](https://github.com/rodriaum/github-readme-activity-
 
 ## Optional Private Activity
 
-Public activity continues to work without login. To include private activity, deploy an instance with a GitHub OAuth App and MongoDB configured. Set `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `OAUTH_CALLBACK_URL`, `MONGODB_URI`, `MONGODB_DATABASE`, `OAUTH_TOKEN_ENCRYPTION_KEY` (a long random secret), and `APP_ORIGIN`. Register the exact callback URL in the OAuth App settings. The GitHub OAuth App scopes requested are `repo` and `read:org`; access remains limited to what the authenticated account can actually access. Add `include_private=true` to the graph URL only when a browser session is signed in. Private graph responses are not cacheable by shared caches.
+Public activity works without signing in. To include private activity, simply sign in with GitHub on an instance where private activity support has already been configured. You do not need to deploy the application again if this setup is already enabled.
 
-`include_private` defaults to `false`. Tokens are stored in MongoDB and encrypted with AES-256-GCM when `OAUTH_TOKEN_ENCRYPTION_KEY` is configured; production refuses OAuth token storage when this key is missing.
+After signing in, add `include_private=true` to the graph URL. The graph will include private activity that the signed-in GitHub account is authorized to access. The parameter defaults to `false`, so existing public graphs continue to work without login. Private graph responses must not be cached by shared caches.
+
+For administrators setting up their own instance, private activity requires a GitHub OAuth App and MongoDB configuration. Set `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, `OAUTH_CALLBACK_URL`, `MONGODB_URI`, `MONGODB_DATABASE`, `OAUTH_TOKEN_ENCRYPTION_KEY` (a long random secret), and `APP_ORIGIN`. Register the exact callback URL in the OAuth App settings. The OAuth App requests the `repo` and `read:org` scopes. Tokens are stored in MongoDB and encrypted with AES-256-GCM; production refuses OAuth token storage when `OAUTH_TOKEN_ENCRYPTION_KEY` is missing.
 
 ## Customization
 
