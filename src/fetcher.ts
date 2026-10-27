@@ -276,7 +276,7 @@ export class Fetcher {
                     'GitHub API rate limit exceeded while fetching organization activity.',
                 );
 
-                return `💥 GitHub API rate limit exceeded.${resetMessage}`;
+                return `GitHub API rate limit exceeded.${resetMessage}`;
             }
 
             console.error('Failed to fetch organization activity:', error instanceof Error ? error.message : 'Unknown error');
