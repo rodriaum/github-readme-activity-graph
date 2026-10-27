@@ -389,11 +389,13 @@ elements.entityType.addEventListener('change', () => {
         ? 'Enter GitHub organization'
         : 'Enter your GitHub username';
 
-    if (valueToCopy.username) {
-        generateLink();
-        setLoader();
-        getGraph(valueToCopy.username, elements.entityType.value);
-    }
+    elements.username.value = '';
+    valueToCopy.username = '';
+    elements.textArea.value = '';
+    document.querySelector('.ct-chart').innerHTML = '';
+    elements.placeholder.classList.add('active');
+    elements.copyContainer.style.marginTop = '';
+    removeLoader();
 });
 elements.copyText.addEventListener('click', copyLink);
 inputElements.bgInput.addEventListener('input', changeBgColor);
