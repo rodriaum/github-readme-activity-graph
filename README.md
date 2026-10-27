@@ -115,14 +115,14 @@ Choose the graph style independently from the theme:
 
 |            Type              |                               Preview                                |
 | :--------------------------: | :------------------------------------------------------------------: |
-|          `default`           | <img src="./asset/types/default.png" height=250 alt="graph"/>        |
-|          `playful`           | <img src="./asset/types/playful.png" height=250 alt="graph"/>        |
-|            `bar`             | <img src="./asset/types/bar.png" height=250 alt="graph"/>            |
-|          `mountain`          | <img src="./asset/types/mountain.png" height=250 alt="graph"/>       |
-|            `neon`            | <img src="./asset/types/neon.png" height=250 alt="graph"/>           |
-|          `minimal`           | <img src="./asset/types/minimal.png" height=250 alt="graph"/>        |
-|          `terminal`          | <img src="./asset/types/terminal.png" height=250 alt="graph"/>       |
-|          `gradient`          | <img src="./asset/types/gradient.png" height=250 alt="graph"/>       |
+|          `default`           | <img src="./asset/types/default.svg" height=250 alt="graph"/>        |
+|          `playful`           | <img src="./asset/types/playful.svg" height=250 alt="graph"/>        |
+|            `bar`             | <img src="./asset/types/bar.svg" height=250 alt="graph"/>            |
+|          `mountain`          | <img src="./asset/types/mountain.svg" height=250 alt="graph"/>       |
+|            `neon`            | <img src="./asset/types/neon.svg" height=250 alt="graph"/>           |
+|          `minimal`           | <img src="./asset/types/minimal.svg" height=250 alt="graph"/>        |
+|          `terminal`          | <img src="./asset/types/terminal.svg" height=250 alt="graph"/>       |
+|          `gradient`          | <img src="./asset/types/gradient.svg" height=250 alt="graph"/>       |
 
 Examples:
 
