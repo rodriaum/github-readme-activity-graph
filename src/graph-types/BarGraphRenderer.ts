@@ -4,7 +4,7 @@ import { renderDateLabels, renderGrid, renderYAxis } from './svgHelpers';
 
 export class BarGraphRenderer implements GraphRenderer {
     async render(days: ContributionDay[], options: GraphRenderOptions): Promise<string> {
-        const bounds = { left: 90, right: options.width - 42, top: 88, bottom: options.height - 58 };
+        const bounds = { left: 90, right: options.width - 50, top: 80, bottom: options.height - 70 };
         const chartWidth = bounds.right - bounds.left;
         const chartHeight = bounds.bottom - bounds.top;
         const maxValue = Math.max(1, ...days.map(({ contributionCount }) => contributionCount));
@@ -15,7 +15,7 @@ export class BarGraphRenderer implements GraphRenderer {
             const x = bounds.left + index * slotWidth + (slotWidth - barWidth) / 2;
             const y = bounds.bottom - height;
             const fill = day.contributionCount > 0 ? options.colors.pointColor : options.colors.lineColor;
-            return `<rect x="${x}" y="${y}" width="${barWidth}" height="${Math.max(2, height)}" rx="${Math.min(5, barWidth / 2)}" fill="#${fill}" fill-opacity="${day.contributionCount > 0 ? '.95' : '.28'}"><title>${day.date}: ${day.contributionCount}</title></rect>`;
+            return `<rect class="graph-animated-bar" x="${x}" y="${y}" width="${barWidth}" height="${Math.max(2, height)}" rx="${Math.min(5, barWidth / 2)}" fill="#${fill}" fill-opacity="${day.contributionCount > 0 ? '.95' : '.28'}" style="animation-delay:${index * 0.025}s"><title>${day.date}: ${day.contributionCount}</title></rect>`;
         }).join('');
         const points = days.map((day, index) => ({
             x: bounds.left + index * slotWidth + slotWidth / 2,
@@ -26,7 +26,6 @@ export class BarGraphRenderer implements GraphRenderer {
 
         return `
             <g class="bar-chart">
-                <rect x="22" y="66" width="${options.width - 44}" height="${options.height - 86}" rx="12" fill="#${options.colors.bgColor}" stroke="#${options.colors.borderColor}"/>
                 ${renderGrid(options, bounds)}
                 ${renderYAxis(days, options, bounds)}
                 ${bars}
