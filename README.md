@@ -83,23 +83,27 @@ _`username=rodriaum&theme=theme_name`_
 
 [Manual Customization](#customization) is also available
 
-## Available Themes
+## Available Graph Types and Themes
 
-|            Name            |                            Preview                             |
-| :------------------------: | :------------------------------------------------------------: |
-| **Default (cotton candy)** |    <img src="./asset/default.svg" height=250 alt="graph"/>     |
-|         **react**          |     <img src="./asset/react.png" height=250 alt="graph"/>      |
-|       **react-dark**       |   <img src="./asset/react-dark.svg" height=250 alt="graph"/>   |
-|         **github**         |     <img src="./asset/github.svg" height=250 alt="graph"/>     |
-|      **shadcn-white**      | <img src="./asset/shadcn-white.png" height=250 alt="graph"/>   |
-|       **shadcn-dark**      | <img src="./asset/shadcn-dark.png" height=250 alt="graph"/>    |
-|     **github-compact**     | <img src="./asset/github-compact.svg" height=250 alt="graph"/> |
-|         **xcode**          |     <img src="./asset/xcode.svg" height=250 alt="graph"/>      |
-|         **rogue**          |     <img src="./asset/rogue.svg" height=250 alt="graph"/>      |
-|         **merko**          |     <img src="./asset/merko.png" height=250 alt="graph"/>      |
-|          **vue**           |      <img src="./asset/vue.png" height=250 alt="graph"/>       |
-|      **tokyo-night**       |  <img src="./asset/tokyo-night.png" height=250 alt="graph"/>   |
-|     **high-contrast**      | <img src="./asset/high-contrast.png" height=250 alt="graph"/>  |
+| Type / Theme | Preview |
+| :---: | :---: |
+| `default` | <img src="./asset/types/default.png" height=250 alt="default graph"/> |
+| `playful` | <img src="./asset/types/playful.png" height=250 alt="playful graph"/> |
+| `bar` | <img src="./asset/types/bar.png" height=250 alt="bar graph"/> |
+| `mountain` | <img src="./asset/types/mountain.png" height=250 alt="mountain graph"/> |
+| `neon` | <img src="./asset/types/neon.png" height=250 alt="neon graph"/> |
+| `minimal` | <img src="./asset/types/minimal.png" height=250 alt="minimal graph"/> |
+| `terminal` | <img src="./asset/types/terminal.png" height=250 alt="terminal graph"/> |
+| `gradient` | <img src="./asset/types/gradient.png" height=250 alt="gradient graph"/> |
+| `shadcn-white` | <img src="./asset/types/shadcn-white.png" height=250 alt="shadcn-white theme"/> |
+| `shadcn-dark` | <img src="./asset/types/shadcn-dark.png" height=250 alt="shadcn-dark theme"/> |
+| `github-compact` | <img src="./asset/types/github-compact.png" height=250 alt="github-compact theme"/> |
+| `xcode` | <img src="./asset/types/xcode.png" height=250 alt="xcode theme"/> |
+| `rogue` | <img src="./asset/types/rogue.png" height=250 alt="rogue theme"/> |
+| `merko` | <img src="./asset/types/merko.png" height=250 alt="merko theme"/> |
+| `vue` | <img src="./asset/types/vue.png" height=250 alt="vue theme"/> |
+| `tokyo-night` | <img src="./asset/types/tokyo-night.png" height=250 alt="tokyo-night theme"/> |
+| `high-contrast` | <img src="./asset/types/high-contrast.png" height=250 alt="high-contrast theme"/> |
 
 For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
 
