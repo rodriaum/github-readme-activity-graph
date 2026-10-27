@@ -465,13 +465,6 @@ elements.themeSelect.addEventListener('change', onThemeChange);
                 item.setAttribute('aria-selected', String(active));
                 item.classList.toggle('is-selected', active);
                 item.querySelector('.theme-select__check')?.remove();
-                if (active) {
-                    const check = document.createElement('span');
-                    check.className = 'theme-select__check';
-                    check.setAttribute('aria-hidden', 'true');
-                    check.textContent = '✓';
-                    item.appendChild(check);
-                }
             });
         };
 

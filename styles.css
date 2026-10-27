@@ -1091,12 +1091,8 @@ select.picker option {
 }
 
 .theme-select__option.is-selected {
+    background: var(--border);
     font-weight: 500;
-}
-
-.theme-select__check {
-    color: var(--foreground);
-    font-size: 13px;
 }
 
 .bg-color.active .theme-select__menu {
