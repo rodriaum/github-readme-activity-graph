@@ -21,12 +21,7 @@ const themes = {
     'github-light': { bgColor: '#ffffff', line: '#9be9a8', point: '#40c463', color: '#000000' },
     'github-compact': { bgColor: '#00000000', line: '#26a641', point: '#8b949e', color: '#8b949e' },
     'github-dark': { bgColor: '#0D1117', line: '#1F6FEB', point: '#58A6FF', color: '#58A6FF' },
-    'github-dark-dimmed': {
-        bgColor: '#24292F',
-        line: '#ADBAC7',
-        point: '#539bf5',
-        color: '#ADBAC7',
-    },
+    'github-dark-dimmed': { bgColor: '#24292F', line: '#ADBAC7', point: '#539bf5', color: '#ADBAC7' },
     dracula: { bgColor: '#44475a', line: '#ff79c6', point: '#bd93f9', color: '#f8f8f2' },
     gruvbox: { bgColor: '#504945', line: '#d8a657', point: '#e78a4e', color: '#d4be98' },
     gotham: { bgColor: '#0c1014', line: '#599cab', point: '#99d1ce', color: '#2aa889' },
@@ -42,12 +37,7 @@ const themes = {
     minimal: { bgColor: '#ffffff', line: '#d3e6fa', point: '#3f99ed', color: '#000000' },
     'shadcn-white': { bgColor: '#FFFFFF', line: '#18181B', point: '#18181B', color: '#09090B' },
     'shadcn-dark': { bgColor: '#09090B', line: '#FAFAFA', point: '#FAFAFA', color: '#FAFAFA' },
-    'material-palenight': {
-        bgColor: '#292d3e',
-        line: '#c792ea',
-        point: '#89ddff',
-        color: '#a6accd',
-    },
+    'material-palenight': { bgColor: '#292d3e', line: '#c792ea', point: '#89ddff', color: '#a6accd' },
     green: { bgColor: '#dad7cd', line: '#588157', point: '#344e41', color: '#3a5a40' },
     'noctis-minimus': { bgColor: '#1b2932', line: '#72b7c0', point: '#c5cdd3', color: '#d3b692' },
     'one-dark': { bgColor: '#282C34', line: '#e5c17c', point: '#e06c75', color: '#abb2bf' },
@@ -70,22 +60,17 @@ const themes = {
 const onThemeChange = () => {
     const selected = elements.themeSelect.value;
     const theme = themes[selected] || themes.default;
-    // Update color pickers
     inputElements.bgInput.value = theme.bgColor;
     inputElements.lineInput.value = theme.line;
     inputElements.pointInput.value = theme.point;
     inputElements.ltgInput.value = theme.color;
-    // Update valueToCopy
     valueToCopy.bgColor = theme.bgColor;
     valueToCopy.line = theme.line;
     valueToCopy.point = theme.point;
     valueToCopy.color = theme.color;
-    // Update UI colors
-    changeBgColor();
-    changeLineColor();
-    changeLabelsAndGridColor();
-    changePointColor();
+    applyGraphColors();
     syncSkeletonTheme();
+    generateLink();
 };
 
 const inputElements = {
@@ -144,6 +129,11 @@ const showToast = (message, type = 'error') => {
     timeoutId = setTimeout(dismiss, 5000);
 };
 
+/*-----------------------------------------
+                Fetch user's contribution data
+        and generate graph link
+-------------------------------------------*/
+
 const valueToCopy = {
     username: '',
     bgColor: '#ffcfe9',
@@ -152,13 +142,6 @@ const valueToCopy = {
     point: '#403d3d',
     includePrivate: false,
 };
-
-/*-----------------------------------------
-        Fetch user's contribution data
-        and generate graph link
--------------------------------------------*/
-
-//For displaying loading animation
 
 const setGraphLoading = (loading) => {
     elements.preview.classList.toggle('is-loading', loading);
@@ -184,9 +167,33 @@ const syncSkeletonTheme = () => {
     preview.style.setProperty('--skeleton-text', valueToCopy.color);
 };
 
+// Keep theme colors on the preview independently of the current SVG instance.
+// Chartist creates a new SVG when data changes or the chart is resized, so
+// styles applied only to individual SVG nodes are lost. Reapply them to every
+// generated node and use !important to override the default stylesheet.
+const applyGraphColors = () => {
+    elements.preview.style.backgroundColor = valueToCopy.bgColor;
 
-
-// Generate chart link with user data
+    document.querySelectorAll('.ct-line').forEach((el) => {
+        el.style.setProperty('stroke', valueToCopy.line, 'important');
+    });
+    document.querySelectorAll('.ct-point').forEach((el) => {
+        el.style.setProperty('stroke', valueToCopy.point, 'important');
+    });
+    document.querySelectorAll('.ct-label').forEach((el) => {
+        el.style.setProperty('fill', valueToCopy.color, 'important');
+        el.style.setProperty('color', valueToCopy.color, 'important');
+    });
+    document.querySelectorAll('.ct-axis-title').forEach((el) => {
+        el.style.setProperty('fill', valueToCopy.color, 'important');
+    });
+    document.querySelectorAll('.ct-grid').forEach((el) => {
+        el.style.setProperty('stroke', valueToCopy.color, 'important');
+    });
+    document.querySelectorAll('.ct-series-a .ct-area').forEach((el) => {
+        el.style.setProperty('fill', valueToCopy.color, 'important');
+    });
+};
 
 const generateLink = () => {
     const isOrganization = elements.entityType.value === 'organization';
@@ -206,13 +213,9 @@ const generateLink = () => {
     return link;
 };
 
-// Fetch user data and create graph
-
 const getGraph = (username, type) => {
     setGraphLoading(true);
     elements.placeholder.classList.remove('active');
-
-    // Graph Configuration
 
     const options = {
         height: 380,
@@ -220,23 +223,14 @@ const getGraph = (username, type) => {
             title: 'Contributions',
             onlyInteger: true,
             offset: 70,
-            labelOffset: {
-                y: 4.5,
-            },
+            labelOffset: { y: 4.5 },
         },
         axisX: {
             title: 'Days',
             offset: 50,
-            labelOffset: {
-                x: -4.5,
-            },
+            labelOffset: { x: -4.5 },
         },
-        chartPadding: {
-            top: 80,
-            right: 50,
-            bottom: 20,
-            left: 20,
-        },
+        chartPadding: { top: 80, right: 50, bottom: 20, left: 20 },
         showArea: true,
         fullWidth: true,
         plugins: [
@@ -244,19 +238,13 @@ const getGraph = (username, type) => {
                 axisX: {
                     axisTitle: 'Days',
                     axisClass: 'ct-axis-title',
-                    offset: {
-                        x: 0,
-                        y: 50,
-                    },
+                    offset: { x: 0, y: 50 },
                     textAnchor: 'middle',
                 },
                 axisY: {
                     axisTitle: 'Contributions',
                     axisClass: 'ct-axis-title',
-                    offset: {
-                        x: 0,
-                        y: 50,
-                    },
+                    offset: { x: 0, y: 50 },
                     textAnchor: 'middle',
                     flipTitle: true,
                 },
@@ -269,10 +257,7 @@ const getGraph = (username, type) => {
         `${parameter}=${encodeURIComponent(username)}` +
         `&include_private=${valueToCopy.includePrivate ? 'true' : 'false'}`;
 
-    axios({
-        url: `/data?${query}`,
-        method: 'GET',
-    })
+    axios({ url: `/data?${query}`, method: 'GET' })
         .then((contributionData) => {
             const days = contributionData.data?.contributions;
             if (!Array.isArray(days)) {
@@ -289,6 +274,19 @@ const getGraph = (username, type) => {
             document.querySelector('.ct-chart').innerHTML = '';
             new Chartist.Line('.ct-chart', data, options);
 
+            // Chartist renders its SVG asynchronously; apply colors after the
+            // initial render and whenever it replaces the SVG (e.g. on resize).
+            const chartContainer = document.querySelector('.ct-chart');
+            if (chartContainer) {
+                const observer = new MutationObserver(() => applyGraphColors());
+                observer.observe(chartContainer, { childList: true, subtree: true });
+                // Disconnect the observer once this particular chart is replaced.
+                chartContainer.__colorObserver?.disconnect();
+                chartContainer.__colorObserver = observer;
+                requestAnimationFrame(applyGraphColors);
+            }
+
+            applyGraphColors();
             removeLoader();
             removePlaceholder();
             generateLink();
@@ -299,24 +297,18 @@ const getGraph = (username, type) => {
             if (!document.querySelector('.ct-chart svg')) {
                 elements.placeholder.classList.add('active');
             }
-            showToast(
-                err.response?.data?.error || err.message || 'Sorry, something went wrong.',
-            );
+            showToast(err.response?.data?.error || err.message || 'Sorry, something went wrong.');
         });
 };
 
-// Handle submit button
 const onSubmit = (event) => {
     event.preventDefault();
-
-    //get username
     const username = elements.username.value;
     if (username.length > 0) {
         valueToCopy.username = username.trim();
         getGraph(valueToCopy.username, elements.entityType.value);
     } else {
         showToast('Enter a GitHub username or organization name.');
-        return;
     }
 };
 
@@ -334,96 +326,55 @@ const disableDarkMode = () => {
     elements.bgColor.classList.remove('active');
     localStorage.setItem('darkMode', '');
 };
-if (darkMode === 'enabled') {
-    enableDarkMode();
-}
+if (darkMode === 'enabled') enableDarkMode();
 
 const handleDarkMode = () => {
     darkMode = localStorage.getItem('darkMode');
-
-    if (darkMode !== 'enabled') {
-        enableDarkMode();
-    } else {
-        disableDarkMode();
-    }
+    if (darkMode !== 'enabled') enableDarkMode();
+    else disableDarkMode();
 };
 
-//Dynamic changes
-
-// Background Color
+// Dynamic changes
 const changeBgColor = () => {
     valueToCopy.bgColor = inputElements.bgInput.value;
     syncSkeletonTheme();
-    document.querySelector('.rect').style.backgroundColor = inputElements.bgInput.value;
+    applyGraphColors();
     generateLink();
 };
 
-// Line Color
 const changeLineColor = () => {
     valueToCopy.line = inputElements.lineInput.value;
     syncSkeletonTheme();
-    document.querySelector('.ct-line').style.stroke = inputElements.lineInput.value;
+    applyGraphColors();
     generateLink();
 };
 
-//Lables, Title and Grid color
 const changeLabelsAndGridColor = () => {
-    const ltgValue = inputElements.ltgInput.value;
-    valueToCopy.color = ltgValue;
+    valueToCopy.color = inputElements.ltgInput.value;
     syncSkeletonTheme();
-
-    const allLables = document.querySelectorAll('.ct-label');
-    const axisTitles = document.querySelectorAll('.ct-axis-title');
-    const grids = document.querySelectorAll('.ct-grid');
-
-    allLables.forEach((el) => {
-        el.style.fill = ltgValue;
-        el.style.color = ltgValue;
-    });
-
-    axisTitles.forEach((el) => {
-        el.style.fill = ltgValue;
-    });
-    grids.forEach((el) => {
-        el.style.stroke = ltgValue;
-    });
-
+    applyGraphColors();
     generateLink();
 };
 
-// Point Color
 const changePointColor = () => {
     valueToCopy.point = inputElements.pointInput.value;
     syncSkeletonTheme();
-    const allPointLables = document.querySelectorAll('.ct-point');
-    const len = allPointLables.length;
-    for (let idx = 0; idx < len; idx++) {
-        allPointLables[idx].style.stroke = inputElements.pointInput.value;
-    }
+    applyGraphColors();
     generateLink();
 };
 
-// Copy to clipboard
 const copyLink = () => {
     if (elements.textArea.value !== '') {
-        let copyBtn = elements.copyText.childNodes[3];
+        const copyBtn = elements.copyText.childNodes[3];
         if (copyBtn.style.backgroundColor === 'rgb(87, 132, 245)') {
-            const copiedText = elements.textArea.value;
-            navigator.clipboard.writeText(copiedText);
-            const input = elements.copyText.querySelector('input.text');
-            input.select();
-
+            navigator.clipboard.writeText(elements.textArea.value);
+            elements.copyText.querySelector('input.text').select();
             copyBtn.style.backgroundColor = '#2bbe60';
             elements.copyText.classList.add('active');
-
-            setTimeout(() => {
-                elements.copyText.classList.remove('active');
-            }, 2500);
+            setTimeout(() => elements.copyText.classList.remove('active'), 2500);
         }
     }
 };
-
-//Event Handlers
 
 const refreshAuthStatus = async () => {
     try {
@@ -479,9 +430,7 @@ elements.includePrivate.addEventListener('change', () => {
     if (elements.includePrivate.disabled) return;
     valueToCopy.includePrivate = elements.includePrivate.checked;
     generateLink();
-    if (valueToCopy.username) {
-        getGraph(valueToCopy.username, elements.entityType.value);
-    }
+    if (valueToCopy.username) getGraph(valueToCopy.username, elements.entityType.value);
 });
 syncSkeletonTheme();
 refreshAuthStatus();
@@ -492,9 +441,6 @@ elements.entityType.addEventListener('change', () => {
     elements.username.placeholder = isOrganization
         ? 'Enter GitHub organization'
         : 'Enter your GitHub username';
-
-    // A username and an organization name are different inputs; don't reuse
-    // the previous value or automatically request a graph for the new type.
     elements.username.value = '';
     valueToCopy.username = '';
     elements.textArea.value = '';
@@ -509,7 +455,6 @@ inputElements.lineInput.addEventListener('input', changeLineColor);
 inputElements.ltgInput.addEventListener('input', changeLabelsAndGridColor);
 inputElements.pointInput.addEventListener('input', changePointColor);
 elements.themeSelect.addEventListener('change', onThemeChange);
-
 
 // Apply the same custom select design to all picker controls.
 (() => {
