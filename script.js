@@ -220,7 +220,7 @@ const generateLink = () => {
         color: valueToCopy.color.slice(1),
         line: valueToCopy.line.slice(1),
         point: valueToCopy.point.slice(1),
-        area: 'true',
+        area: ['mountain', 'gradient'].includes(graphType) ? 'true' : 'false',
         hide_border: 'true',
         type: graphType,
     });
