@@ -386,8 +386,8 @@ elements.submitButton.addEventListener('click', onSubmit);
 elements.entityType.addEventListener('change', () => {
     const isOrganization = elements.entityType.value === 'organization';
     elements.username.placeholder = isOrganization
-        ? 'Enter GitHub organization'
-        : 'Enter your GitHub username';
+        ? 'Enter gitHub organization'
+        : 'Enter your github username';
 
     elements.username.value = '';
     valueToCopy.username = '';
