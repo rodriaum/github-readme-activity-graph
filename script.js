@@ -272,21 +272,18 @@ const getGraph = (username, type) => {
             };
 
             document.querySelector('.ct-chart').innerHTML = '';
-            new Chartist.Line('.ct-chart', data, options);
-
-            // Chartist renders its SVG asynchronously; apply colors after the
-            // initial render and whenever it replaces the SVG (e.g. on resize).
             const chartContainer = document.querySelector('.ct-chart');
-            if (chartContainer) {
-                const observer = new MutationObserver(() => applyGraphColors());
-                observer.observe(chartContainer, { childList: true, subtree: true });
-                // Disconnect the observer once this particular chart is replaced.
-                chartContainer.__colorObserver?.disconnect();
-                chartContainer.__colorObserver = observer;
-                requestAnimationFrame(applyGraphColors);
-            }
+            // Keep a single observer for this container. Chartist replaces SVG
+            // children on redraw/resize, so styling only the current nodes is
+            // not enough to preserve the selected colors.
+            chartContainer.__colorObserver?.disconnect();
+            new Chartist.Line('.ct-chart', data, options);
+            const observer = new MutationObserver(() => applyGraphColors());
+            observer.observe(chartContainer, { childList: true, subtree: true });
+            chartContainer.__colorObserver = observer;
 
             applyGraphColors();
+            requestAnimationFrame(applyGraphColors);
             removeLoader();
             removePlaceholder();
             generateLink();
