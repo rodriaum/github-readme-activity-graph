@@ -273,15 +273,14 @@ const getGraph = (username, type) => {
 
             document.querySelector('.ct-chart').innerHTML = '';
             const chartContainer = document.querySelector('.ct-chart');
-            // Keep a single observer for this container. Chartist replaces SVG
-            // children on redraw/resize, so styling only the current nodes is
-            // not enough to preserve the selected colors.
+            // Observe the container before rendering so the initial SVG and
+            // future SVG replacements receive the selected colors as well.
             chartContainer.__colorObserver?.disconnect();
-            new Chartist.Line('.ct-chart', data, options);
             const observer = new MutationObserver(() => applyGraphColors());
             observer.observe(chartContainer, { childList: true, subtree: true });
             chartContainer.__colorObserver = observer;
 
+            new Chartist.Line('.ct-chart', data, options);
             applyGraphColors();
             requestAnimationFrame(applyGraphColors);
             removeLoader();
