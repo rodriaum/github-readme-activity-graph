@@ -25,8 +25,11 @@ export class MountainGraphRenderer implements GraphRenderer {
             return `${path} C ${middleX},${previous.y} ${middleX},${point.y} ${point.x},${point.y}`;
         }, '');
 
+        const curveContinuation = points.length > 1
+            ? curvePath.slice(curvePath.indexOf(' C'))
+            : '';
         const areaPath = points.length
-            ? `M ${bounds.left},${bounds.bottom} L ${bounds.left},${points[0].y} ${curvePath.slice(curvePath.indexOf(' C'))} L ${bounds.right},${bounds.bottom} Z`
+            ? `M ${bounds.left},${bounds.bottom} L ${points[0].x},${points[0].y}${curveContinuation} L ${bounds.right},${bounds.bottom} Z`
             : '';
 
         const markers = points
