@@ -109,7 +109,7 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 
 ![Customization interface preview](./asset/customizer-preview.png)
 
-You can also configure the graph manually using URL parameters. The `type` parameter changes the graph design while preserving the selected theme and its colors. The default is `default`, which keeps the existing graph. Set `type=cartoon` for the alternative rounded, playful design.
+You can also configure the graph manually using URL parameters. The `type` parameter changes the graph design while preserving the selected theme and its colors. The default is `default`, which keeps the existing graph. Set `type=cartoon` for the rounded, playful design, `type=bar` for vertical bars, or `type=mountain` for a filled area chart.
 
 ```md
 [![Rodrigo's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=cartoon&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
@@ -136,7 +136,7 @@ You can also configure the graph manually using URL parameters. The `type` param
 |     `days`     |      number of to days display on graph       | number between (1 - 90) [Recommended below 40] |
 |     `from`     |       date from which the graph starts        |              format `YYYY-MM-DD`               |
 |      `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
-|     `type`     |        graph design (`default` or `cartoon`)       |                    string                      |
+|     `type`     | graph design: `default`, `cartoon`, `bar` or `mountain` | string |
 |     `grid`     |                   show grid                   |           boolean (default: `true`)            |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
