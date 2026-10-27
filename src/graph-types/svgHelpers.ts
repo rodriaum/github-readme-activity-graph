@@ -25,11 +25,19 @@ export interface ChartPadding {
 export function getGraphPoints(
     days: ContributionDay[],
     options: GraphRenderOptions,
-    padding: ChartPadding = { left: 88, right: 42, top: 82, bottom: 54 },
+    padding: ChartPadding = {
+        left: 88,
+        right: 42,
+        top: 82,
+        bottom: 54,
+    },
 ): GraphPoint[] {
     const chartWidth = options.width - padding.left - padding.right;
     const chartHeight = options.height - padding.top - padding.bottom;
-    const maxValue = Math.max(1, ...days.map(({ contributionCount }) => contributionCount));
+    const maxValue = Math.max(
+        1,
+        ...days.map(({ contributionCount }) => contributionCount),
+    );
 
     return days.map((day, index) => ({
         x: padding.left + (index / Math.max(1, days.length - 1)) * chartWidth,
@@ -44,7 +52,9 @@ export function renderGrid(
     bounds: ChartBounds,
     ticks = 4,
 ): string {
-    if (!options.showGrid) return '';
+    if (!options.showGrid) {
+        return '';
+    }
 
     return Array.from({ length: ticks + 1 }, (_, index) => {
         const y = bounds.top + (index / ticks) * (bounds.bottom - bounds.top);
@@ -69,7 +79,10 @@ export function renderYAxis(
     bounds: ChartBounds,
     ticks = 4,
 ): string {
-    const maxValue = Math.max(1, ...days.map(({ contributionCount }) => contributionCount));
+    const maxValue = Math.max(
+        1,
+        ...days.map(({ contributionCount }) => contributionCount),
+    );
 
     return Array.from({ length: ticks + 1 }, (_, index) => {
         const value = Math.round((maxValue * (ticks - index)) / ticks);
@@ -82,7 +95,9 @@ export function renderYAxis(
                 text-anchor="end"
                 fill="#${options.colors.color}"
                 font-size="12"
-            >${value}</text>
+            >
+                ${value}
+            </text>
         `;
     }).join('');
 }
@@ -94,24 +109,32 @@ export function renderDateLabels(
 ): string {
     const interval = Math.max(1, Math.ceil(points.length / 12));
 
-    return points.map(({ x, day, index }) => {
-        const shouldShowLabel =
-            points.length <= 18 || index % interval === 0 || index === points.length - 1;
+    return points
+        .map(({ x, day, index }) => {
+            const shouldShowLabel =
+                points.length <= 18 ||
+                index % interval === 0 ||
+                index === points.length - 1;
 
-        if (!shouldShowLabel) return '';
+            if (!shouldShowLabel) {
+                return '';
+            }
 
-        const label = escapeSvgText(day.date);
+            const label = escapeSvgText(day.date);
 
-        return `
-            <text
-                x="${x}"
-                y="${y}"
-                text-anchor="middle"
-                fill="#${options.colors.color}"
-                font-size="11"
-            >${label}</text>
-        `;
-    }).join('');
+            return `
+                <text
+                    x="${x}"
+                    y="${y}"
+                    text-anchor="middle"
+                    fill="#${options.colors.color}"
+                    font-size="11"
+                >
+                    ${label}
+                </text>
+            `;
+        })
+        .join('');
 }
 
 export function escapeSvgText(value: string): string {
