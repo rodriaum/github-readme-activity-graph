@@ -22,13 +22,13 @@ export const graphSvg = (props: GraphArgs) => `
                     margin-top: 20px;
                 }
                 svg { font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; user-select: none; }
-                ${props.type === 'default' ? graphStyle(
+                ${(!props.type || props.type === 'default') ? graphStyle(
                     props.colors.color,
                     props.colors.lineColor,
                     props.colors.pointColor,
                     props.colors.areaColor,
                 ) : ''}
-                ${props.type === 'default' ? pointAnimation() + lineAnimation() : ''}
+                ${(!props.type || props.type === 'default') ? pointAnimation() + lineAnimation() : ''}
             </style>
 
             <foreignObject x="0" y="0" width="${props.width}" height="50">
