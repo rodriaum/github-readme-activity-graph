@@ -10,6 +10,7 @@ const elements = {
     username: document.getElementById('username'),
     entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
+    toastContainer: document.getElementById('toast-container'),
 };
 // Theme definitions
 const themes = {
@@ -105,6 +106,40 @@ const valueToCopy = {
 -------------------------------------------*/
 
 //For displaying loading animation
+
+const showToast = (message, type = 'error') => {
+    const toast = document.createElement('div');
+    const icon = document.createElement('span');
+    const content = document.createElement('p');
+    const close = document.createElement('button');
+
+    toast.className = `toast toast--${type}`;
+    toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    toast.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+
+    icon.className = 'toast__icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = type === 'error' ? '!' : '✓';
+
+    content.className = 'toast__message';
+    content.textContent = message;
+
+    close.className = 'toast__close';
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Dismiss notification');
+    close.textContent = '×';
+
+    const dismiss = () => {
+        if (!toast.isConnected || toast.classList.contains('toast--leaving')) return;
+        toast.classList.add('toast--leaving');
+        toast.addEventListener('animationend', () => toast.remove(), { once: true });
+    };
+
+    close.addEventListener('click', dismiss);
+    toast.append(icon, content, close);
+    elements.toastContainer.appendChild(toast);
+    window.setTimeout(dismiss, 5000);
+};
 
 const setLoader = () => {
     elements.loader.classList.add('active');
@@ -213,7 +248,7 @@ const getGraph = (username, type) => {
         .catch((err) => {
             console.error('Failed to load activity graph:', err);
             removeLoader();
-            alert(err.response?.data?.error || err.message || 'Sorry! something went wrong.');
+            showToast(err.response?.data?.error || err.message || 'Sorry! something went wrong.');
         });
 };
 
@@ -228,7 +263,7 @@ const onSubmit = (event) => {
         setLoader();
         getGraph(valueToCopy.username, elements.entityType.value);
     } else {
-        alert('Enter a GitHub username or organization name');
+        showToast('Enter a GitHub username or organization name.');
         return;
     }
 };
