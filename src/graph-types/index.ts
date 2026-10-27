@@ -12,7 +12,9 @@ const renderers: Record<GraphType, GraphRenderer> = {
 };
 
 export function getGraphRenderer(type: string): GraphRenderer {
-    return renderers[isGraphType(type) ? type : 'default'];
+    const graphType = isGraphType(type) ? type : 'default';
+
+    return renderers[graphType];
 }
 
 export function isGraphType(type: string): type is GraphType {
