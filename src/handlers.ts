@@ -9,7 +9,7 @@ import { readFile } from 'fs/promises';
 export class Handlers {
     public async getRoot(_req: Request, res: Response) {
         const html = await readFile(path.resolve(process.cwd(), 'index.html'), 'utf8');
-        const origin = (process.env.ORIGIN_URL || 'https://github-act-graph.rodriaum.com').replace(/\\/+$/, '');
+        const origin = (process.env.ORIGIN_URL || 'https://github-act-graph.rodriaum.com').replace(/\/+$/, '');
 
         res.type('html').send(html.replace('__ORIGIN_URL__', origin));
     }
