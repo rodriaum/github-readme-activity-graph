@@ -12,4 +12,4 @@ export interface GraphRenderer {
     render(days: ContributionDay[], options: GraphRenderOptions): Promise<string>;
 }
 
-export type GraphType = 'default' | 'cartoon' | 'bar' | 'mountain';
+export type GraphType = 'default' | 'cartoon' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
