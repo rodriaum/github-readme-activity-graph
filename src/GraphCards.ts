@@ -63,7 +63,8 @@ export class Card {
             : '';
         const labels = points.map(({ x, day }, index) => {
             if (points.length > 18 && index % Math.ceil(points.length / 12) !== 0 && index !== points.length - 1) return '';
-            return `<text x="${x}" y="${bottom + 28}" text-anchor="middle" fill="#${this.colors.color}" font-size="12">${day.date}</text>`;
+            const label = String(day.date).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return `<text x="${x}" y="${bottom + 28}" text-anchor="middle" fill="#${this.colors.color}" font-size="12">${label}</text>`;
         }).join('');
         const pointsLine = points.map(({ x, y }) => `${x},${y}`).join(' ');
         const areaPath = points.length
