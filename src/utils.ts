@@ -93,7 +93,7 @@ export class Utilities {
         // Custom options for user
         const colors = this.getColors();
         const requestedType = String(this.queryString.type || 'default');
-        const type = isGraphType(requestedType) ? requestedType : 'default';
+        const type = requestedType === 'cartoon' ? 'playful' : isGraphType(requestedType) ? requestedType : 'default';
         let from = '',
             to = '',
             days = 31;
