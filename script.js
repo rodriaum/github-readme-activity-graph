@@ -78,11 +78,8 @@ const onThemeChange = () => {
     valueToCopy.line = theme.line;
     valueToCopy.point = theme.point;
     valueToCopy.color = theme.color;
-    // Update UI colors
-    changeBgColor();
-    changeLineColor();
-    changeLabelsAndGridColor();
-    changePointColor();
+    applyGraphColors();
+    generateLink();
 };
 
 const inputElements = {
@@ -151,6 +148,34 @@ const removeLoader = () => {
 const removePlaceholder = () => {
     elements.placeholder.classList.remove('active');
     elements.copyContainer.style.marginTop = '2rem';
+};
+
+// Keep the selected theme after Chartist renders or replaces its SVG.
+const applyGraphColors = () => {
+    const preview = document.querySelector('.rect');
+    if (!preview) return;
+
+    preview.style.backgroundColor = valueToCopy.bgColor;
+
+    document.querySelectorAll('.ct-line').forEach((el) => {
+        el.style.setProperty('stroke', valueToCopy.line, 'important');
+    });
+    document.querySelectorAll('.ct-point').forEach((el) => {
+        el.style.setProperty('stroke', valueToCopy.point, 'important');
+    });
+    document.querySelectorAll('.ct-label').forEach((el) => {
+        el.style.setProperty('fill', valueToCopy.color, 'important');
+        el.style.setProperty('color', valueToCopy.color, 'important');
+    });
+    document.querySelectorAll('.ct-axis-title').forEach((el) => {
+        el.style.setProperty('fill', valueToCopy.color, 'important');
+    });
+    document.querySelectorAll('.ct-grid').forEach((el) => {
+        el.style.setProperty('stroke', valueToCopy.color, 'important');
+    });
+    document.querySelectorAll('.ct-series-a .ct-area').forEach((el) => {
+        el.style.setProperty('fill', valueToCopy.color, 'important');
+    });
 };
 
 // Generate chart link with user data
@@ -238,8 +263,16 @@ const getGraph = (username, type) => {
                 series: [{ value: days.map((day) => day.contributionCount) }],
             };
 
-            document.querySelector('.ct-chart').innerHTML = '';
+            const chartContainer = document.querySelector('.ct-chart');
+            chartContainer.__colorObserver?.disconnect();
+
+            const observer = new MutationObserver(() => applyGraphColors());
+            observer.observe(chartContainer, { childList: true, subtree: true });
+            chartContainer.__colorObserver = observer;
+
             new Chartist.Line('.ct-chart', data, options);
+            applyGraphColors();
+            requestAnimationFrame(applyGraphColors);
 
             removeLoader();
             removePlaceholder();
@@ -301,49 +334,28 @@ const handleDarkMode = () => {
 // Background Color
 const changeBgColor = () => {
     valueToCopy.bgColor = inputElements.bgInput.value;
-    document.querySelector('.rect').style.backgroundColor = inputElements.bgInput.value;
+    applyGraphColors();
     generateLink();
 };
 
 // Line Color
 const changeLineColor = () => {
     valueToCopy.line = inputElements.lineInput.value;
-    document.querySelector('.ct-line').style.stroke = inputElements.lineInput.value;
+    applyGraphColors();
     generateLink();
 };
 
 //Lables, Title and Grid color
 const changeLabelsAndGridColor = () => {
-    const ltgValue = inputElements.ltgInput.value;
-    valueToCopy.color = ltgValue;
-
-    const allLables = document.querySelectorAll('.ct-label');
-    const axisTitles = document.querySelectorAll('.ct-axis-title');
-    const grids = document.querySelectorAll('.ct-grid');
-
-    allLables.forEach((el) => {
-        el.style.fill = ltgValue;
-        el.style.color = ltgValue;
-    });
-
-    axisTitles.forEach((el) => {
-        el.style.fill = ltgValue;
-    });
-    grids.forEach((el) => {
-        el.style.stroke = ltgValue;
-    });
-
+    valueToCopy.color = inputElements.ltgInput.value;
+    applyGraphColors();
     generateLink();
 };
 
 // Point Color
 const changePointColor = () => {
     valueToCopy.point = inputElements.pointInput.value;
-    const allPointLables = document.querySelectorAll('.ct-point');
-    const len = allPointLables.length;
-    for (let idx = 0; idx < len; idx++) {
-        allPointLables[idx].style.stroke = inputElements.pointInput.value;
-    }
+    applyGraphColors();
     generateLink();
 };
 
