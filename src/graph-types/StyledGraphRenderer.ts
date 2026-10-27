@@ -23,7 +23,6 @@ export class StyledGraphRenderer implements GraphRenderer {
             top: bounds.top,
             bottom: options.height - bounds.bottom,
         });
-        const polyline = points.map(({ x, y }) => `${x},${y}`).join(' ');
         const linePath = terminal
             ? points.reduce((path, point, index) => {
                 if (index === 0) return `M ${point.x},${point.y}`;
