@@ -25,7 +25,7 @@ export class QueryOption {
     radius: number;
     height: number;
     days: number;
-    type: 'default' | 'cartoon' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
+    type: 'default' | 'playful' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
 }
 
 export class ParsedQs {
@@ -59,7 +59,7 @@ export class GraphArgs {
     title: string;
     radius: number;
     line: string | Promise<string>;
-    type?: 'default' | 'cartoon' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
+    type?: 'default' | 'playful' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
 }
 
 export class UserDetails {
