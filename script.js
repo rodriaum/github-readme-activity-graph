@@ -11,6 +11,7 @@ const elements = {
     entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
     graphTypeSelect: document.getElementById('graphTypeSelect'),
+    previewImage: document.getElementById('graph-preview-image'),
     toastContainer: document.getElementById('toast-container'),
 };
 // Theme definitions
@@ -181,6 +182,27 @@ const applyGraphColors = () => {
 
 // Generate chart link with user data
 
+let previewUpdateTimeout;
+
+const updatePreview = (url) => {
+    if (!valueToCopy.username || !elements.previewImage) return;
+
+    window.clearTimeout(previewUpdateTimeout);
+    previewUpdateTimeout = window.setTimeout(() => {
+        elements.previewImage.onload = () => {
+            if (elements.previewImage.src !== url) return;
+            elements.previewImage.classList.add('active');
+            document.querySelector('.ct-chart').style.display = 'none';
+        };
+        elements.previewImage.onerror = () => {
+            if (elements.previewImage.src !== url) return;
+            elements.previewImage.classList.remove('active');
+            document.querySelector('.ct-chart').style.display = '';
+        };
+        elements.previewImage.src = url;
+    }, 250);
+};
+
 const generateLink = () => {
     const isOrganization = elements.entityType.value === 'organization';
     const parameter = isOrganization ? 'organization' : 'username';
@@ -202,9 +224,11 @@ const generateLink = () => {
         hide_border: 'true',
         type: graphType,
     });
-    const link = `[![${label}](${graphOrigin}/graph?${query.toString()})](${profileUrl})`;
+    const graphUrl = `${graphOrigin}/graph?${query.toString()}`;
+    const link = `[![${label}](${graphUrl})](${profileUrl})`;
 
     elements.textArea.value = link;
+    updatePreview(graphUrl);
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
 
     return link;
@@ -412,6 +436,9 @@ elements.entityType.addEventListener('change', () => {
     valueToCopy.username = '';
     elements.textArea.value = '';
     document.querySelector('.ct-chart').innerHTML = '';
+    document.querySelector('.ct-chart').style.display = '';
+    elements.previewImage.classList.remove('active');
+    elements.previewImage.removeAttribute('src');
     elements.placeholder.classList.add('active');
     elements.copyContainer.style.marginTop = '';
     removeLoader();
