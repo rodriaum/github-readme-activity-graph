@@ -37,7 +37,7 @@ export class StyledGraphRenderer implements GraphRenderer {
                 return `${path} C ${middleX},${previous.y} ${middleX},${point.y} ${point.x},${point.y}`;
             }, '');
         const areaPath = points.length
-            ? `M ${bounds.left},${bounds.bottom} L ${points[0].x},${points[0].y} ${linePath.slice(linePath.indexOf(' ') + 1)} L ${bounds.right},${bounds.bottom} Z`
+            ? `M ${bounds.left},${bounds.bottom} L ${points[0].x},${points[0].y}${linePath.replace(/^M [^ ]+/, '')} L ${bounds.right},${bounds.bottom} Z`
             : '';
         const gridOptions = minimal ? { ...options, showGrid: false } : options;
         const grid = renderGrid(gridOptions, bounds, terminal ? 5 : 4);
