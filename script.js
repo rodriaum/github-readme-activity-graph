@@ -225,10 +225,11 @@ const generateLink = () => {
         type: graphType,
     });
     const graphUrl = `${graphOrigin}/graph?${query.toString()}`;
+    const previewUrl = `${window.location.origin}/graph?${query.toString()}`;
     const link = `[![${label}](${graphUrl})](${profileUrl})`;
 
     elements.textArea.value = link;
-    updatePreview(graphUrl);
+    updatePreview(previewUrl);
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
 
     return link;
