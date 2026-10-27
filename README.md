@@ -104,7 +104,7 @@ _`username=rodriaum&theme=theme_name`_
 
 For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
 
-## Graph Type
+## Graph Types
 
 Choose the graph style independently from the theme:
 
