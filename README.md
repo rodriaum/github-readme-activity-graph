@@ -109,7 +109,7 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 
 ![Customization interface preview](./asset/customizer-preview.png)
 
-You can also configure the graph manually using URL parameters.
+You can also configure the graph manually using URL parameters. The `type` parameter changes the graph design while preserving the selected theme and its colors. The default is `default`, which keeps the existing graph. Set `type=cartoon` for the alternative rounded, playful design.\n\n```md\n[![Rodrigo's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=cartoon&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)\n```
 
 #### Common Options
 
