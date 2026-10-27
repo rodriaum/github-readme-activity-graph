@@ -1159,3 +1159,124 @@ select.picker option {
         width: 100%;
     }
 }
+
+
+.toast-container {
+    position: fixed;
+    z-index: 1000;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(380px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 14px 14px 15px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    color: var(--foreground);
+    box-shadow: 0 8px 28px rgb(0 0 0 / 12%), 0 2px 6px rgb(0 0 0 / 5%);
+    pointer-events: auto;
+    animation: toast-enter 0.22s ease-out both;
+}
+
+.toast--error {
+    border-left: 3px solid #dc2626;
+}
+
+.toast--success {
+    border-left: 3px solid #16a34a;
+}
+
+.toast__icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.toast--success .toast__icon {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.toast__message {
+    flex: 1;
+    min-width: 0;
+    margin: 1px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.toast__close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin: -2px -3px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted-foreground);
+    font-size: 21px;
+    line-height: 1;
+}
+
+.toast__close:hover {
+    background: var(--muted);
+    color: var(--foreground);
+}
+
+.toast--leaving {
+    animation: toast-exit 0.18s ease-in both;
+}
+
+@keyframes toast-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toast-exit {
+    to {
+        opacity: 0;
+        transform: translateX(12px);
+    }
+}
+
+@media (max-width: 480px) {
+    .toast-container {
+        top: 12px;
+        right: 12px;
+        width: calc(100vw - 24px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .toast,
+    .toast--leaving {
+        animation-duration: 0.01ms;
+    }
+}
