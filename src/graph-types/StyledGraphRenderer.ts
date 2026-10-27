@@ -24,8 +24,20 @@ export class StyledGraphRenderer implements GraphRenderer {
             bottom: options.height - bounds.bottom,
         });
         const polyline = points.map(({ x, y }) => `${x},${y}`).join(' ');
+        const linePath = terminal
+            ? points.reduce((path, point, index) => {
+                if (index === 0) return `M ${point.x},${point.y}`;
+                const previous = points[index - 1];
+                return `${path} L ${point.x},${previous.y} L ${point.x},${point.y}`;
+            }, '')
+            : points.reduce((path, point, index) => {
+                if (index === 0) return `M ${point.x},${point.y}`;
+                const previous = points[index - 1];
+                const middleX = (previous.x + point.x) / 2;
+                return `${path} C ${middleX},${previous.y} ${middleX},${point.y} ${point.x},${point.y}`;
+            }, '');
         const areaPath = points.length
-            ? `M ${bounds.left},${bounds.bottom} L ${polyline.replace(/ /g, ' L ')} L ${bounds.right},${bounds.bottom} Z`
+            ? `M ${bounds.left},${bounds.bottom} L ${points[0].x},${points[0].y} ${linePath.slice(linePath.indexOf(' ') + 1)} L ${bounds.right},${bounds.bottom} Z`
             : '';
         const gridOptions = minimal ? { ...options, showGrid: false } : options;
         const grid = renderGrid(gridOptions, bounds, terminal ? 5 : 4);
@@ -60,7 +72,7 @@ export class StyledGraphRenderer implements GraphRenderer {
             ? `<path d="${areaPath}" fill="${areaColor}" fill-opacity="${this.style === 'gradient' ? '1' : minimal ? '.08' : '.2'}"/>`
             : '';
         const line = points.length ? `
-            <polyline points="${polyline}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" ${neon ? 'filter="url(#neon-glow)"' : ''} ${terminal ? 'stroke-dasharray="8 4"' : ''} class="graph-animated-line"/>
+            <path d="${linePath}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" ${neon ? 'filter="url(#neon-glow)"' : ''} ${terminal ? 'stroke-dasharray="8 4"' : ''} class="graph-animated-line"/>
         ` : '';
         const markers = points.filter(({ day, index }) => neon ? day.contributionCount > 0 : terminal ? index % 3 === 0 : minimal ? false : day.contributionCount > 0)
             .map(({ x, y, index }) => `
