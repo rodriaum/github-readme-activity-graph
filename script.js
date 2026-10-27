@@ -188,6 +188,9 @@ const generateLink = () => {
         ? `${valueToCopy.username} organization activity graph`
         : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
+    const configuredOrigin = document.querySelector('meta[name="graph-origin"]')?.content;
+    const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    const graphOrigin = (isLocalhost ? window.location.origin : configuredOrigin || window.location.origin).replace(/\\/+$/, '');
     const graphType = elements.graphTypeSelect.value;
     const query = new URLSearchParams({
         [parameter]: valueToCopy.username,
@@ -199,7 +202,7 @@ const generateLink = () => {
         hide_border: 'true',
         type: graphType,
     });
-    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${query.toString()})](${profileUrl})`;
+    const link = `[![${label}](${graphOrigin}/graph?${query.toString()})](${profileUrl})`;
 
     elements.textArea.value = link;
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
