@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="description" content="Customize a GitHub activity graph for your profile README." />
+        <meta name="graph-origin" content="__ORIGIN_URL__" />
         <title>GitHub Readme Activity Graph</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -82,9 +83,13 @@
                             <label for="graphTypeSelect">Graph type</label>
                             <select id="graphTypeSelect" class="picker" aria-label="Graph type">
                                 <option value="default">Default</option>
-                                <option value="cartoon">Cartoon</option>
+                                <option value="playful">Playful</option>
                                 <option value="bar">Bar</option>
                                 <option value="mountain">Mountain</option>
+                                <option value="neon">Neon</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="terminal">Terminal</option>
+                                <option value="gradient">Gradient</option>
                             </select>
                         </div>
 
@@ -178,6 +183,7 @@
                                 <div class="chart_placeholder active">
                                     <span>Your graph preview will appear here.</span>
                                 </div>
+                                <img id="graph-preview-image" class="graph-preview-image" alt="Preview of the selected GitHub activity graph" />
                                 <div class="ct-chart"><div class="ct-line-hook" aria-hidden="true"></div></div>
                             </div>
                             <div class="copy_container">

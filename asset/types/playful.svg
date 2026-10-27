@@ -1,0 +1,959 @@
+
+    <svg
+        width="1200"
+        height="420"
+        viewBox="0 0 1200 420"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <rect
+            data-testid="card_bg"
+            id="cardBg"
+            x="0"
+            y="0"
+            rx="0"
+            height="100%"
+            width="100%"
+            fill="#202124"
+            fill-opacity="1"
+            stroke="#0000"
+            stroke-opacity="1"
+            stroke-width="1"
+        />
+
+        <style>
+            body {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            }
+
+            .header {
+                font: 700 20px 'Segoe UI', Ubuntu, Sans-Serif;
+                text-align: center;
+                color: #fcfcfa;
+                margin-top: 20px;
+            }
+
+            svg {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+                user-select: none;
+            }
+
+            
+
+            
+        @keyframes blink {
+            from {
+                opacity: 0;
+                transform:translateX(-20px); 
+            }
+            to {
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+    
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    
+    
+
+            .graph-animated-line {
+                stroke-dasharray: 5000;
+                stroke-dashoffset: 5000;
+                animation: dash 5s ease-in-out forwards;
+            }
+
+            .graph-animated-point {
+                opacity: 0;
+                animation: blink 1s ease-in-out forwards;
+            }
+
+            .graph-animated-bar {
+                transform-box: fill-box;
+                transform-origin: bottom;
+                animation: bar-grow .8s ease-out both;
+            }
+
+            @keyframes bar-grow {
+                from {
+                    transform: scaleY(0);
+                    opacity: .2;
+                }
+
+                to {
+                    transform: scaleY(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        <foreignObject
+            x="0"
+            y="0"
+            width="1200"
+            height="50"
+        >
+            <h1
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="header"
+            >
+                Rodrigo Ferreira's Contribution Graph
+            </h1>
+        </foreignObject>
+
+        
+            <g class="playful-chart">
+                
+            <line
+                x1="90"
+                y1="80"
+                x2="1150"
+                y2="80"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="147.5"
+                x2="1150"
+                y2="147.5"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="215"
+                x2="1150"
+                y2="215"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="282.5"
+                x2="1150"
+                y2="282.5"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="350"
+                x2="1150"
+                y2="350"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+                
+            <text
+                x="76"
+                y="84"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                45
+            </text>
+        
+            <text
+                x="76"
+                y="151.5"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                34
+            </text>
+        
+            <text
+                x="76"
+                y="219"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                23
+            </text>
+        
+            <text
+                x="76"
+                y="286.5"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                11
+            </text>
+        
+            <text
+                x="76"
+                y="354"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                0
+            </text>
+        
+
+                
+
+                
+                <polyline
+                    class="graph-animated-line"
+                    points="90,350 125.33333333333334,350 160.66666666666669,350 196,350 231.33333333333334,350 266.66666666666663,350 302,332 337.33333333333337,344 372.6666666666667,350 408,284 443.3333333333333,344 478.66666666666663,212 514,290 549.3333333333334,350 584.6666666666667,350 620,272 655.3333333333334,350 690.6666666666666,314 726,242 761.3333333333333,194.00000000000003 796.6666666666666,350 832,350 867.3333333333333,278 902.6666666666667,308 938,314 973.3333333333334,350 1008.6666666666667,326 1044,308 1079.3333333333335,146 1114.6666666666667,80 1150,158"
+                    fill="none"
+                    stroke="#c4e3ff"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="90"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="90"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="125.33333333333334"
+                        cy="350"
+                        r="7"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.025s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="125.33333333333334"
+                        cy="350"
+                        r="3"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.025s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="160.66666666666669"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.05s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="160.66666666666669"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.05s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="196"
+                        cy="350"
+                        r="7"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.07500000000000001s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="196"
+                        cy="350"
+                        r="3"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.07500000000000001s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="231.33333333333334"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.1s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="231.33333333333334"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.1s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="266.66666666666663"
+                        cy="350"
+                        r="7"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.125s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="266.66666666666663"
+                        cy="350"
+                        r="3"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.125s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="302"
+                        cy="332"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.15000000000000002s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="302"
+                        cy="332"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.15000000000000002s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="337.33333333333337"
+                        cy="344"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.17500000000000002s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="337.33333333333337"
+                        cy="344"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.17500000000000002s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="372.6666666666667"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.2s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="372.6666666666667"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.2s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="408"
+                        cy="284"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.225s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="408"
+                        cy="284"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.225s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="443.3333333333333"
+                        cy="344"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.25s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="443.3333333333333"
+                        cy="344"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.25s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="478.66666666666663"
+                        cy="212"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.275s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="478.66666666666663"
+                        cy="212"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.275s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="514"
+                        cy="290"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.30000000000000004s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="514"
+                        cy="290"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.30000000000000004s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="549.3333333333334"
+                        cy="350"
+                        r="7"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.325s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="549.3333333333334"
+                        cy="350"
+                        r="3"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.325s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="584.6666666666667"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.35000000000000003s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="584.6666666666667"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.35000000000000003s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="620"
+                        cy="272"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.375s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="620"
+                        cy="272"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.375s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="655.3333333333334"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.4s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="655.3333333333334"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.4s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="690.6666666666666"
+                        cy="314"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.42500000000000004s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="690.6666666666666"
+                        cy="314"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.42500000000000004s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="726"
+                        cy="242"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.45s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="726"
+                        cy="242"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.45s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="761.3333333333333"
+                        cy="194.00000000000003"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.47500000000000003s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="761.3333333333333"
+                        cy="194.00000000000003"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.47500000000000003s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="796.6666666666666"
+                        cy="350"
+                        r="7"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.5s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="796.6666666666666"
+                        cy="350"
+                        r="3"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.5s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="832"
+                        cy="350"
+                        r="7"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.525s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="832"
+                        cy="350"
+                        r="3"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.525s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="867.3333333333333"
+                        cy="278"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.55s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="867.3333333333333"
+                        cy="278"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.55s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="902.6666666666667"
+                        cy="308"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.5750000000000001s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="902.6666666666667"
+                        cy="308"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.5750000000000001s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="938"
+                        cy="314"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.6000000000000001s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="938"
+                        cy="314"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.6000000000000001s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="973.3333333333334"
+                        cy="350"
+                        r="7"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.625s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="973.3333333333334"
+                        cy="350"
+                        r="3"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.625s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="1008.6666666666667"
+                        cy="326"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.65s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="1008.6666666666667"
+                        cy="326"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.65s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="1044"
+                        cy="308"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.675s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="1044"
+                        cy="308"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.675s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="1079.3333333333335"
+                        cy="146"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.7000000000000001s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="1079.3333333333335"
+                        cy="146"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.7000000000000001s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="1114.6666666666667"
+                        cy="80"
+                        r="9"
+                        fill="#c4e3ff"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.7250000000000001s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="1114.6666666666667"
+                        cy="80"
+                        r="5"
+                        fill="#c4e3ff"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.7250000000000001s"
+                    />
+                
+                    <circle
+                        class="graph-animated-point"
+                        cx="1150"
+                        cy="158"
+                        r="9"
+                        fill="#ff8070"
+                        fill-opacity=".12"
+                        style="animation-delay: 0.75s"
+                    />
+                    <circle
+                        class="graph-animated-point"
+                        cx="1150"
+                        cy="158"
+                        r="5"
+                        fill="#ff8070"
+                        stroke="#202124"
+                        stroke-width="2"
+                        style="animation-delay: 0.75s"
+                    />
+                
+                
+                <text
+                    x="90"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+                <text
+                    x="196"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    30
+                </text>
+            
+                <text
+                    x="302"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    3
+                </text>
+            
+                <text
+                    x="408"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    6
+                </text>
+            
+                <text
+                    x="514"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    9
+                </text>
+            
+                <text
+                    x="620"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    12
+                </text>
+            
+                <text
+                    x="726"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    15
+                </text>
+            
+                <text
+                    x="832"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    18
+                </text>
+            
+                <text
+                    x="938"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    21
+                </text>
+            
+                <text
+                    x="1044"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    24
+                </text>
+            
+                <text
+                    x="1150"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+            </g>
+        
+    </svg>

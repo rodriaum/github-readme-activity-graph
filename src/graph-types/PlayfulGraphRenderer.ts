@@ -2,7 +2,7 @@ import { ContributionDay } from '../interfaces/interface';
 import { getGraphPoints, renderDateLabels, renderGrid, renderYAxis } from './svgHelpers';
 import { GraphRenderOptions, GraphRenderer } from './types';
 
-export class CartoonGraphRenderer implements GraphRenderer {
+export class PlayfulGraphRenderer implements GraphRenderer {
     async render(days: ContributionDay[], options: GraphRenderOptions): Promise<string> {
         const bounds = {
             left: 90,
@@ -73,7 +73,7 @@ export class CartoonGraphRenderer implements GraphRenderer {
             .join('');
 
         return `
-            <g class="cartoon-chart">
+            <g class="playful-chart">
                 ${renderGrid(options, bounds)}
                 ${renderYAxis(days, options, bounds)}
 

@@ -532,6 +532,18 @@ a:focus-visible {
     min-width: 0;
 }
 
+.graph-preview-image {
+    display: none;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    object-fit: contain;
+}
+
+.graph-preview-image.active {
+    display: block;
+}
+
 .chart_placeholder {
     position: absolute;
     inset: 0;

@@ -11,6 +11,7 @@ const elements = {
     entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
     graphTypeSelect: document.getElementById('graphTypeSelect'),
+    previewImage: document.getElementById('graph-preview-image'),
     toastContainer: document.getElementById('toast-container'),
 };
 // Theme definitions
@@ -181,6 +182,27 @@ const applyGraphColors = () => {
 
 // Generate chart link with user data
 
+let previewUpdateTimeout;
+
+const updatePreview = (url) => {
+    if (!valueToCopy.username || !elements.previewImage) return;
+
+    window.clearTimeout(previewUpdateTimeout);
+    previewUpdateTimeout = window.setTimeout(() => {
+        elements.previewImage.onload = () => {
+            if (elements.previewImage.src !== url) return;
+            elements.previewImage.classList.add('active');
+            document.querySelector('.ct-chart').style.display = 'none';
+        };
+        elements.previewImage.onerror = () => {
+            if (elements.previewImage.src !== url) return;
+            elements.previewImage.classList.remove('active');
+            document.querySelector('.ct-chart').style.display = '';
+        };
+        elements.previewImage.src = url;
+    }, 250);
+};
+
 const generateLink = () => {
     const isOrganization = elements.entityType.value === 'organization';
     const parameter = isOrganization ? 'organization' : 'username';
@@ -188,6 +210,9 @@ const generateLink = () => {
         ? `${valueToCopy.username} organization activity graph`
         : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
+    const configuredOrigin = document.querySelector('meta[name="graph-origin"]')?.content;
+    const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    const graphOrigin = (isLocalhost ? window.location.origin : configuredOrigin || window.location.origin).replace(/\/+$/, '');
     const graphType = elements.graphTypeSelect.value;
     const query = new URLSearchParams({
         [parameter]: valueToCopy.username,
@@ -195,13 +220,16 @@ const generateLink = () => {
         color: valueToCopy.color.slice(1),
         line: valueToCopy.line.slice(1),
         point: valueToCopy.point.slice(1),
-        area: 'true',
+        area: ['mountain', 'gradient'].includes(graphType) ? 'true' : 'false',
         hide_border: 'true',
         type: graphType,
     });
-    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${query.toString()})](${profileUrl})`;
+    const graphUrl = `${graphOrigin}/graph?${query.toString()}`;
+    const previewUrl = `${window.location.origin}/graph?${query.toString()}`;
+    const link = `[![${label}](${graphUrl})](${profileUrl})`;
 
     elements.textArea.value = link;
+    updatePreview(previewUrl);
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
 
     return link;
@@ -409,6 +437,9 @@ elements.entityType.addEventListener('change', () => {
     valueToCopy.username = '';
     elements.textArea.value = '';
     document.querySelector('.ct-chart').innerHTML = '';
+    document.querySelector('.ct-chart').style.display = '';
+    elements.previewImage.classList.remove('active');
+    elements.previewImage.removeAttribute('src');
     elements.placeholder.classList.add('active');
     elements.copyContainer.style.marginTop = '';
     removeLoader();

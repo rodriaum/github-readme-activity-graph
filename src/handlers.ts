@@ -4,10 +4,14 @@ import { Fetcher } from './fetcher';
 import { invalidUserSvg } from './svgs';
 import { UserDetails } from './interfaces/interface';
 import path from 'path';
+import { readFile } from 'fs/promises';
 
 export class Handlers {
-    public getRoot(_req: Request, res: Response) {
-        res.sendFile(path.resolve(process.cwd(), 'index.html'));
+    public async getRoot(_req: Request, res: Response) {
+        const html = await readFile(path.resolve(process.cwd(), 'index.html'), 'utf8');
+        const origin = (process.env.ORIGIN_URL || 'https://github-act-graph.rodriaum.com').replace(/\/+$/, '');
+
+        res.type('html').send(html.replace('__ORIGIN_URL__', origin));
     }
 
     public async getGraph(req: Request, res: Response) {
