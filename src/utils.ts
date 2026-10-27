@@ -121,6 +121,7 @@ export class Utilities {
                 : 420, // Custom height implementation from range [200, 600], if not specified use default value - 420
             days: isFromValid && isToValid ? days : this.validateDays(this.queryString.days),
             grid: this.queryString.grid === 'false' ? false : true,
+            type: this.queryString.type === 'cartoon' ? 'cartoon' : 'default',
             from,
             to,
         };
@@ -156,6 +157,7 @@ export class Utilities {
                 title,
                 options.area,
                 options.grid,
+                options.type,
             );
             const getChart = await graph.buildGraph(fetchCalendarData.contributions);
             return {
