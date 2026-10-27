@@ -111,6 +111,23 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 
 You can also configure the graph manually using URL parameters. The `type` parameter changes the graph design while preserving the selected theme and its colors. The default is `default`, which keeps the existing graph. Set `type=cartoon` for the rounded, playful design, `type=bar` for vertical bars, or `type=mountain` for a filled area chart.
 
+Choose the graph style independently from the theme:
+
+| Type | Design |
+| --- | --- |
+| `default` | Original line graph. Used when `type` is omitted. |
+| `cartoon` | Rounded panel, highlighted points and contribution summary. |
+| `bar` | Vertical bars for comparing activity day by day. |
+| `mountain` | Filled area chart that emphasizes activity trends. |
+
+Examples:
+
+```md
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=bar&theme=dracula
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=mountain&theme=github-dark
+```
+
+
 ```md
 [![Rodrigo's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=cartoon&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
