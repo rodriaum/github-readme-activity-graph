@@ -1,5 +1,5 @@
 import { BarGraphRenderer } from './BarGraphRenderer';
-import { CartoonGraphRenderer } from './CartoonGraphRenderer';
+import { PlayfulGraphRenderer } from './PlayfulGraphRenderer';
 import { DefaultGraphRenderer } from './DefaultGraphRenderer';
 import { MountainGraphRenderer } from './MountainGraphRenderer';
 import { StyledGraphRenderer } from './StyledGraphRenderer';
@@ -7,7 +7,7 @@ import { GraphRenderer, GraphType } from './types';
 
 const renderers: Record<GraphType, GraphRenderer> = {
     default: new DefaultGraphRenderer(),
-    cartoon: new CartoonGraphRenderer(),
+    playful: new PlayfulGraphRenderer(),
     bar: new BarGraphRenderer(),
     mountain: new MountainGraphRenderer(),
     neon: new StyledGraphRenderer('neon'),
