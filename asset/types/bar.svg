@@ -1,0 +1,759 @@
+
+    <svg
+        width="1200"
+        height="420"
+        viewBox="0 0 1200 420"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <rect
+            data-testid="card_bg"
+            id="cardBg"
+            x="0"
+            y="0"
+            rx="0"
+            height="100%"
+            width="100%"
+            fill="#202124"
+            fill-opacity="1"
+            stroke="#0000"
+            stroke-opacity="1"
+            stroke-width="1"
+        />
+
+        <style>
+            body {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            }
+
+            .header {
+                font: 700 20px 'Segoe UI', Ubuntu, Sans-Serif;
+                text-align: center;
+                color: #fcfcfa;
+                margin-top: 20px;
+            }
+
+            svg {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+                user-select: none;
+            }
+
+            
+
+            
+        @keyframes blink {
+            from {
+                opacity: 0;
+                transform:translateX(-20px); 
+            }
+            to {
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+    
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    
+    
+
+            .graph-animated-line {
+                stroke-dasharray: 5000;
+                stroke-dashoffset: 5000;
+                animation: dash 5s ease-in-out forwards;
+            }
+
+            .graph-animated-point {
+                opacity: 0;
+                animation: blink 1s ease-in-out forwards;
+            }
+
+            .graph-animated-bar {
+                transform-box: fill-box;
+                transform-origin: bottom;
+                animation: bar-grow .8s ease-out both;
+            }
+
+            @keyframes bar-grow {
+                from {
+                    transform: scaleY(0);
+                    opacity: .2;
+                }
+
+                to {
+                    transform: scaleY(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        <foreignObject
+            x="0"
+            y="0"
+            width="1200"
+            height="50"
+        >
+            <h1
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="header"
+            >
+                Rodrigo Ferreira's Contribution Graph
+            </h1>
+        </foreignObject>
+
+        
+            <g class="bar-chart">
+                
+            <line
+                x1="90"
+                y1="80"
+                x2="1150"
+                y2="80"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="147.5"
+                x2="1150"
+                y2="147.5"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="215"
+                x2="1150"
+                y2="215"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="282.5"
+                x2="1150"
+                y2="282.5"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="350"
+                x2="1150"
+                y2="350"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+                
+            <text
+                x="76"
+                y="84"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                45
+            </text>
+        
+            <text
+                x="76"
+                y="151.5"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                34
+            </text>
+        
+            <text
+                x="76"
+                y="219"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                23
+            </text>
+        
+            <text
+                x="76"
+                y="286.5"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                11
+            </text>
+        
+            <text
+                x="76"
+                y="354"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                0
+            </text>
+        
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="95.47096774193548"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0s"
+                    >
+                        <title>27: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="129.66451612903225"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.025s"
+                    >
+                        <title>28: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="163.85806451612902"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.05s"
+                    >
+                        <title>29: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="198.05161290322582"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.07500000000000001s"
+                    >
+                        <title>30: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="232.24516129032259"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.1s"
+                    >
+                        <title>1: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="266.4387096774194"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.125s"
+                    >
+                        <title>2: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="300.6322580645162"
+                        y="332"
+                        width="23.25161290322581"
+                        height="18"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.15000000000000002s"
+                    >
+                        <title>3: 3</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="334.82580645161295"
+                        y="344"
+                        width="23.25161290322581"
+                        height="6"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.17500000000000002s"
+                    >
+                        <title>4: 1</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="369.0193548387097"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.2s"
+                    >
+                        <title>5: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="403.2129032258065"
+                        y="284"
+                        width="23.25161290322581"
+                        height="66"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.225s"
+                    >
+                        <title>6: 11</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="437.40645161290325"
+                        y="344"
+                        width="23.25161290322581"
+                        height="6"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.25s"
+                    >
+                        <title>7: 1</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="471.6"
+                        y="212"
+                        width="23.25161290322581"
+                        height="138"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.275s"
+                    >
+                        <title>8: 23</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="505.79354838709685"
+                        y="290"
+                        width="23.25161290322581"
+                        height="60"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.30000000000000004s"
+                    >
+                        <title>9: 10</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="539.9870967741936"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.325s"
+                    >
+                        <title>10: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="574.1806451612904"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.35000000000000003s"
+                    >
+                        <title>11: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="608.3741935483871"
+                        y="272"
+                        width="23.25161290322581"
+                        height="77.99999999999999"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.375s"
+                    >
+                        <title>12: 13</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="642.5677419354839"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.4s"
+                    >
+                        <title>13: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="676.7612903225807"
+                        y="314"
+                        width="23.25161290322581"
+                        height="36"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.42500000000000004s"
+                    >
+                        <title>14: 6</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="710.9548387096775"
+                        y="242"
+                        width="23.25161290322581"
+                        height="108"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.45s"
+                    >
+                        <title>15: 18</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="745.1483870967743"
+                        y="194.00000000000003"
+                        width="23.25161290322581"
+                        height="155.99999999999997"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.47500000000000003s"
+                    >
+                        <title>16: 26</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="779.341935483871"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.5s"
+                    >
+                        <title>17: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="813.5354838709678"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.525s"
+                    >
+                        <title>18: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="847.7290322580645"
+                        y="278"
+                        width="23.25161290322581"
+                        height="72"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.55s"
+                    >
+                        <title>19: 12</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="881.9225806451614"
+                        y="308"
+                        width="23.25161290322581"
+                        height="42"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.5750000000000001s"
+                    >
+                        <title>20: 7</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="916.1161290322582"
+                        y="314"
+                        width="23.25161290322581"
+                        height="36"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.6000000000000001s"
+                    >
+                        <title>21: 6</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="950.3096774193549"
+                        y="350"
+                        width="23.25161290322581"
+                        height="2"
+                        rx="5"
+                        fill="#c4e3ff"
+                        fill-opacity=".28"
+                        style="animation-delay: 0.625s"
+                    >
+                        <title>22: 0</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="984.5032258064517"
+                        y="326"
+                        width="23.25161290322581"
+                        height="24"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.65s"
+                    >
+                        <title>23: 4</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="1018.6967741935484"
+                        y="308"
+                        width="23.25161290322581"
+                        height="42"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.675s"
+                    >
+                        <title>24: 7</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="1052.8903225806453"
+                        y="146"
+                        width="23.25161290322581"
+                        height="204"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.7000000000000001s"
+                    >
+                        <title>25: 34</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="1087.0838709677419"
+                        y="80"
+                        width="23.25161290322581"
+                        height="270"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.7250000000000001s"
+                    >
+                        <title>26: 45</title>
+                    </rect>
+                
+                    <rect
+                        class="graph-animated-bar"
+                        x="1121.2774193548387"
+                        y="158"
+                        width="23.25161290322581"
+                        height="192"
+                        rx="5"
+                        fill="#ff8070"
+                        fill-opacity=".95"
+                        style="animation-delay: 0.75s"
+                    >
+                        <title>27: 32</title>
+                    </rect>
+                
+                
+                <text
+                    x="107.09677419354838"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+                <text
+                    x="209.67741935483872"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    30
+                </text>
+            
+                <text
+                    x="312.2580645161291"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    3
+                </text>
+            
+                <text
+                    x="414.8387096774194"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    6
+                </text>
+            
+                <text
+                    x="517.4193548387098"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    9
+                </text>
+            
+                <text
+                    x="620"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    12
+                </text>
+            
+                <text
+                    x="722.5806451612904"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    15
+                </text>
+            
+                <text
+                    x="825.1612903225807"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    18
+                </text>
+            
+                <text
+                    x="927.7419354838711"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    21
+                </text>
+            
+                <text
+                    x="1030.3225806451612"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    24
+                </text>
+            
+                <text
+                    x="1132.9032258064515"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+            </g>
+        
+    </svg>

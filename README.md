@@ -109,16 +109,20 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 
 ![Customization interface preview](./asset/customizer-preview.png)
 
-You can also configure the graph manually using URL parameters. The `type` parameter changes the graph design while preserving the selected theme and its colors. The default is `default`, which keeps the existing graph. Set `type=playful` for the rounded, playful design, `type=bar` for vertical bars, or `type=mountain` for a filled area chart.
+You can also configure the graph manually using URL parameters.
 
 Choose the graph style independently from the theme:
 
-| Type | Design |
-| --- | --- |
-| `default` | Original line graph. Used when `type` is omitted. |
-| `playful` | Rounded panel, highlighted points and contribution summary. |
-| `bar` | Vertical bars for comparing activity day by day. |
-| `mountain` | Filled area chart that emphasizes activity trends. |
+|            Type              |                               Preview                                |
+| :--------------------------: | :------------------------------------------------------------------: |
+|          `default`           | <img src="./asset/types/default.png" height=250 alt="graph"/>        |
+|          `playful`           | <img src="./asset/types/playful.png" height=250 alt="graph"/>        |
+|            `bar`             | <img src="./asset/types/bar.png" height=250 alt="graph"/>            |
+|          `mountain`          | <img src="./asset/types/mountain.png" height=250 alt="graph"/>       |
+|            `neon`            | <img src="./asset/types/neon.png" height=250 alt="graph"/>           |
+|          `minimal`           | <img src="./asset/types/minimal.png" height=250 alt="graph"/>        |
+|          `terminal`          | <img src="./asset/types/terminal.png" height=250 alt="graph"/>       |
+|          `gradient`          | <img src="./asset/types/gradient.png" height=250 alt="graph"/>       |
 
 Examples:
 
@@ -129,7 +133,7 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=mountain&them
 
 
 ```md
-[![Rodrigo's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=playful&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
+[![Rodrigo's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
 #### Common Options
@@ -153,7 +157,7 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=mountain&them
 |     `days`     |      number of to days display on graph       | number between (1 - 90) [Recommended below 40] |
 |     `from`     |       date from which the graph starts        |              format `YYYY-MM-DD`               |
 |      `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
-|     `type`     | graph design: `default`, `playful`, `bar` or `mountain` | string |
+|     `type`     |                  graph design                 |                     string                     |
 |     `grid`     |                   show grid                   |           boolean (default: `true`)            |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**

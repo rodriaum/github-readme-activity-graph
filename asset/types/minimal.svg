@@ -1,0 +1,234 @@
+
+    <svg
+        width="1200"
+        height="420"
+        viewBox="0 0 1200 420"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <rect
+            data-testid="card_bg"
+            id="cardBg"
+            x="0"
+            y="0"
+            rx="0"
+            height="100%"
+            width="100%"
+            fill="#202124"
+            fill-opacity="1"
+            stroke="#0000"
+            stroke-opacity="1"
+            stroke-width="1"
+        />
+
+        <style>
+            body {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            }
+
+            .header {
+                font: 700 20px 'Segoe UI', Ubuntu, Sans-Serif;
+                text-align: center;
+                color: #fcfcfa;
+                margin-top: 20px;
+            }
+
+            svg {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+                user-select: none;
+            }
+
+            
+
+            
+        @keyframes blink {
+            from {
+                opacity: 0;
+                transform:translateX(-20px); 
+            }
+            to {
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+    
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    
+    
+
+            .graph-animated-line {
+                stroke-dasharray: 5000;
+                stroke-dashoffset: 5000;
+                animation: dash 5s ease-in-out forwards;
+            }
+
+            .graph-animated-point {
+                opacity: 0;
+                animation: blink 1s ease-in-out forwards;
+            }
+
+            .graph-animated-bar {
+                transform-box: fill-box;
+                transform-origin: bottom;
+                animation: bar-grow .8s ease-out both;
+            }
+
+            @keyframes bar-grow {
+                from {
+                    transform: scaleY(0);
+                    opacity: .2;
+                }
+
+                to {
+                    transform: scaleY(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        <foreignObject
+            x="0"
+            y="0"
+            width="1200"
+            height="50"
+        >
+            <h1
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="header"
+            >
+                Rodrigo Ferreira's Contribution Graph
+            </h1>
+        </foreignObject>
+
+        
+            
+            
+            
+            <g font-family="inherit">
+                
+                
+                
+                
+            <path d="M 70,350 C 88.25,350 88.25,350 106.5,350 C 124.75,350 124.75,350 143,350 C 161.25,350 161.25,350 179.5,350 C 197.75,350 197.75,350 216,350 C 234.25,350 234.25,350 252.5,350 C 270.75,350 270.75,332.1333333333333 289,332.1333333333333 C 307.25,332.1333333333333 307.25,344.0444444444444 325.5,344.0444444444444 C 343.75,344.0444444444444 343.75,350 362,350 C 380.25,350 380.25,284.4888888888889 398.5,284.4888888888889 C 416.75,284.4888888888889 416.75,344.0444444444444 435,344.0444444444444 C 453.25,344.0444444444444 453.25,213.02222222222224 471.5,213.02222222222224 C 489.75,213.02222222222224 489.75,290.44444444444446 508,290.44444444444446 C 526.25,290.44444444444446 526.25,350 544.5,350 C 562.75,350 562.75,350 581,350 C 599.25,350 599.25,272.5777777777778 617.5,272.5777777777778 C 635.75,272.5777777777778 635.75,350 654,350 C 672.25,350 672.25,314.26666666666665 690.5,314.26666666666665 C 708.75,314.26666666666665 708.75,242.8 727,242.8 C 745.25,242.8 745.25,195.15555555555557 763.5,195.15555555555557 C 781.75,195.15555555555557 781.75,350 800,350 C 818.25,350 818.25,350 836.5,350 C 854.75,350 854.75,278.5333333333333 873,278.5333333333333 C 891.25,278.5333333333333 891.25,308.31111111111113 909.5,308.31111111111113 C 927.75,308.31111111111113 927.75,314.26666666666665 946,314.26666666666665 C 964.25,314.26666666666665 964.25,350 982.5,350 C 1000.75,350 1000.75,326.1777777777778 1019,326.1777777777778 C 1037.25,326.1777777777778 1037.25,308.31111111111113 1055.5,308.31111111111113 C 1073.75,308.31111111111113 1073.75,147.51111111111112 1092,147.51111111111112 C 1110.25,147.51111111111112 1110.25,82 1128.5,82 C 1146.75,82 1146.75,159.42222222222222 1165,159.42222222222222" fill="none" stroke="#c4e3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"   class="graph-animated-line"/>
+        
+                
+                <g fill="#fcfcfa" >
+                    
+                <text
+                    x="70"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+                <text
+                    x="179.5"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    30
+                </text>
+            
+                <text
+                    x="289"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    3
+                </text>
+            
+                <text
+                    x="398.5"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    6
+                </text>
+            
+                <text
+                    x="508"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    9
+                </text>
+            
+                <text
+                    x="617.5"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    12
+                </text>
+            
+                <text
+                    x="727"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    15
+                </text>
+            
+                <text
+                    x="836.5"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    18
+                </text>
+            
+                <text
+                    x="946"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    21
+                </text>
+            
+                <text
+                    x="1055.5"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    24
+                </text>
+            
+                <text
+                    x="1165"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+                </g>
+            </g>
+        
+    </svg>
