@@ -10,6 +10,7 @@ const elements = {
     username: document.getElementById('username'),
     entityType: document.getElementById('entityType'),
     themeSelect: document.getElementById('themeSelect'),
+    graphTypeSelect: document.getElementById('graphTypeSelect'),
     toastContainer: document.getElementById('toast-container'),
 };
 // Theme definitions
@@ -183,11 +184,26 @@ const applyGraphColors = () => {
 const generateLink = () => {
     const isOrganization = elements.entityType.value === 'organization';
     const parameter = isOrganization ? 'organization' : 'username';
-    const label = isOrganization ? `${valueToCopy.username} organization activity graph` : `${valueToCopy.username}'s GitHub activity graph`;
+    const label = isOrganization
+        ? `${valueToCopy.username} organization activity graph`
+        : `${valueToCopy.username}'s GitHub activity graph`;
     const profileUrl = `https://github.com/${valueToCopy.username}`;
-    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${parameter}=${encodeURIComponent(valueToCopy.username)}&bg_color=${valueToCopy.bgColor.slice(1)}&color=${valueToCopy.color.slice(1)}&line=${valueToCopy.line.slice(1)}&point=${valueToCopy.point.slice(1)}&area=true&hide_border=true)](${profileUrl})`;
+    const graphType = elements.graphTypeSelect.value;
+    const query = new URLSearchParams({
+        [parameter]: valueToCopy.username,
+        bg_color: valueToCopy.bgColor.slice(1),
+        color: valueToCopy.color.slice(1),
+        line: valueToCopy.line.slice(1),
+        point: valueToCopy.point.slice(1),
+        area: 'true',
+        hide_border: 'true',
+        type: graphType,
+    });
+    const link = `[![${label}](https://github-act-graph.rodriaum.com/graph?${query.toString()})](${profileUrl})`;
+
     elements.textArea.value = link;
     elements.copyText.childNodes[3].style.backgroundColor = 'rgb(87, 132, 245)';
+
     return link;
 };
 
@@ -403,6 +419,7 @@ inputElements.lineInput.addEventListener('input', changeLineColor);
 inputElements.ltgInput.addEventListener('input', changeLabelsAndGridColor);
 inputElements.pointInput.addEventListener('input', changePointColor);
 elements.themeSelect.addEventListener('change', onThemeChange);
+elements.graphTypeSelect.addEventListener('change', generateLink);
 
 
 // Apply the same custom select design to all picker controls.
