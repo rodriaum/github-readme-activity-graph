@@ -16,7 +16,7 @@ export const graphSvg = (props: GraphArgs) => `
             <style>
                 body { font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; }
                 .header {
-                    font: 700 ${props.type === 'cartoon' ? '22px' : '20px'} 'Segoe UI', Ubuntu, Sans-Serif;
+                    font: 700 20px 'Segoe UI', Ubuntu, Sans-Serif;
                     text-align: center;
                     color: #${props.colors.titleColor ?? props.colors.color};
                     margin-top: 20px;
@@ -28,7 +28,25 @@ export const graphSvg = (props: GraphArgs) => `
                     props.colors.pointColor,
                     props.colors.areaColor,
                 ) : ''}
-                ${(!props.type || props.type === 'default') ? pointAnimation() + lineAnimation() : ''}
+                ${pointAnimation() + lineAnimation()}
+                .graph-animated-line {
+                    stroke-dasharray: 5000;
+                    stroke-dashoffset: 5000;
+                    animation: dash 5s ease-in-out forwards;
+                }
+                .graph-animated-point {
+                    opacity: 0;
+                    animation: blink 1s ease-in-out forwards;
+                }
+                .graph-animated-bar {
+                    transform-box: fill-box;
+                    transform-origin: bottom;
+                    animation: bar-grow .8s ease-out both;
+                }
+                @keyframes bar-grow {
+                    from { transform: scaleY(0); opacity: .2; }
+                    to { transform: scaleY(1); opacity: 1; }
+                }
             </style>
 
             <foreignObject x="0" y="0" width="${props.width}" height="50">
