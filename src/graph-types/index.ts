@@ -2,6 +2,7 @@ import { BarGraphRenderer } from './BarGraphRenderer';
 import { CartoonGraphRenderer } from './CartoonGraphRenderer';
 import { DefaultGraphRenderer } from './DefaultGraphRenderer';
 import { MountainGraphRenderer } from './MountainGraphRenderer';
+import { StyledGraphRenderer } from './StyledGraphRenderer';
 import { GraphRenderer, GraphType } from './types';
 
 const renderers: Record<GraphType, GraphRenderer> = {
@@ -9,6 +10,10 @@ const renderers: Record<GraphType, GraphRenderer> = {
     cartoon: new CartoonGraphRenderer(),
     bar: new BarGraphRenderer(),
     mountain: new MountainGraphRenderer(),
+    neon: new StyledGraphRenderer('neon'),
+    minimal: new StyledGraphRenderer('minimal'),
+    terminal: new StyledGraphRenderer('terminal'),
+    gradient: new StyledGraphRenderer('gradient'),
 };
 
 export function getGraphRenderer(type: string): GraphRenderer {
