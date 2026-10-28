@@ -1,0 +1,377 @@
+
+    <svg
+        width="1200"
+        height="420"
+        viewBox="0 0 1200 420"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <rect
+            data-testid="card_bg"
+            id="cardBg"
+            x="0"
+            y="0"
+            rx="0"
+            height="100%"
+            width="100%"
+            fill="#202124"
+            fill-opacity="1"
+            stroke="#0000"
+            stroke-opacity="1"
+            stroke-width="1"
+        />
+
+        <style>
+            body {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            }
+
+            .header {
+                font: 700 20px 'Segoe UI', Ubuntu, Sans-Serif;
+                text-align: center;
+                color: #fcfcfa;
+                margin-top: 20px;
+            }
+
+            svg {
+                font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+                user-select: none;
+            }
+
+            
+
+            
+        @keyframes blink {
+            from {
+                opacity: 0;
+                transform:translateX(-20px); 
+            }
+            to {
+                opacity:1;
+                transform: translateX(0);
+            }
+        }
+    
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    
+    
+
+            .graph-animated-line {
+                stroke-dasharray: 5000;
+                stroke-dashoffset: 5000;
+                animation: dash 5s ease-in-out forwards;
+            }
+
+            .graph-animated-point {
+                opacity: 0;
+                animation: blink 1s ease-in-out forwards;
+            }
+
+            .graph-animated-bar {
+                transform-box: fill-box;
+                transform-origin: bottom;
+                animation: bar-grow .8s ease-out both;
+            }
+
+            @keyframes bar-grow {
+                from {
+                    transform: scaleY(0);
+                    opacity: .2;
+                }
+
+                to {
+                    transform: scaleY(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        <foreignObject
+            x="0"
+            y="0"
+            width="1200"
+            height="50"
+        >
+            <h1
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="header"
+            >
+                Rodrigo Ferreira's Contribution Graph
+            </h1>
+        </foreignObject>
+
+        
+            
+            
+            <defs>
+                <linearGradient id="activity-gradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#c4e3ff" stop-opacity=".75"/>
+                    <stop offset="100%" stop-color="#9e4c98" stop-opacity=".04"/>
+                </linearGradient>
+            </defs>
+        
+            
+            <g font-family="inherit">
+                
+            <line
+                x1="90"
+                y1="82"
+                x2="1150"
+                y2="82"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="149"
+                x2="1150"
+                y2="149"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="216"
+                x2="1150"
+                y2="216"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="283"
+                x2="1150"
+                y2="283"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+            <line
+                x1="90"
+                y1="350"
+                x2="1150"
+                y2="350"
+                stroke="#fcfcfa"
+                stroke-opacity=".14"
+                stroke-dasharray="4 6"
+            />
+        
+                
+            <text
+                x="76"
+                y="86"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                45
+            </text>
+        
+            <text
+                x="76"
+                y="153"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                34
+            </text>
+        
+            <text
+                x="76"
+                y="220"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                23
+            </text>
+        
+            <text
+                x="76"
+                y="287"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                11
+            </text>
+        
+            <text
+                x="76"
+                y="354"
+                text-anchor="end"
+                fill="#fcfcfa"
+                font-size="12"
+            >
+                0
+            </text>
+        
+                <path d="M 90,350 L 90,350 C 107.66666666666667,350 107.66666666666667,350 125.33333333333334,350 C 143,350 143,350 160.66666666666669,350 C 178.33333333333334,350 178.33333333333334,350 196,350 C 213.66666666666669,350 213.66666666666669,350 231.33333333333334,350 C 249,350 249,350 266.66666666666663,350 C 284.3333333333333,350 284.3333333333333,332.1333333333333 302,332.1333333333333 C 319.6666666666667,332.1333333333333 319.6666666666667,344.0444444444444 337.33333333333337,344.0444444444444 C 355,344.0444444444444 355,350 372.6666666666667,350 C 390.33333333333337,350 390.33333333333337,284.4888888888889 408,284.4888888888889 C 425.66666666666663,284.4888888888889 425.66666666666663,344.0444444444444 443.3333333333333,344.0444444444444 C 461,344.0444444444444 461,213.02222222222224 478.66666666666663,213.02222222222224 C 496.3333333333333,213.02222222222224 496.3333333333333,290.44444444444446 514,290.44444444444446 C 531.6666666666667,290.44444444444446 531.6666666666667,350 549.3333333333334,350 C 567,350 567,350 584.6666666666667,350 C 602.3333333333334,350 602.3333333333334,272.5777777777778 620,272.5777777777778 C 637.6666666666667,272.5777777777778 637.6666666666667,350 655.3333333333334,350 C 673,350 673,314.26666666666665 690.6666666666666,314.26666666666665 C 708.3333333333333,314.26666666666665 708.3333333333333,242.8 726,242.8 C 743.6666666666666,242.8 743.6666666666666,195.15555555555557 761.3333333333333,195.15555555555557 C 779,195.15555555555557 779,350 796.6666666666666,350 C 814.3333333333333,350 814.3333333333333,350 832,350 C 849.6666666666666,350 849.6666666666666,278.5333333333333 867.3333333333333,278.5333333333333 C 885,278.5333333333333 885,308.31111111111113 902.6666666666667,308.31111111111113 C 920.3333333333334,308.31111111111113 920.3333333333334,314.26666666666665 938,314.26666666666665 C 955.6666666666667,314.26666666666665 955.6666666666667,350 973.3333333333334,350 C 991,350 991,326.1777777777778 1008.6666666666667,326.1777777777778 C 1026.3333333333335,326.1777777777778 1026.3333333333335,308.31111111111113 1044,308.31111111111113 C 1061.6666666666667,308.31111111111113 1061.6666666666667,147.51111111111112 1079.3333333333335,147.51111111111112 C 1097,147.51111111111112 1097,82 1114.6666666666667,82 C 1132.3333333333335,82 1132.3333333333335,159.42222222222222 1150,159.42222222222222 L 1150,350 Z" fill="url(#activity-gradient)" fill-opacity="1"/>
+                
+            <path d="M 90,350 C 107.66666666666667,350 107.66666666666667,350 125.33333333333334,350 C 143,350 143,350 160.66666666666669,350 C 178.33333333333334,350 178.33333333333334,350 196,350 C 213.66666666666669,350 213.66666666666669,350 231.33333333333334,350 C 249,350 249,350 266.66666666666663,350 C 284.3333333333333,350 284.3333333333333,332.1333333333333 302,332.1333333333333 C 319.6666666666667,332.1333333333333 319.6666666666667,344.0444444444444 337.33333333333337,344.0444444444444 C 355,344.0444444444444 355,350 372.6666666666667,350 C 390.33333333333337,350 390.33333333333337,284.4888888888889 408,284.4888888888889 C 425.66666666666663,284.4888888888889 425.66666666666663,344.0444444444444 443.3333333333333,344.0444444444444 C 461,344.0444444444444 461,213.02222222222224 478.66666666666663,213.02222222222224 C 496.3333333333333,213.02222222222224 496.3333333333333,290.44444444444446 514,290.44444444444446 C 531.6666666666667,290.44444444444446 531.6666666666667,350 549.3333333333334,350 C 567,350 567,350 584.6666666666667,350 C 602.3333333333334,350 602.3333333333334,272.5777777777778 620,272.5777777777778 C 637.6666666666667,272.5777777777778 637.6666666666667,350 655.3333333333334,350 C 673,350 673,314.26666666666665 690.6666666666666,314.26666666666665 C 708.3333333333333,314.26666666666665 708.3333333333333,242.8 726,242.8 C 743.6666666666666,242.8 743.6666666666666,195.15555555555557 761.3333333333333,195.15555555555557 C 779,195.15555555555557 779,350 796.6666666666666,350 C 814.3333333333333,350 814.3333333333333,350 832,350 C 849.6666666666666,350 849.6666666666666,278.5333333333333 867.3333333333333,278.5333333333333 C 885,278.5333333333333 885,308.31111111111113 902.6666666666667,308.31111111111113 C 920.3333333333334,308.31111111111113 920.3333333333334,314.26666666666665 938,314.26666666666665 C 955.6666666666667,314.26666666666665 955.6666666666667,350 973.3333333333334,350 C 991,350 991,326.1777777777778 1008.6666666666667,326.1777777777778 C 1026.3333333333335,326.1777777777778 1026.3333333333335,308.31111111111113 1044,308.31111111111113 C 1061.6666666666667,308.31111111111113 1061.6666666666667,147.51111111111112 1079.3333333333335,147.51111111111112 C 1097,147.51111111111112 1097,82 1114.6666666666667,82 C 1132.3333333333335,82 1132.3333333333335,159.42222222222222 1150,159.42222222222222" fill="none" stroke="#c4e3ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"   class="graph-animated-line"/>
+        
+                
+                <circle cx="302" cy="332.1333333333333" r="3" fill="#ff8070"  style="animation-delay:0.12s" class="graph-animated-point"/>
+            
+                <circle cx="337.33333333333337" cy="344.0444444444444" r="3" fill="#ff8070"  style="animation-delay:0.14s" class="graph-animated-point"/>
+            
+                <circle cx="408" cy="284.4888888888889" r="3" fill="#ff8070"  style="animation-delay:0.18s" class="graph-animated-point"/>
+            
+                <circle cx="443.3333333333333" cy="344.0444444444444" r="3" fill="#ff8070"  style="animation-delay:0.2s" class="graph-animated-point"/>
+            
+                <circle cx="478.66666666666663" cy="213.02222222222224" r="3" fill="#ff8070"  style="animation-delay:0.22s" class="graph-animated-point"/>
+            
+                <circle cx="514" cy="290.44444444444446" r="3" fill="#ff8070"  style="animation-delay:0.24s" class="graph-animated-point"/>
+            
+                <circle cx="620" cy="272.5777777777778" r="3" fill="#ff8070"  style="animation-delay:0.3s" class="graph-animated-point"/>
+            
+                <circle cx="690.6666666666666" cy="314.26666666666665" r="3" fill="#ff8070"  style="animation-delay:0.34s" class="graph-animated-point"/>
+            
+                <circle cx="726" cy="242.8" r="3" fill="#ff8070"  style="animation-delay:0.36s" class="graph-animated-point"/>
+            
+                <circle cx="761.3333333333333" cy="195.15555555555557" r="3" fill="#ff8070"  style="animation-delay:0.38s" class="graph-animated-point"/>
+            
+                <circle cx="867.3333333333333" cy="278.5333333333333" r="3" fill="#ff8070"  style="animation-delay:0.44s" class="graph-animated-point"/>
+            
+                <circle cx="902.6666666666667" cy="308.31111111111113" r="3" fill="#ff8070"  style="animation-delay:0.46s" class="graph-animated-point"/>
+            
+                <circle cx="938" cy="314.26666666666665" r="3" fill="#ff8070"  style="animation-delay:0.48s" class="graph-animated-point"/>
+            
+                <circle cx="1008.6666666666667" cy="326.1777777777778" r="3" fill="#ff8070"  style="animation-delay:0.52s" class="graph-animated-point"/>
+            
+                <circle cx="1044" cy="308.31111111111113" r="3" fill="#ff8070"  style="animation-delay:0.54s" class="graph-animated-point"/>
+            
+                <circle cx="1079.3333333333335" cy="147.51111111111112" r="3" fill="#ff8070"  style="animation-delay:0.56s" class="graph-animated-point"/>
+            
+                <circle cx="1114.6666666666667" cy="82" r="3" fill="#ff8070"  style="animation-delay:0.58s" class="graph-animated-point"/>
+            
+                <circle cx="1150" cy="159.42222222222222" r="3" fill="#ff8070"  style="animation-delay:0.6s" class="graph-animated-point"/>
+            
+                <g fill="#fcfcfa" >
+                    
+                <text
+                    x="90"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+                <text
+                    x="196"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    30
+                </text>
+            
+                <text
+                    x="302"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    3
+                </text>
+            
+                <text
+                    x="408"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    6
+                </text>
+            
+                <text
+                    x="514"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    9
+                </text>
+            
+                <text
+                    x="620"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    12
+                </text>
+            
+                <text
+                    x="726"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    15
+                </text>
+            
+                <text
+                    x="832"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    18
+                </text>
+            
+                <text
+                    x="938"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    21
+                </text>
+            
+                <text
+                    x="1044"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    24
+                </text>
+            
+                <text
+                    x="1150"
+                    y="378"
+                    text-anchor="middle"
+                    fill="#fcfcfa"
+                    font-size="11"
+                >
+                    27
+                </text>
+            
+                </g>
+            </g>
+        
+    </svg>

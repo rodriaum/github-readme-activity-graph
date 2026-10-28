@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Card } from './GraphCards';
 import { invalidUserSvg } from './svgs';
 import { selectColors } from './styles/themes';
+import { isGraphType } from './graph-types';
 import { QueryOption, ParsedQs, UserDetails } from './interfaces/interface';
 
 export class Utilities {
@@ -91,6 +92,8 @@ export class Utilities {
 
         // Custom options for user
         const colors = this.getColors();
+        const requestedType = String(this.queryString.type || 'default');
+        const type = requestedType === 'cartoon' ? 'playful' : isGraphType(requestedType) ? requestedType : 'default';
         let from = '',
             to = '',
             days = 31;
@@ -121,6 +124,7 @@ export class Utilities {
                 : 420, // Custom height implementation from range [200, 600], if not specified use default value - 420
             days: isFromValid && isToValid ? days : this.validateDays(this.queryString.days),
             grid: this.queryString.grid === 'false' ? false : true,
+            type,
             from,
             to,
         };
@@ -156,6 +160,7 @@ export class Utilities {
                 title,
                 options.area,
                 options.grid,
+                options.type,
             );
             const getChart = await graph.buildGraph(fetchCalendarData.contributions);
             return {

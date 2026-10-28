@@ -12,7 +12,7 @@
     --ring: #a1a1aa;
     --radius: 0.75rem;
     font-family:
-        Inter,
+        Archivo,
         ui-sans-serif,
         system-ui,
         -apple-system,
@@ -209,7 +209,7 @@ a:focus-visible {
 
 .heading {
     margin: 0;
-    font-size: clamp(30px, 4vw, 44px);
+    font-size: clamp(24px, 3vw, 36px);
     font-weight: 700;
     line-height: 1.12;
     letter-spacing: -0.055em;
@@ -530,6 +530,18 @@ a:focus-visible {
 .ct-chart {
     width: 100%;
     min-width: 0;
+}
+
+.graph-preview-image {
+    display: none;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    object-fit: contain;
+}
+
+.graph-preview-image.active {
+    display: block;
 }
 
 .chart_placeholder {

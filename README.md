@@ -27,6 +27,7 @@ Please refer to the updated link [here](#how-to-use)
     - [Optional Private Activity](#optional-private-activity)
 - [Use themes](#use-themes)
 - [Available Themes](#available-themes)
+- [Graph Types](#graph-types)
 - [Customization](#customization)
     - [Common Options](#common-options)
 - [Deploy on your own Vercel instance](#deploy-on-your-own-vercel-instance)
@@ -103,6 +104,21 @@ _`username=rodriaum&theme=theme_name`_
 
 For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
 
+## Graph Types
+
+Choose the graph style independently from the theme:
+
+|            Type              |                               Preview                                |
+| :--------------------------: | :------------------------------------------------------------------: |
+|          **default**         | <img src="./asset/types/default.svg" height=250 alt="graph"/>        |
+|          **playful**         | <img src="./asset/types/playful.svg" height=250 alt="graph"/>        |
+|            **bar**           | <img src="./asset/types/bar.svg" height=250 alt="graph"/>            |
+|          **mountain**        | <img src="./asset/types/mountain.svg" height=250 alt="graph"/>       |
+|            **neon**          | <img src="./asset/types/neon.svg" height=250 alt="graph"/>           |
+|          **minimal**         | <img src="./asset/types/minimal.svg" height=250 alt="graph"/>        |
+|          **terminal**        | <img src="./asset/types/terminal.svg" height=250 alt="graph"/>       |
+|          **gradient**        | <img src="./asset/types/gradient.svg" height=250 alt="graph"/>       |
+
 ## Customization
 
 Personalize your GitHub activity graph using the [online customizer](https://github-act-graph.rodriaum.com/). Adjust its appearance and generate a graph URL ready to use in your profile README.
@@ -110,6 +126,18 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 ![Customization interface preview](./asset/customizer-preview.png)
 
 You can also configure the graph manually using URL parameters.
+
+Examples:
+
+```md
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=bar&theme=dracula
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=mountain&theme=github-dark
+```
+
+
+```md
+[![Rodrigo's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
+```
 
 #### Common Options
 
@@ -132,6 +160,7 @@ You can also configure the graph manually using URL parameters.
 |     `days`     |      number of to days display on graph       | number between (1 - 90) [Recommended below 40] |
 |     `from`     |       date from which the graph starts        |              format `YYYY-MM-DD`               |
 |      `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
+|     `type`     | name of [graph types](#graph-types)           |                     string                     |
 |     `grid`     |                   show grid                   |           boolean (default: `true`)            |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**

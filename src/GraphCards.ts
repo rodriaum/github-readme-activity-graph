@@ -1,6 +1,7 @@
-import { createGraph } from './createChart';
-import { graphSvg } from './svgs';
 import { Colors, ContributionDay } from './interfaces/interface';
+import { graphSvg } from './svgs';
+import { getGraphRenderer } from './graph-types';
+import { GraphType } from './graph-types/types';
 
 export class Card {
     constructor(
@@ -11,76 +12,27 @@ export class Card {
         private readonly title = '',
         private readonly area = false,
         private readonly showGrid = true,
+        private readonly type: GraphType = 'default',
     ) {}
 
-    private getOptions() {
-        return {
+    async buildGraph(days: ContributionDay[]): Promise<string> {
+        const renderer = getGraphRenderer(this.type);
+        const chart = await renderer.render(days, {
             width: this.width,
             height: this.height,
-            axisY: {
-                title: 'Contributions',
-                onlyInteger: true,
-                offset: 70,
-                labelOffset: {
-                    y: 4.5,
-                },
-                low: 0,
-                showGrid: this.showGrid,
-            },
-            axisX: {
-                title: 'Days',
-                offset: 50,
-                labelOffset: {
-                    x: -4.5,
-                },
-                showGrid: this.showGrid,
-            },
-            chartPadding: {
-                top: 80,
-                right: 50,
-                bottom: 20,
-                left: 20,
-            },
+            colors: this.colors,
+            showGrid: this.showGrid,
             showArea: this.area,
-            fullWidth: true,
-        };
-    }
-
-    /** Unused Code ref #85 */
-    // private getContrubutionDates() {
-    //     const days = [];
-    //     for (const date = new Date(); days.length < 31; date.setDate(date.getUTCDate() - 1)) {
-    //         const current = new Date(date);
-    //         days.push(
-    //             current.toLocaleString('default', { month: 'short' }) +
-    //                 ' ' +
-    //                 current.getUTCDate().toString()
-    //         );
-    //     }
-
-    //     return days.reverse();
-    // }
-
-    async buildGraph(days: ContributionDay[]): Promise<string> {
-        //Options to pass in createGraph function
-        const options = this.getOptions();
-
-        //Construction of graph from node-chartist
-        const line: Promise<string> = await createGraph('line', options, {
-            labels: days.map((day) => day.date),
-            series: [{ value: days.map((day) => day.contributionCount) }],
         });
 
-        //Arguments to construct graphs with rect and other options
-        const args = {
+        return graphSvg({
             height: this.height,
             width: this.width,
             colors: this.colors,
             title: this.title,
             radius: this.radius,
-            line,
-        };
-
-        return graphSvg(args);
+            line: chart,
+            type: this.type,
+        });
     }
 }

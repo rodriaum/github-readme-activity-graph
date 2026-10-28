@@ -1,8 +1,6 @@
 export class Query {
     query: string;
-    variables: {
-        LOGIN: string;
-    };
+    variables: { LOGIN: string };
 }
 
 export class Colors {
@@ -27,6 +25,7 @@ export class QueryOption {
     radius: number;
     height: number;
     days: number;
+    type: 'default' | 'playful' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
 }
 
 export class ParsedQs {
@@ -42,6 +41,7 @@ export class ParsedQs {
     line?: string;
     point?: string;
     theme?: string;
+    type?: string;
     area?: boolean;
     radius?: number;
     title_color?: string;
@@ -58,7 +58,8 @@ export class GraphArgs {
     colors: Colors;
     title: string;
     radius: number;
-    line: Promise<string>;
+    line: string | Promise<string>;
+    type?: 'default' | 'playful' | 'bar' | 'mountain' | 'neon' | 'minimal' | 'terminal' | 'gradient';
 }
 
 export class UserDetails {
@@ -71,19 +72,14 @@ export class ContributionDay {
     date: string;
 }
 
-export class Week {
-    contributionDays: Array<ContributionDay>;
-}
+export class Week { contributionDays: Array<ContributionDay>; }
 
 export class ResponseOfApi {
     data?: {
         user: {
             name: string;
             contributionsCollection: {
-                contributionCalendar: {
-                    totalContributions: number;
-                    weeks: Array<Week>;
-                };
+                contributionCalendar: { totalContributions: number; weeks: Array<Week> };
             };
         };
     };

@@ -48,4 +48,26 @@ describe('SVG Testing', () => {
             ]),
         ).toMatchSnapshot();
     });
+    it('supports all registered graph types', async () => {
+        const days = [
+            { contributionCount: 0, date: '2026-10-20' },
+            { contributionCount: 4, date: '2026-10-21' },
+            { contributionCount: 2, date: '2026-10-22' },
+        ];
+        for (const type of ['cartoon', 'bar', 'mountain'] as const) {
+            const svg = await new Card(
+                420,
+                1200,
+                8,
+                fakeQueryStringRes[0].colors,
+                'Activity Graph',
+                true,
+                true,
+                type,
+            ).buildGraph(days);
+            expect(svg).toContain('<svg');
+            expect(svg).toContain('Activity Graph');
+        }
+    });
+
 });

@@ -6,10 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="description" content="Customize a GitHub activity graph for your profile README." />
+        <meta name="graph-origin" content="__ORIGIN_URL__" />
         <title>GitHub Readme Activity Graph</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/457a315592.js" crossorigin="anonymous"></script>
         <link href="./styles.css" rel="stylesheet" />
         <link rel="icon" href="asset/logo.png" />
@@ -45,8 +46,8 @@
             </nav>
 
             <header class="header">
-                <h1 class="heading">GitHub Readme Activity Graph</h1>
-                <p class="description">Build a personalized activity graph for your GitHub user profile or organization and add it to your README.</p>
+                <h1 class="heading">GITHUB README ACTIVITY GRAPH</h1>
+                <p class="description">Create a personalized GitHub activity graph for your README.</p>
             </header>
 
             <section class="builder-section" aria-labelledby="builder-title">
@@ -66,7 +67,7 @@
                         <label class="sr-only" for="username">GitHub username or organization</label>
                         <div class="username-field">
                             <i class="fab fa-github" aria-hidden="true"></i>
-                            <input type="text" class="form__field" placeholder="Enter username or organization" id="username" name="username" autocomplete="off" spellcheck="false" />
+                            <input type="text" class="form__field" placeholder="Enter your github username" id="username" name="username" autocomplete="off" spellcheck="false" />
                         </div>
                         <button type="submit" class="btn btn--primary" id="submit-button">Generate Graph</button>
                     </form>
@@ -76,7 +77,20 @@
                     <section class="left" aria-label="Graph customization">
                         <div class="panel-heading">
                             <h3>Appearance</h3>
-                            <p>Fine-tune the colors and theme.</p>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="graphTypeSelect">Graph type</label>
+                            <select id="graphTypeSelect" class="picker" aria-label="Graph type">
+                                <option value="default">Default</option>
+                                <option value="playful">Playful</option>
+                                <option value="bar">Bar</option>
+                                <option value="mountain">Mountain</option>
+                                <option value="neon">Neon</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="terminal">Terminal</option>
+                                <option value="gradient">Gradient</option>
+                            </select>
                         </div>
 
                         <div class="control-group">
@@ -163,24 +177,19 @@
                             <div class="preview-header">
                                 <div>
                                     <h3>Preview</h3>
-                                    <p>See how your graph will look in your README.</p>
                                 </div>
                             </div>
                             <div class="rect">
                                 <div class="chart_placeholder active">
-                                    <div class="placeholder-mark" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24"><path d="M3 18V5m0 13h18M6 15l4-5 3 3 5-7"></path></svg>
-                                    </div>
-                                    <p class="placeholder_text">Your graph preview will appear here.</p>
-                                    <span>Enter a GitHub username or organization above to get started.</span>
+                                    <span>Your graph preview will appear here.</span>
                                 </div>
+                                <img id="graph-preview-image" class="graph-preview-image" alt="Preview of the selected GitHub activity graph" />
                                 <div class="ct-chart"><div class="ct-line-hook" aria-hidden="true"></div></div>
                             </div>
                             <div class="copy_container">
                                 <div class="embed-heading">
                                     <div>
                                         <h3>Embed in your README</h3>
-                                        <p>Copy the Markdown snippet below.</p>
                                     </div>
                                 </div>
                                 <div class="copy_text">
@@ -197,7 +206,7 @@
 
             <footer class="footer">
                 <span>Built for GitHub profile READMEs.</span>
-                <a href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer">View source on GitHub <span aria-hidden="true">↗</span></a>
+                <a href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer">View source on GitHub</a>
             </footer>
         </main>
 
