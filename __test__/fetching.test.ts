@@ -10,6 +10,7 @@ import { UserDetails } from '../src/interfaces/interface';
 
 describe('Fetching Tests', () => {
     const fetcher = new Fetcher('rodriaum');
+
     it('Query Test', () => {
         const expected = expectedQuery(
             'rodriaum',
@@ -25,29 +26,23 @@ describe('Fetching Tests', () => {
         ).toEqual(expected);
     });
 
-    it('Fetching Contributions Test', () => {
+    it('Fetching Contributions Test', async () => {
         // @ts-ignore: mocking private method
         fetcher.getGraphQLQuery = mockQueryCorrect;
         // @ts-ignore: mocking private method
         fetcher.fetch = mockFetchCorrect;
 
-        fetcher.fetchContributions(31).then(
-            //@ts-ignore: will always return data of type userDetails
-            (data: UserDetails) => {
-                expect(data.contributions).toEqual(expect.any(Array));
-                expect(data.contributions.length).toEqual(31);
-                expect(data.name).toEqual('Ashutosh Dwivedi');
-            },
-        );
+        const data = await fetcher.fetchContributions(31);
+        expect((data as UserDetails).contributions).toEqual(expect.any(Array));
+        expect((data as UserDetails).contributions.length).toEqual(31);
+        expect((data as UserDetails).name).toEqual('Ashutosh Dwivedi');
 
         // @ts-ignore: mocking private method
         fetcher.getGraphQLQuery = mockQueryIncorrect;
         // @ts-ignore: mocking private method
         fetcher.fetch = mockFetchIncorrect;
 
-        // @ts-ignore: this will always return a string
-        fetcher.fetchContributions().then((data: string) => {
-            expect(data).toEqual(`Can't fetch any contribution. Please check your username 😬`);
-        });
+        const invalidData = await fetcher.fetchContributions(31);
+        expect(invalidData).toEqual("Can't fetch any contribution. Please check your username 😬");
     });
 });

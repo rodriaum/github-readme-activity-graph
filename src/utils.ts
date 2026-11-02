@@ -4,109 +4,126 @@ import { Card } from './GraphCards';
 import { invalidUserSvg } from './svgs';
 import { selectColors } from './styles/themes';
 import { isGraphType } from './graph-types';
-import { QueryOption, ParsedQs, UserDetails } from './interfaces/interface';
+import { QueryOption, UserDetails } from './interfaces/interface';
+
+const HEX_COLOR_PATTERN = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const MAX_DATE_RANGE_DAYS = 90;
+const MAX_CUSTOM_TITLE_LENGTH = 120;
+
+const safeColor = (value: unknown, fallback: string): string =>
+    typeof value === 'string' && HEX_COLOR_PATTERN.test(value)
+        ? value
+        : fallback;
+
+const boundedNumber = (
+    value: unknown,
+    fallback: number,
+    min: number,
+    max: number,
+): number => {
+    const parsed = typeof value === 'number'
+        ? value
+        : typeof value === 'string' && value.trim() !== ''
+          ? Number(value)
+          : Number.NaN;
+
+    return Number.isFinite(parsed)
+        ? Math.min(Math.max(parsed, min), max)
+        : fallback;
+};
+
+export const isValidGitHubLogin = (login: string): boolean =>
+    /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(login);
 
 export class Utilities {
     public username: string;
-    constructor(private readonly queryString: ParsedQs) {
-        this.username = String(this.queryString.username);
+
+    constructor(private readonly queryString: Record<string, unknown>) {
+        this.username = typeof this.queryString.username === 'string'
+            ? this.queryString.username.trim()
+            : '';
     }
 
     private getColors() {
-        const theme = this.queryString.theme || 'default';
+        const theme = typeof this.queryString.theme === 'string'
+            ? this.queryString.theme
+            : 'default';
+        const themeColors = selectColors(theme);
+
         return {
-            areaColor: this.queryString.area_color
-                ? this.queryString.area_color
-                : selectColors(theme).areaColor,
-            bgColor: this.queryString.bg_color
-                ? this.queryString.bg_color
-                : selectColors(theme).bgColor,
-            borderColor: this.queryString.border_color
-                ? this.queryString.border_color
-                : String(this.queryString.hide_border) === 'true'
-                  ? '0000' // transparent
-                  : selectColors(theme).borderColor,
-            color: this.queryString.color ? this.queryString.color : selectColors(theme).color,
-            titleColor: this.queryString.title_color
-                ? this.queryString.title_color
-                : this.queryString.color
-                  ? this.queryString.color
-                  : selectColors(theme).titleColor,
-            lineColor: this.queryString.line
-                ? this.queryString.line
-                : selectColors(theme).lineColor,
-            pointColor: this.queryString.point
-                ? this.queryString.point
-                : selectColors(theme).pointColor,
+            areaColor: safeColor(this.queryString.area_color, themeColors.areaColor),
+            bgColor: safeColor(this.queryString.bg_color, themeColors.bgColor),
+            borderColor: String(this.queryString.hide_border) === 'true'
+                ? '0000'
+                : safeColor(this.queryString.border_color, themeColors.borderColor),
+            color: safeColor(this.queryString.color, themeColors.color),
+            titleColor: safeColor(
+                this.queryString.title_color,
+                safeColor(this.queryString.color, themeColors.titleColor),
+            ),
+            lineColor: safeColor(this.queryString.line, themeColors.lineColor),
+            pointColor: safeColor(this.queryString.point, themeColors.pointColor),
         };
     }
 
-    private validateDays(days?: string): number {
-        const d = Number(days);
-        if (typeof d !== 'number') {
-            return 31;
-        } else if (d > 0 && d <= 90) {
-            return d;
-        } else {
-            return 31;
-        }
+    private validateDays(days?: unknown): number {
+        const parsed = typeof days === 'string' || typeof days === 'number' ? Number(days) : Number.NaN;
+        return Number.isInteger(parsed) && parsed >= 1 && parsed <= MAX_DATE_RANGE_DAYS
+            ? parsed
+            : 31;
     }
 
-    private validateDate(date?: string): boolean {
-        const format = 'YYYY-MM-DD';
-        return moment(date, format, true).isValid();
+    private validateDate(date?: unknown): boolean {
+        return typeof date === 'string' && moment(date, 'YYYY-MM-DD', true).isValid();
     }
 
-    private stringDateToUTC(date?: string): string {
-        const format = 'YYYY-MM-DD';
-        return moment(date, format, true).utc().toISOString();
+    private stringDateToUTC(date: string): string {
+        return moment(date, 'YYYY-MM-DD', true).utc().toISOString();
     }
 
     private validateFromIsLessThanTwo(from: string, to: string): boolean {
-        // Parse the ISO string dates into Moment objects
         const fromDate = moment(from);
         const toDate = moment(to);
         const now = moment();
-        // Compare the dates using the isBefore method
+
         return (
             fromDate.isBefore(toDate) &&
+            toDate.diff(fromDate, 'days') <= MAX_DATE_RANGE_DAYS &&
             moment(fromDate).isSameOrBefore(now) &&
             moment(toDate).isSameOrBefore(now)
         );
     }
 
     private calculateNumberOfDaysFromDate(from: string, to: string): number {
-        // Parse the ISO string dates into Moment objects
-        const fromDate = moment(from);
-        const toDate = moment(to);
-
-        // Compare the dates using the isBefore method
-        return toDate.diff(fromDate, 'days');
+        return moment(to).diff(moment(from), 'days');
     }
 
     public queryOptions() {
-        let area = false;
-        if (String(this.queryString.area) === 'true') {
-            area = true;
-        }
-
-        // Custom options for user
+        const area = String(this.queryString.area) === 'true';
         const colors = this.getColors();
-        const requestedType = String(this.queryString.type || 'default');
-        const type = requestedType === 'cartoon' ? 'playful' : isGraphType(requestedType) ? requestedType : 'default';
-        let from = '',
-            to = '',
-            days = 31;
+        const requestedType = typeof this.queryString.type === 'string'
+            ? this.queryString.type
+            : 'default';
+        const type = requestedType === 'cartoon'
+            ? 'playful'
+            : isGraphType(requestedType)
+              ? requestedType
+              : 'default';
+
+        let from = '';
+        let to = '';
+        let days = 31;
+
         const isFromValid = this.validateDate(this.queryString.from);
         const isToValid = this.validateDate(this.queryString.to);
+
         if (isFromValid && isToValid) {
-            from = this.stringDateToUTC(this.queryString.from);
-            to = this.stringDateToUTC(this.queryString.to);
-            if (!this.validateFromIsLessThanTwo(from, to)) {
-                from = '';
-                to = '';
-                days = 31;
-            } else {
+            const requestedFrom = this.stringDateToUTC(this.queryString.from as string);
+            const requestedTo = this.stringDateToUTC(this.queryString.to as string);
+
+            if (this.validateFromIsLessThanTwo(requestedFrom, requestedTo)) {
+                from = requestedFrom;
+                to = requestedTo;
                 days = this.calculateNumberOfDaysFromDate(from, to);
             }
         }
@@ -114,23 +131,23 @@ export class Utilities {
         const options: QueryOption = {
             username: this.username,
             hide_title: String(this.queryString.hide_title) === 'true',
-            radius: this.queryString.radius
-                ? Math.min(Math.max(this.queryString.radius, 0), 16)
-                : 0, // Border radius in range [0, 16]
-            colors: colors,
-            area: area,
-            height: this.queryString.height
-                ? Math.min(Math.max(this.queryString.height, 200), 600)
-                : 420, // Custom height implementation from range [200, 600], if not specified use default value - 420
-            days: isFromValid && isToValid ? days : this.validateDays(this.queryString.days),
-            grid: this.queryString.grid === 'false' ? false : true,
+            radius: boundedNumber(this.queryString.radius, 0, 0, 16),
+            colors,
+            area,
+            height: boundedNumber(this.queryString.height, 420, 200, 600),
+            days: from && to ? days : this.validateDays(this.queryString.days),
+            grid: String(this.queryString.grid) !== 'false',
             type,
             from,
             to,
         };
 
-        if (this.queryString.custom_title)
-            options['custom_title'] = String(this.queryString.custom_title);
+        if (typeof this.queryString.custom_title === 'string') {
+            const title = this.queryString.custom_title
+                .replace(/[\u0000-\u001f\u007f]/g, '')
+                .slice(0, MAX_CUSTOM_TITLE_LENGTH);
+            if (title) options.custom_title = title;
+        }
 
         return options;
     }
@@ -143,12 +160,10 @@ export class Utilities {
             if (!options.hide_title) {
                 if (options.custom_title) {
                     title = options.custom_title;
-                } else if (this.queryString.organization) {
-                    title = `${this.queryString.organization}'s Organization Activity Graph`;
+                } else if (typeof this.queryString.organization === 'string' && this.queryString.organization.trim()) {
+                    title = `${this.queryString.organization.trim()}'s Organization Activity Graph`;
                 } else {
-                    title = `${
-                        fetchCalendarData.name !== null ? fetchCalendarData.name : options.username
-                    }'s Contribution Graph`;
+                    title = `${fetchCalendarData.name !== null ? fetchCalendarData.name : options.username}'s Contribution Graph`;
                 }
             }
 
@@ -169,16 +184,18 @@ export class Utilities {
                     maxAge: 'public, max-age=1800',
                 },
             };
-        } else {
-            return {
-                finalGraph: invalidUserSvg(fetchCalendarData),
-                header: { maxAge: 'no-store, max-age=0' },
-            };
         }
+
+        return {
+            finalGraph: invalidUserSvg(fetchCalendarData),
+            header: { maxAge: 'no-store, max-age=0' },
+        };
     }
 
     public setHttpHeader(res: Response, directivesAndAge: string): void {
-        res.setHeader('Cache-Control', `${directivesAndAge}`);
-        res.set('Content-Type', 'image/svg+xml');
+        res.setHeader('Cache-Control', directivesAndAge);
+        res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'");
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.type('image/svg+xml');
     }
 }

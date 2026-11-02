@@ -1,10 +1,12 @@
-import { Utilities } from './utils';
+import { Utilities, isValidGitHubLogin } from './utils';
 import { Request, Response } from 'express';
 import { Fetcher } from './fetcher';
 import { invalidUserSvg } from './svgs';
 import { UserDetails } from './interfaces/interface';
 import path from 'path';
 import { readFile } from 'fs/promises';
+
+const INVALID_LOGIN_MESSAGE = 'Invalid GitHub username or organization. Please check the GitHub login.';
 
 export class Handlers {
     public async getRoot(_req: Request, res: Response) {
@@ -17,32 +19,39 @@ export class Handlers {
     public async getGraph(req: Request, res: Response) {
         try {
             const utils = new Utilities(req.query);
-
             const organization = typeof req.query.organization === 'string'
                 ? req.query.organization.trim()
                 : '';
-            const fetcher = new Fetcher(organization || utils.username);
+            const login = organization || utils.username;
             const queryOptions = utils.queryOptions();
-            const fetchCalendarData = organization
-                ? await fetcher.fetchOrganizationActivity(
-                      queryOptions.days,
-                      queryOptions.from,
-                      queryOptions.to,
-                  )
-                : await fetcher.fetchContributions(
-                      queryOptions.days,
-                      queryOptions.from,
-                      queryOptions.to,
-                  );
+
+            let fetchCalendarData: UserDetails | string;
+            if (!isValidGitHubLogin(login)) {
+                fetchCalendarData = INVALID_LOGIN_MESSAGE;
+            } else {
+                const fetcher = new Fetcher(login);
+                fetchCalendarData = organization
+                    ? await fetcher.fetchOrganizationActivity(
+                          queryOptions.days,
+                          queryOptions.from,
+                          queryOptions.to,
+                      )
+                    : await fetcher.fetchContributions(
+                          queryOptions.days,
+                          queryOptions.from,
+                          queryOptions.to,
+                      );
+            }
 
             const { finalGraph, header } = await utils.buildGraph(fetchCalendarData);
             utils.setHttpHeader(res, header.maxAge);
-
             res.status(200).send(finalGraph);
-        } catch (error) {
+        } catch {
             res.setHeader('Cache-Control', 'no-store, max-age=0');
-            res.set('Content-Type', 'image/svg+xml');
-            res.send(invalidUserSvg('Something unexpected happened 💥'));
+            res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'");
+            res.setHeader('X-Content-Type-Options', 'nosniff');
+            res.type('image/svg+xml');
+            res.status(500).send(invalidUserSvg('Something unexpected happened 💥'));
         }
     }
 
@@ -52,18 +61,36 @@ export class Handlers {
             const organization = typeof req.query.organization === 'string'
                 ? req.query.organization.trim()
                 : '';
-            const fetcher = new Fetcher(organization || utils.username);
-            const fetchCalendarData: UserDetails | string = organization
-                ? await fetcher.fetchOrganizationActivity(utils.queryOptions().days)
-                : await fetcher.fetchContributions(utils.queryOptions().days);
+            const login = organization || utils.username;
+            const queryOptions = utils.queryOptions();
+
+            let fetchCalendarData: UserDetails | string;
+            if (!isValidGitHubLogin(login)) {
+                fetchCalendarData = INVALID_LOGIN_MESSAGE;
+            } else {
+                const fetcher = new Fetcher(login);
+                fetchCalendarData = organization
+                    ? await fetcher.fetchOrganizationActivity(
+                          queryOptions.days,
+                          queryOptions.from,
+                          queryOptions.to,
+                      )
+                    : await fetcher.fetchContributions(
+                          queryOptions.days,
+                          queryOptions.from,
+                          queryOptions.to,
+                      );
+            }
 
             if (typeof fetchCalendarData === 'object') {
+                res.setHeader('Cache-Control', 'public, max-age=300');
                 res.status(200).json(fetchCalendarData);
             } else {
-                res.status(502).json({ error: fetchCalendarData });
+                res.setHeader('Cache-Control', 'no-store, max-age=0');
+                res.status(400).json({ error: fetchCalendarData });
             }
-        } catch (error) {
-            console.error('Failed to fetch graph data:', error);
+        } catch {
+            res.setHeader('Cache-Control', 'no-store, max-age=0');
             res.status(500).json({ error: 'Something unexpected happened while fetching graph data.' });
         }
     }
