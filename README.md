@@ -1,8 +1,8 @@
 <p align="center">
-    <img src="public/logo.png" height="150">
+    <img src="public/logo.png" width="384" alt="Activity Graph logo">
 </p>
 
-<h1 align="center">Github Readme Activity Graph</h1>
+<h1 align="center">GITHUB README ACTIVITY GRAPH</h1>
 
 ### DEPLOYMENT
 
