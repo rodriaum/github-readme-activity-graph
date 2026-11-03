@@ -2,6 +2,15 @@ import { GraphArgs } from './interfaces/interface';
 import { pointAnimation, lineAnimation } from './styles/graphAnimation';
 import { graphStyle } from './styles/graphStyle';
 
+/**
+ * Escape untrusted text before embedding it in SVG/XML or XHTML text nodes.
+ */
+export const escapeSvgText = (value: unknown): string =>
+    String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
 export const graphSvg = (props: GraphArgs) => `
     <svg
         width="${props.width}"
@@ -93,7 +102,7 @@ export const graphSvg = (props: GraphArgs) => `
                 xmlns="http://www.w3.org/1999/xhtml"
                 class="header"
             >
-                ${props.title}
+                ${escapeSvgText(props.title)}
             </h1>
         </foreignObject>
 
@@ -134,7 +143,7 @@ export const invalidUserSvg = (data: string) => `
             y="100"
             fill="#bd93f9"
         >
-            ${data}
+            ${escapeSvgText(data)}
         </text>
     </svg>
 `;

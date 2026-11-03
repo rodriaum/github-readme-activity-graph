@@ -3,9 +3,8 @@ import { Card } from '../src/GraphCards';
 import { fakeGraphArgs, fakeQueryStringRes } from './fakeInputs';
 
 describe('SVG Testing', () => {
-    //- Svg testing ✔
     it('Test SVGs', () => {
-        let fakeInvalidSvgArg = 'User not found!';
+        const fakeInvalidSvgArg = 'User not found!';
         expect.assertions(4);
         expect(graphSvg(fakeGraphArgs)).toEqual(expect.any(String));
         expect(graphSvg(fakeGraphArgs)).toMatchSnapshot();
@@ -13,7 +12,17 @@ describe('SVG Testing', () => {
         expect(invalidUserSvg(fakeInvalidSvgArg)).toMatchSnapshot();
     });
 
-    //- Svg testing Promise<string> (GrapgCards.ts)✔
+    it('escapes untrusted title and error text before embedding it in SVG', () => {
+        const payload = '<script>alert(1)</script>';
+        const graph = graphSvg({ ...fakeGraphArgs, title: payload });
+        const error = invalidUserSvg(payload);
+
+        expect(graph).toContain('&lt;script&gt;alert(1)&lt;/script&gt;');
+        expect(graph).not.toContain(payload);
+        expect(error).toContain('&lt;script&gt;alert(1)&lt;/script&gt;');
+        expect(error).not.toContain(payload);
+    });
+
     it('chart SVGs', async () => {
         expect.assertions(1);
         expect(
@@ -25,29 +34,15 @@ describe('SVG Testing', () => {
                 "xyz's Contribution Graph",
                 fakeQueryStringRes[0].area,
             ).buildGraph([
-                {
-                    contributionCount: 2,
-                    date: '1',
-                },
-                {
-                    contributionCount: 3,
-                    date: '2',
-                },
-                {
-                    contributionCount: 10,
-                    date: '1',
-                },
-                {
-                    contributionCount: 12,
-                    date: '1',
-                },
-                {
-                    contributionCount: 14,
-                    date: '1',
-                },
+                { contributionCount: 2, date: '1' },
+                { contributionCount: 3, date: '2' },
+                { contributionCount: 10, date: '1' },
+                { contributionCount: 12, date: '1' },
+                { contributionCount: 14, date: '1' },
             ]),
         ).toMatchSnapshot();
     });
+
     it('supports all registered graph types', async () => {
         const days = [
             { contributionCount: 0, date: '2026-10-20' },
@@ -69,5 +64,4 @@ describe('SVG Testing', () => {
             expect(svg).toContain('Activity Graph');
         }
     });
-
 });
