@@ -34,6 +34,9 @@ type FormState = {
   height: string
   radius: string
   bgColor: string
+  borderColor: string
+  titleColor: string
+  areaColor: string
   color: string
   line: string
   point: string
@@ -53,6 +56,9 @@ const initial: FormState = {
   height: "420",
   radius: "0",
   bgColor: "",
+  borderColor: "",
+  titleColor: "",
+  areaColor: "",
   color: "",
   line: "",
   point: ""
@@ -71,10 +77,9 @@ function toQuery(state: FormState) {
   params.set("height", state.height)
   params.set("radius", state.radius)
   if (state.customTitle.trim()) params.set("custom_title", state.customTitle.trim())
-  if (state.bgColor) params.set("bg_color", state.bgColor.replace("#", ""))
-  if (state.color) params.set("color", state.color.replace("#", ""))
-  if (state.line) params.set("line", state.line.replace("#", ""))
-  if (state.point) params.set("point", state.point.replace("#", ""))
+  for (const key of ["bgColor", "borderColor", "titleColor", "areaColor", "color", "line", "point"] as const) {
+    if (state[key]) params.set(({ bgColor: "bg_color", borderColor: "border_color", titleColor: "title_color", areaColor: "area_color", color: "color", line: "line", point: "point" })[key], state[key].replace("#", ""))
+  }
   return params.toString()
 }
 
@@ -85,9 +90,12 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 export function ActivityGraphBuilder() {
   const [form, setForm] = useState(initial)
   const [copied, setCopied] = useState(false)
+  const [origin, setOrigin] = useState("")
   const query = useMemo(() => toQuery(form), [form])
-  const graphUrl = useMemo(() => `${typeof window === "undefined" ? "" : window.location.origin}/graph?${query}`, [query])
+  const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
   const markdown = `[![${form.username}'s GitHub activity graph](${graphUrl})](https://github.com/${form.username})`
+
+  React.useEffect(() => setOrigin(window.location.origin), [])
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(previous => ({ ...previous, [key]: value }))
@@ -172,9 +180,9 @@ export function ActivityGraphBuilder() {
             <details className="group rounded-xl border border-border p-4">
               <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-medium"><Palette className="size-4" /> Custom colors</summary>
               <div className="mt-4 grid grid-cols-2 gap-4">
-                {(["bgColor", "color", "line", "point"] as const).map((key) => (
-                  <label key={key} className="grid gap-2 text-xs capitalize text-muted-foreground">{key === "bgColor" ? "Background" : key === "line" ? "Line" : key}
-                    <Input type="color" className="h-10 p-1" value={form[key] || (key === "bgColor" ? "#ffcfe9" : "#9e4c98")} onChange={event => update(key, event.target.value)} />
+                {(["bgColor", "borderColor", "color", "titleColor", "line", "point", "areaColor"] as const).map(key => (
+                  <label key={key} className="grid gap-2 text-xs capitalize text-muted-foreground">{({ bgColor: "Background", borderColor: "Border", color: "Labels", titleColor: "Title", line: "Line", point: "Points", areaColor: "Area" })[key]}
+                    <Input type="color" className="h-10 p-1" value={form[key] || ({ bgColor: "#ffcfe9", borderColor: "#ffffff", titleColor: "#9e4c98", color: "#9e4c98", line: "#9e4c98", point: "#403d3d", areaColor: "#9e4c98" })[key]} onChange={event => update(key, event.target.value)} />
                   </label>
                 ))}
               </div>

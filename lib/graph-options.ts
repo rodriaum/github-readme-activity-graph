@@ -32,8 +32,7 @@ export const isValidGitHubLogin = (value: string) => loginPattern.test(value)
 export function parseGraphOptions(query: GraphQuery): GraphOptions {
   const username = (getValue(query, "username") ?? "").trim()
   const organization = (getValue(query, "organization") ?? "").trim()
-  const themeName = getValue(query, "theme") ?? "default"
-  const theme = getTheme(themeName)
+  const theme = getTheme(getValue(query, "theme") ?? "default")
   const fromValue = getDate(getValue(query, "from"))
   const toValue = getDate(getValue(query, "to"))
   const now = new Date().toISOString().slice(0, 10)
@@ -45,7 +44,7 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
     const start = Date.parse(`${fromValue}T00:00:00.000Z`)
     const end = Date.parse(`${toValue}T00:00:00.000Z`)
     const range = (end - start) / 86_400_000
-    if (range > 0 && range <= 90 && toValue <= now) {
+    if (range >= 0 && range < 90 && toValue <= now) {
       from = fromValue
       to = toValue
       days = range + 1
@@ -57,11 +56,12 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
   const radius = getNumber(getValue(query, "radius"), 0, 0, 16)
   const height = getNumber(getValue(query, "height"), 420, 200, 600)
   const customTitle = getValue(query, "custom_title")?.replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 120)
+  const hideBorder = getBoolean(getValue(query, "hide_border"), false)
 
   const colors: Colors = {
     areaColor: safeColor(getValue(query, "area_color"), theme.areaColor),
     bgColor: safeColor(getValue(query, "bg_color"), theme.bgColor),
-    borderColor: getBoolean(getValue(query, "hide_border"), false) ? "0000" : safeColor(getValue(query, "border_color"), theme.borderColor),
+    borderColor: hideBorder ? "0000" : safeColor(getValue(query, "border_color"), theme.borderColor),
     color: safeColor(getValue(query, "color"), theme.color),
     titleColor: safeColor(getValue(query, "title_color"), theme.titleColor),
     lineColor: safeColor(getValue(query, "line"), theme.lineColor),

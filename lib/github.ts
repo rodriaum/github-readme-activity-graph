@@ -123,7 +123,9 @@ export async function fetchOrganizationActivity(login: string, days: number, fro
       for (const item of commits) {
         const date = item.commit.committer?.date ?? item.commit.author?.date
         if (!date) continue
-        const key = new Date(date).toISOString().slice(0, 10)
+        const timestamp = Date.parse(date)
+        if (!Number.isFinite(timestamp)) continue
+        const key = new Date(timestamp).toISOString().slice(0, 10)
         if (totals.has(key)) totals.set(key, (totals.get(key) ?? 0) + 1)
       }
     }

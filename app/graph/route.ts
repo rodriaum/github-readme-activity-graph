@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   if (!isValidGitHubLogin(login)) return response(invalidGraph("Invalid GitHub username or organization."), 400)
 
   const forwarded = request.headers.get("x-forwarded-for")
-  const clientIp = request.headers.get("x-real-ip") || forwarded?.split(",").at(-1)?.trim() || "unknown"
+  const clientIp = request.headers.get("x-real-ip") || forwarded?.split(",")[0]?.trim() || "unknown"
   const retryAfter = checkRateLimit(`${options.organization ? "organization" : "user"}:${clientIp}`, Boolean(options.organization))
   if (retryAfter > 0) {
     return new NextResponse(invalidGraph("Rate limit exceeded. Please try again later."), {
