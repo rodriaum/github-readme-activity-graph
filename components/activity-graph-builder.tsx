@@ -189,7 +189,7 @@ export function ActivityGraphBuilder() {
                             <Field label="Account type">
                                 <Select value={form.organization ? "organization" : "user"}
                                         onValueChange={value => { if (value !== null) update("organization", value === "organization") }}>
-                                    <SelectTrigger className="w-full"><SelectValue/></SelectTrigger>
+                                    <SelectTrigger className="w-full"><SelectValue>{form.organization ? "Organization" : "User"}</SelectValue></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="user">User</SelectItem>
                                         <SelectItem value="organization">Organization</SelectItem>
@@ -200,14 +200,14 @@ export function ActivityGraphBuilder() {
                         <div className="grid grid-cols-2 gap-3">
                             <Field label="Date range">
                                 <Select value={form.days} onValueChange={value => { if (value !== null) update("days", value) }}>
-                                    <SelectTrigger className="w-full"><SelectValue/></SelectTrigger>
+                                    <SelectTrigger className="w-full"><SelectValue>{form.days} days</SelectValue></SelectTrigger>
                                     <SelectContent>{["7", "14", "31", "45", "60", "90"].map(value => <SelectItem
                                         key={value} value={value}>{value} days</SelectItem>)}</SelectContent>
                                 </Select>
                             </Field>
                             <Field label="Graph type">
                                 <Select value={form.type} onValueChange={value => { if (value !== null) update("type", value as GraphType) }}>
-                                    <SelectTrigger className="w-full"><SelectValue/></SelectTrigger>
+                                    <SelectTrigger className="w-full"><SelectValue>{graphStyles[form.type].label}</SelectValue></SelectTrigger>
                                     <SelectContent>{graphStyleNames.map(value => <SelectItem key={value}
                                                                                        value={value}>{graphStyles[value].label}</SelectItem>)}</SelectContent>
                                 </Select>
@@ -215,7 +215,7 @@ export function ActivityGraphBuilder() {
                         </div>
                         <Field label="Theme">
                             <Select value={form.theme} onValueChange={value => { if (value !== null) update("theme", value) }}>
-                                <SelectTrigger className="w-full"><SelectValue/></SelectTrigger>
+                                <SelectTrigger className="w-full"><SelectValue>{formatThemeLabel(form.theme)}</SelectValue></SelectTrigger>
                                 <SelectContent>{themeNames.map(name => <SelectItem key={name}
                                                                                    value={name}>{formatThemeLabel(name)}</SelectItem>)}</SelectContent>
                             </Select>
