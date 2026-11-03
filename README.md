@@ -4,6 +4,9 @@
 
 <h1 align="center">GITHUB README ACTIVITY GRAPH</h1>
 
+> [!NOTE]
+> This project is being moved to a new version based on **Next.js**.
+
 ### DEPLOYMENT
 
 The deployment is `github-act-graph.rodriaum.com`.
