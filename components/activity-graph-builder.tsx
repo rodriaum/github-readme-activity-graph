@@ -20,6 +20,26 @@ const graphTypes: { value: GraphType; label: string }[] = [
   { value: "gradient", label: "Gradient" }
 ]
 
+const themeLabels: Record<string, string> = {
+  github: "GitHub",
+  shadcn: "shadcn",
+  xcode: "Xcode",
+  vue: "Vue",
+  nightowl: "Night Owl",
+  synthwave: "Synthwave",
+  high: "High",
+  contrast: "Contrast",
+  modern: "Modern",
+  lilac: "Lilac"
+}
+
+function formatThemeLabel(name: string) {
+  return name
+    .split("-")
+    .map(part => themeLabels[part] ?? `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join(" ")
+}
+
 type FormState = {
   username: string
   organization: boolean
@@ -51,7 +71,7 @@ const initial: FormState = {
   area: false,
   grid: true,
   hideTitle: false,
-  hideBorder: false,
+  hideBorder: true,
   customTitle: "",
   height: "420",
   radius: "0",
@@ -138,15 +158,25 @@ export function ActivityGraphBuilder() {
         <aside className="rounded-2xl border border-border bg-card">
           <div className="flex items-center justify-between border-b border-border px-5 py-4"><div className="flex items-center gap-2 font-semibold"><SlidersHorizontal className="size-4" /> Customize</div><span className="text-xs text-muted-foreground">Settings</span></div>
           <div className="grid gap-5 p-5">
-            <Field label="GitHub account">
-              <div className="flex gap-2">
-                <Input value={form.username} onChange={event => update("username", event.target.value)} placeholder="username or organization" aria-label="GitHub username or organization" />
+            <div className="grid grid-cols-[minmax(0,1fr)_132px] gap-3">
+              <Field label={form.organization ? "Organization" : "User"}>
+                <Input
+                  value={form.username}
+                  onChange={event => update("username", event.target.value)}
+                  placeholder={form.organization ? "organization name" : "GitHub username"}
+                  aria-label={form.organization ? "GitHub organization" : "GitHub username"}
+                />
+              </Field>
+              <Field label="Account type">
                 <Select value={form.organization ? "organization" : "user"} onValueChange={value => update("organization", value === "organization")}>
-                  <SelectTrigger className="w-[118px]"><SelectValue /></SelectTrigger>
-                  <SelectContent><SelectItem value="user">User</SelectItem><SelectItem value="organization">Org</SelectItem></SelectContent>
+                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="user">User</SelectItem>
+                    <SelectItem value="organization">Organization</SelectItem>
+                  </SelectContent>
                 </Select>
-              </div>
-            </Field>
+              </Field>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Date range">
                 <Select value={form.days} onValueChange={value => update("days", value)}>
@@ -164,7 +194,7 @@ export function ActivityGraphBuilder() {
             <Field label="Theme">
               <Select value={form.theme} onValueChange={value => update("theme", value)}>
                 <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>{themeNames.map(name => <SelectItem key={name} value={name}>{name}</SelectItem>)}</SelectContent>
+                <SelectContent>{themeNames.map(name => <SelectItem key={name} value={name}>{formatThemeLabel(name)}</SelectItem>)}</SelectContent>
               </Select>
             </Field>
             <div className="grid grid-cols-2 gap-4">
@@ -208,13 +238,13 @@ export function ActivityGraphBuilder() {
               <div className="flex items-center gap-2 font-semibold"><Code2 className="size-4 text-primary" /> Image URL</div>
               <p className="mt-2 text-xs text-muted-foreground">Use this URL as the image source.</p>
               <div className="mt-4 break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{graphUrl || `/graph?${query}`}</div>
-              <Button className="mt-3 w-full" variant="outline" onClick={() => copy(graphUrl || `/graph?${query}`)}><Clipboard className="size-4" /> Copy URL</Button>
+              <Button className="mx-auto mt-3 flex w-full max-w-[240px] justify-center" variant="outline" onClick={() => copy(graphUrl || `/graph?${query}`)}><Clipboard className="size-4" /> Copy URL</Button>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5">
               <div className="flex items-center gap-2 font-semibold"><GitBranch className="size-4 text-primary" /> Markdown embed</div>
               <p className="mt-2 text-xs text-muted-foreground">Paste this snippet into your profile README.</p>
               <pre className="mt-4 min-h-[92px] overflow-x-auto whitespace-pre-wrap break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{markdown}</pre>
-              <Button className="mt-3 w-full" variant="outline" onClick={() => copy(markdown)}>{copied ? <Check className="size-4" /> : <Clipboard className="size-4" />}{copied ? "Copied" : "Copy Markdown"}</Button>
+              <Button className="mx-auto mt-3 flex w-full max-w-[240px] justify-center" variant="outline" onClick={() => copy(markdown)}>{copied ? <Check className="size-4" /> : <Clipboard className="size-4" />}{copied ? "Copied" : "Copy Markdown"}</Button>
             </div>
           </div>
           <p className="px-1 text-xs leading-5 text-muted-foreground">Organization graphs include public repositories only. Private contribution counts are available through the GitHub contribution calendar when enabled in profile settings.</p>
