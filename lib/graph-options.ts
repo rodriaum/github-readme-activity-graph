@@ -52,7 +52,7 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
   }
 
   const requestedType = getValue(query, "type") ?? "default"
-  const type = requestedType === "cartoon" ? "playful" : graphStyleNames.includes(requestedType as GraphType) ? requestedType as GraphType : "default"
+  const type = graphStyleNames.includes(requestedType as GraphType) ? requestedType as GraphType : "default"
   const radius = getNumber(getValue(query, "radius"), 0, 0, 16)
   const height = getNumber(getValue(query, "height"), 420, 200, 600)
   const customTitle = getValue(query, "custom_title")?.replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 120)

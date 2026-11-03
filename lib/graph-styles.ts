@@ -45,8 +45,7 @@ export type GraphStyle = {
   }
 }
 
-export const graphStyles = {
-  default: {
+const defaultGraphStyle = {
     label: "Default",
     chart: "line",
     fontFamily: "Segoe UI, Ubuntu, sans-serif",
@@ -57,19 +56,10 @@ export const graphStyles = {
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
     animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
-  },
-  playful: {
-    label: "Playful",
-    chart: "line",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
-    line: { width: 3.8, smooth: true },
-    points: { width: 9, mode: "all", alternateColor: true },
-    area: { enabled: false, fill: "solid", opacity: 0.22 },
-    grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
-    axisY: { showLabels: true, offset: 48 },
-    bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
-  },
+  } as const satisfies GraphStyle
+
+export const graphStyles = {
+  default: defaultGraphStyle,
   bar: {
     label: "Bar",
     chart: "bar",
@@ -77,18 +67,6 @@ export const graphStyles = {
     line: { width: 2.8, smooth: true },
     points: { width: 6, mode: "none" },
     area: { enabled: false, fill: "solid", opacity: 0.22 },
-    grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
-    axisY: { showLabels: true, offset: 48 },
-    bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
-  },
-  mountain: {
-    label: "Mountain",
-    chart: "line",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
-    line: { width: 2.8, smooth: true },
-    points: { width: 6, mode: "positive" },
-    area: { enabled: true, fill: "gradient", opacity: 0.7 },
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
@@ -119,16 +97,8 @@ export const graphStyles = {
     animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   terminal: {
-    label: "Terminal",
-    chart: "line",
-    fontFamily: "ui-monospace, SFMono-Regular, Consolas, monospace",
-    line: { width: 2.8, smooth: false, color: "7CFF8A", dashArray: "8 4" },
-    points: { width: 6, mode: "every-third", color: "B6FFBE" },
-    area: { enabled: false, fill: "solid", opacity: 0.22 },
-    grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
-    axisY: { showLabels: true, offset: 48 },
-    bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: false, lineDuration: 6000, markDuration: 700 }
+    ...defaultGraphStyle,
+    label: "Terminal"
   },
   gradient: {
     label: "Gradient",

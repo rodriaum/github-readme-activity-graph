@@ -103,12 +103,10 @@ Choose the graph style independently from the theme:
 |            Type              |                               Preview                                |
 | :--------------------------: | :------------------------------------------------------------------: |
 |          **default**         | <img src="./public/types/default.svg" height=250 alt="graph"/>        |
-|          **playful**         | <img src="./public/types/playful.svg" height=250 alt="graph"/>        |
 |            **bar**           | <img src="./public/types/bar.svg" height=250 alt="graph"/>            |
-|          **mountain**        | <img src="./public/types/mountain.svg" height=250 alt="graph"/>       |
 |            **neon**          | <img src="./public/types/neon.svg" height=250 alt="graph"/>           |
 |          **minimal**         | <img src="./public/types/minimal.svg" height=250 alt="graph"/>        |
-|          **terminal**        | <img src="./public/types/terminal.svg" height=250 alt="graph"/>       |
+|          **terminal**        | <img src="./public/types/default.svg" height=250 alt="graph"/>       |
 |          **gradient**        | <img src="./public/types/gradient.svg" height=250 alt="graph"/>       |
 
 ## Customization
@@ -123,7 +121,7 @@ Examples:
 
 ```md
 https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=bar&theme=dracula
-https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=mountain&theme=github-dark
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&theme=github-dark
 ```
 
 
