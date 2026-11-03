@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { ArrowUpRight, Check, Clipboard, Code2, GitBranch, Palette, SlidersHorizontal, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -109,7 +109,8 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 export function ActivityGraphBuilder() {
   const [form, setForm] = useState(initial)
-  const [copied, setCopied] = useState(false)
+  const [copiedAction, setCopiedAction] = useState<"url" | "markdown" | null>(null)
+  const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [origin, setOrigin] = useState("")
   const query = useMemo(() => toQuery(form), [form])
   const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
@@ -117,17 +118,31 @@ export function ActivityGraphBuilder() {
 
   useEffect(() => setOrigin(window.location.origin), [])
 
+  useEffect(() => {
+    return () => {
+      if (copyTimeout.current) clearTimeout(copyTimeout.current)
+    }
+  }, [])
+
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(previous => ({ ...previous, [key]: value }))
-    setCopied(false)
+    setCopiedAction(null)
+    if (copyTimeout.current) clearTimeout(copyTimeout.current)
   }
 
-  async function copy(value: string) {
+  async function copy(value: string, action: "url" | "markdown") {
     try {
       await navigator.clipboard.writeText(value)
-      setCopied(true)
+      setCopiedAction(action)
+      if (copyTimeout.current) clearTimeout(copyTimeout.current)
+      copyTimeout.current = setTimeout(() => {
+        setCopiedAction(null)
+        copyTimeout.current = null
+      }, 1800)
     } catch {
-      setCopied(false)
+      setCopiedAction(null)
+      if (copyTimeout.current) clearTimeout(copyTimeout.current)
+      copyTimeout.current = null
     }
   }
 
@@ -234,17 +249,17 @@ export function ActivityGraphBuilder() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-5">
               <div className="flex items-center gap-2 font-semibold"><Code2 className="size-4 text-primary" /> Image URL</div>
               <p className="mt-2 text-xs text-muted-foreground">Use this URL as the image source.</p>
-              <div className="mt-4 break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{graphUrl || `/graph?${query}`}</div>
-              <Button className="mx-auto mt-3 flex w-full max-w-[240px] justify-center" variant="outline" onClick={() => copy(graphUrl || `/graph?${query}`)}><Clipboard className="size-4" /> Copy URL</Button>
+              <div className="mt-4 h-[120px] overflow-auto break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{graphUrl || `/graph?${query}`}</div>
+              <Button className="mx-auto mt-3 flex w-full max-w-[240px] justify-center" variant="outline" onClick={() => copy(graphUrl || `/graph?${query}`, "url")}>{copiedAction === "url" ? <Check className="size-4" /> : <Clipboard className="size-4" />}{copiedAction === "url" ? "Copied" : "Copy URL"}</Button>
             </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-5">
               <div className="flex items-center gap-2 font-semibold"><GitBranch className="size-4 text-primary" /> Markdown embed</div>
               <p className="mt-2 text-xs text-muted-foreground">Paste this snippet into your profile README.</p>
-              <pre className="mt-4 min-h-[92px] overflow-x-auto whitespace-pre-wrap break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{markdown}</pre>
-              <Button className="mx-auto mt-3 flex w-full max-w-[240px] justify-center" variant="outline" onClick={() => copy(markdown)}>{copied ? <Check className="size-4" /> : <Clipboard className="size-4" />}{copied ? "Copied" : "Copy Markdown"}</Button>
+              <pre className="mt-4 h-[120px] overflow-auto whitespace-pre-wrap break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{markdown}</pre>
+              <Button className="mx-auto mt-3 flex w-full max-w-[240px] justify-center" variant="outline" onClick={() => copy(markdown, "markdown")}>{copiedAction === "markdown" ? <Check className="size-4" /> : <Clipboard className="size-4" />}{copiedAction === "markdown" ? "Copied" : "Copy Markdown"}</Button>
             </div>
           </div>
           <p className="px-1 text-xs leading-5 text-muted-foreground">Organization graphs include public repositories only. Private contribution counts are available through the GitHub contribution calendar when enabled in profile settings.</p>
