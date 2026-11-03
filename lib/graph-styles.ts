@@ -56,7 +56,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   playful: {
     label: "Playful",
@@ -68,7 +68,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   bar: {
     label: "Bar",
@@ -80,7 +80,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   mountain: {
     label: "Mountain",
@@ -92,7 +92,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   neon: {
     label: "Neon",
@@ -104,7 +104,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   minimal: {
     label: "Minimal",
@@ -116,7 +116,7 @@ export const graphStyles = {
     grid: { enabled: false, opacity: 0, dashArray: "4 6" },
     axisY: { showLabels: false, offset: 8 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   },
   terminal: {
     label: "Terminal",
@@ -128,7 +128,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: false, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: false, lineDuration: 6000, markDuration: 700 }
   },
   gradient: {
     label: "Gradient",
@@ -140,7 +140,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 2800, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
   }
 } as const satisfies Record<string, GraphStyle>
 

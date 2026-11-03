@@ -162,7 +162,7 @@ function decorateScene(
   if (title) {
     scene = scene.append(node("text", {
       x: SVG_WIDTH / 2,
-      y: 32,
+      y: 38,
       "text-anchor": "middle",
       fill: "#" + titleColor,
       "font-size": 20,
@@ -213,7 +213,7 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
     series: [{ name: "contributions", data: values }]
   }
   const chartPadding = {
-    top: hasTitle ? 48 : 22,
+    top: hasTitle ? 60 : 22,
     right: 34,
     bottom: 22,
     left: 12
