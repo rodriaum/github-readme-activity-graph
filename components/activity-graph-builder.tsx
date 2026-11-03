@@ -259,7 +259,7 @@ export function ActivityGraphBuilder() {
                                         point: "Points",
                                         areaColor: "Area"
                                     })[key]}
-                                        <Input type="color" className="h-10 p-1" value={form[key] || ({
+                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={form[key] || ({
                                             bgColor: "#ffcfe9",
                                             borderColor: "#ffffff",
                                             titleColor: "#9e4c98",
