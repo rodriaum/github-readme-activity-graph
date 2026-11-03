@@ -10,8 +10,11 @@ A Next.js and React application that generates customizable GitHub contribution 
 - Custom titles, dimensions, radius, grid and area options
 - Date ranges up to 90 days
 - SVG and JSON endpoints
+- Server-side SVG rendering powered by Chartist 2.2.0
 - Responsive graph customizer
 - Bounded GitHub API requests and request timeouts
+
+Chart rendering is handled by [Chartist](https://chartist.dev/) 2.2.0 using its server renderer. Chartist is dual-licensed under MIT or WTFPL.
 
 ## Requirements
 

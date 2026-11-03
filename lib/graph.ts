@@ -1,125 +1,305 @@
+import {
+  barChartConfig,
+  lineChartConfig,
+  mapNodes,
+  node,
+  toScene
+} from "chartist"
+import { renderToString } from "chartist/server"
 import type { ActivityData, GraphOptions } from "./types"
 
-type Point = { x: number; y: number; index: number; day: ActivityData["contributions"][number] }
+const SVG_WIDTH = 1200
+const MAX_CONTRIBUTION_DAYS = 90
+const HEX_COLOR_PATTERN = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
 
-const width = 1200
-const escapeXml = (value: unknown) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;")
-const n = (value: number) => Number(value.toFixed(1))
-const maxOf = (days: ActivityData["contributions"]) => days.reduce((max, day) => Math.max(max, day.contributionCount), 1)
+type ChartistValue = number | { x?: number; y?: number } | undefined
 
-function getPoints(days: ActivityData["contributions"], height: number, left = 90, right = 50, top = 82, bottom = 70): Point[] {
-  const chartWidth = width - left - right
-  const chartHeight = height - top - bottom
-  const max = maxOf(days)
-  return days.map((day, index) => ({
-    x: n(left + (index / Math.max(1, days.length - 1)) * chartWidth),
-    y: n(top + chartHeight - (day.contributionCount / max) * chartHeight),
-    index,
-    day
-  }))
+function escapeXml(value: unknown) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;")
 }
 
-function gridMarkup(options: GraphOptions, left: number, right: number, top: number, bottom: number, ticks = 4) {
-  if (!options.grid) return ""
-  return Array.from({ length: ticks + 1 }, (_, index) => {
-    const y = n(top + index / ticks * (bottom - top))
-    return `<line x1="${left}" y1="${y}" x2="${right}" y2="${y}" stroke="#${options.colors.color}" stroke-opacity=".14" stroke-dasharray="4 6"/>`
-  }).join("")
+function safeColor(value: string, fallback: string) {
+  return HEX_COLOR_PATTERN.test(value) ? value : fallback
 }
 
-function yAxisMarkup(days: ActivityData["contributions"], color: string, left: number, top: number, bottom: number, ticks = 4) {
-  const max = maxOf(days)
-  return Array.from({ length: ticks + 1 }, (_, index) => {
-    const y = n(top + index / ticks * (bottom - top) + 4)
-    const value = Math.round(max * (ticks - index) / ticks)
-    return `<text x="${left - 14}" y="${y}" text-anchor="end" fill="#${color}" font-size="12">${value}</text>`
-  }).join("")
-}
-
-function dateLabels(points: Point[], color: string, y: number) {
-  const interval = Math.max(1, Math.ceil(points.length / 12))
-  return points.map(({ x, day, index }) => {
-    if (points.length > 18 && index % interval !== 0 && index !== points.length - 1) return ""
-    return `<text x="${x}" y="${y}" text-anchor="middle" fill="#${color}" font-size="11">${escapeXml(day.date)}</text>`
-  }).join("")
-}
-
-function smoothPath(points: Point[], terminal = false) {
-  return points.reduce((path, point, index) => {
-    if (index === 0) return `M ${point.x},${point.y}`
-    const previous = points[index - 1]
-    if (terminal) return `${path} L ${point.x},${previous.y} L ${point.x},${point.y}`
-    const middle = n((previous.x + point.x) / 2)
-    return `${path} C ${middle},${previous.y} ${middle},${point.y} ${point.x},${point.y}`
-  }, "")
-}
-
-function graphBody(days: ActivityData["contributions"], options: GraphOptions) {
-  const height = options.height
-  const minimal = options.type === "minimal"
-  const terminal = options.type === "terminal"
-  const left = minimal ? 70 : 90
-  const right = width - (minimal ? 35 : 50)
-  const top = options.type === "default" ? 80 : 82
-  const bottom = height - 70
-  const points = getPoints(days, height, left, width - right, top, height - bottom)
-  const grid = minimal ? "" : gridMarkup(options, left, right, top, bottom, terminal ? 5 : 4)
-  const yAxis = minimal ? "" : yAxisMarkup(days, options.colors.color, left, top, bottom)
-  const labels = dateLabels(points, options.colors.color, bottom + 28)
-  const path = smoothPath(points, terminal)
-  const first = points[0]
-  const last = points.at(-1)
-  const areaPath = first && last ? `M ${left},${bottom} L ${first.x},${first.y}${path.replace(/^M [^ ]+/, "")} L ${right},${bottom} Z` : ""
-  const area = options.area || options.type === "mountain" || options.type === "gradient"
-  const areaFill = options.type === "gradient" ? "url(#activity-gradient)" : `#${options.colors.areaColor}`
-  const stroke = terminal ? "#7CFF8A" : `#${options.colors.lineColor}`
-  const pointColor = terminal ? "#B6FFBE" : `#${options.colors.pointColor}`
-  let marks = ""
-
-  if (options.type === "bar") {
-    const chartWidth = right - left
-    const slotWidth = chartWidth / Math.max(1, days.length)
-    const barWidth = Math.max(2, Math.min(24, slotWidth * .68))
-    marks = days.map((day, index) => {
-      const barHeight = day.contributionCount / maxOf(days) * (bottom - top)
-      const x = n(left + index * slotWidth + (slotWidth - barWidth) / 2)
-      const y = n(bottom - barHeight)
-      const fill = day.contributionCount > 0 ? pointColor : stroke
-      return `<rect class="graph-bar" x="${x}" y="${y}" width="${n(barWidth)}" height="${n(Math.max(2, barHeight))}" rx="${n(Math.min(5, barWidth / 2))}" fill="${fill}" fill-opacity="${day.contributionCount > 0 ? ".95" : ".28"}"><title>${escapeXml(day.date)}: ${day.contributionCount}</title></rect>`
-    }).join("")
-  } else {
-    const showAll = options.type === "playful"
-    const markers = points.filter(({ day, index }) => {
-      if (minimal) return false
-      if (terminal) return index % 3 === 0
-      if (showAll) return true
-      return day.contributionCount > 0
-    }).map(({ x, y, day, index }) => {
-      const radius = showAll ? (day.contributionCount > 0 ? 5 : 3) : options.type === "neon" ? 4 : 2.5
-      const fill = showAll && index % 2 ? stroke : pointColor
-      return `<circle class="graph-point" cx="${x}" cy="${y}" r="${radius}" fill="${fill}" stroke="#${options.colors.bgColor}" stroke-width="1.5"/>`
-    }).join("")
-    marks = `<path d="${path}" fill="none" stroke="${stroke}" stroke-width="${showAll ? 4 : terminal ? 2 : 2.8}" stroke-linecap="round" stroke-linejoin="round" ${terminal ? 'stroke-dasharray="8 4"' : ""} ${options.type === "neon" ? 'filter="url(#neon-glow)"' : ""} class="graph-line"/>${markers}`
+function numericValue(value: ChartistValue) {
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? value : 0
   }
 
-  const defs = `<defs><linearGradient id="activity-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#${options.colors.lineColor}" stop-opacity=".75"/><stop offset="100%" stop-color="#${options.colors.areaColor}" stop-opacity=".04"/></linearGradient><linearGradient id="mountain-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#${options.colors.areaColor}" stop-opacity=".72"/><stop offset="100%" stop-color="#${options.colors.areaColor}" stop-opacity=".04"/></linearGradient><filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`
-  const areaMarkup = area && first && last && options.type !== "bar"
-    ? `<path d="${areaPath}" fill="${options.type === "mountain" ? "url(#mountain-fill)" : areaFill}" fill-opacity="${options.type === "gradient" ? 1 : options.type === "minimal" ? .08 : .2}"/>`
-    : ""
-  const background = terminal ? `<rect x="${left}" y="${top}" width="${right-left}" height="${bottom-top}" rx="4" fill="#${options.colors.bgColor}" fill-opacity=".35"/>` : ""
+  if (!value) {
+    return 0
+  }
 
-  return `${defs}<g font-family="${terminal ? "monospace" : "inherit"}">${background}${grid}${yAxis}${areaMarkup}${marks}<g fill="${terminal ? "#7CFF8A" : `#${options.colors.color}`}" ${terminal ? 'font-size="10"' : ""}>${labels}</g></g>`
+  const candidate = value.y ?? value.x
+  return typeof candidate === "number" && Number.isFinite(candidate) ? candidate : 0
+}
+
+function normalizeContributions(data: ActivityData) {
+  const contributions = data.contributions
+    .slice(-MAX_CONTRIBUTION_DAYS)
+    .map(day => ({
+      date: String(day.date).slice(0, 10),
+      count: Number.isFinite(day.contributionCount)
+        ? Math.max(0, Math.trunc(day.contributionCount))
+        : 0
+    }))
+
+  return contributions.length > 0 ? contributions : [{ date: "", count: 0 }]
+}
+
+function createChartCss(options: GraphOptions, barWidth: number) {
+  const terminal = options.type === "terminal"
+  const playful = options.type === "playful"
+  const neon = options.type === "neon"
+  const mountain = options.type === "mountain"
+  const gradient = options.type === "gradient"
+  const minimal = options.type === "minimal"
+
+  const labelColor = safeColor(options.colors.color, "9e4c98")
+  const lineColor = terminal ? "7CFF8A" : safeColor(options.colors.lineColor, "9e4c98")
+  const pointColor = terminal ? "B6FFBE" : safeColor(options.colors.pointColor, "403d3d")
+  const areaColor = safeColor(options.colors.areaColor, "9e4c98")
+  const fontFamily = terminal
+    ? "ui-monospace, SFMono-Regular, Consolas, monospace"
+    : "Segoe UI, Ubuntu, sans-serif"
+  const areaFill = gradient || mountain
+    ? "url(#activity-area-gradient)"
+    : "#" + areaColor
+  const areaOpacity = gradient ? "0.92" : mountain ? "0.7" : "0.22"
+  const gridOpacity = options.grid && !minimal ? "0.18" : "0"
+
+  return [
+    "svg{overflow:hidden;font-family:" + fontFamily + ";}",
+    ".ct-label{fill:#" + labelColor + ";color:#" + labelColor + ";font-size:11px;font-family:" + fontFamily + ";}",
+    ".ct-grid{stroke:#" + labelColor + ";stroke-opacity:" + gridOpacity + ";stroke-dasharray:4 6;}",
+    ".ct-line{fill:none;stroke:#" + lineColor + ";stroke-width:" + (playful ? "3.8" : "2.8") + ";stroke-linecap:round;stroke-linejoin:round;}",
+    ".ct-point{stroke:#" + pointColor + ";stroke-width:" + (playful ? "9" : "6") + ";stroke-linecap:round;}",
+    ".ct-point.graph-point-empty{opacity:0.28;}",
+    playful ? ".ct-point.graph-point-active:nth-of-type(2n){stroke:#" + areaColor + ";}" : "",
+    ".ct-area{fill:" + areaFill + ";fill-opacity:" + areaOpacity + ";}",
+    ".ct-bar{stroke:#" + pointColor + ";stroke-width:" + barWidth + ";stroke-linecap:round;}",
+    ".ct-bar.graph-point-empty{opacity:0.28;}",
+    neon ? ".ct-line{filter:drop-shadow(0 0 5px #" + lineColor + ");}" : "",
+    terminal ? ".ct-line{stroke-dasharray:8 4;}" : "",
+    ".graph-title{font-family:" + fontFamily + ";}",
+    ".ct-line{stroke-dasharray:5000;stroke-dashoffset:5000;animation:activity-line-draw 2.8s ease-in-out forwards;}",
+    ".ct-point,.ct-bar{animation:activity-mark-appear 0.7s ease-out both;}",
+    "@keyframes activity-line-draw{to{stroke-dashoffset:0;}}",
+    "@keyframes activity-mark-appear{from{opacity:0.15;}to{opacity:1;}}",
+    "@media(prefers-reduced-motion:reduce){.ct-line,.ct-point,.ct-bar{animation:none;opacity:1;stroke-dashoffset:0;}}"
+  ].filter(Boolean).join("\n")
+}
+
+function addAreaGradient(scene: ReturnType<typeof toScene>, options: GraphOptions) {
+  if (options.type !== "gradient" && options.type !== "mountain") {
+    return scene
+  }
+
+  const lineColor = safeColor(options.colors.lineColor, "9e4c98")
+  const areaColor = safeColor(options.colors.areaColor, "9e4c98")
+
+  const gradient = node("linearGradient", {
+    id: "activity-area-gradient",
+    x1: "0%",
+    y1: "0%",
+    x2: "0%",
+    y2: "100%"
+  })
+    .append(node("stop", {
+      offset: "0%",
+      "stop-color": "#" + lineColor,
+      "stop-opacity": "0.78"
+    }))
+    .append(node("stop", {
+      offset: "100%",
+      "stop-color": "#" + areaColor,
+      "stop-opacity": "0.04"
+    }))
+
+  return scene.append(node("defs").append(gradient), true)
+}
+
+function decorateScene(
+  initialScene: ReturnType<typeof toScene>,
+  title: string,
+  options: GraphOptions,
+  height: number,
+  barWidth: number
+) {
+  const backgroundColor = safeColor(options.colors.bgColor, "ffffff")
+  const borderColor = safeColor(options.colors.borderColor, "ffffff")
+  const titleColor = safeColor(options.colors.titleColor, "9e4c98")
+  const radius = Math.min(16, Math.max(0, Math.trunc(options.radius)))
+
+  let scene = addAreaGradient(initialScene, options)
+
+  scene = scene.append(node("rect", {
+    x: 0,
+    y: 0,
+    width: SVG_WIDTH,
+    height,
+    rx: radius,
+    fill: "#" + backgroundColor
+  }, "graph-background"), true)
+
+  scene = scene.append(
+    node("title").text(title || "GitHub activity graph"),
+    true
+  )
+
+  if (title) {
+    scene = scene.append(node("text", {
+      x: SVG_WIDTH / 2,
+      y: 32,
+      "text-anchor": "middle",
+      fill: "#" + titleColor,
+      "font-size": 20,
+      "font-weight": 700
+    }, "graph-title").text(title))
+  }
+
+  scene = scene.append(node("rect", {
+    x: 0.5,
+    y: 0.5,
+    width: SVG_WIDTH - 1,
+    height: height - 1,
+    rx: radius,
+    fill: "none",
+    stroke: "#" + borderColor,
+    "stroke-width": 1
+  }, "graph-border"))
+
+  scene = scene.append(node("style").text(createChartCss(options, barWidth)))
+
+  return scene.attr({
+    width: SVG_WIDTH,
+    height,
+    viewBox: "0 0 " + SVG_WIDTH + " " + height,
+    role: "img",
+    "aria-label": title || "GitHub activity graph"
+  })
 }
 
 export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
-  const title = options.hideTitle ? "" : options.customTitle || (options.organization
-    ? `${options.organization}'s Organization Activity Graph`
-    : `${data.name || options.username}'s Contribution Graph`)
-  const chart = graphBody(data.contributions, options)
-  const c = options.colors
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${options.height}" viewBox="0 0 ${width} ${options.height}" fill="none" role="img" aria-label="${escapeXml(title || "GitHub activity graph")}"><rect x=".5" y=".5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="${options.radius}" fill="#${c.bgColor}" stroke="#${c.borderColor}" stroke-width="1"/><style>svg{font:600 18px 'Segoe UI',Ubuntu,Sans-Serif;user-select:none}.graph-line{stroke-dasharray:5000;stroke-dashoffset:5000;animation:draw 3s ease-in-out forwards}.graph-point{opacity:0;animation:appear .8s ease-out forwards}.graph-bar{transform-box:fill-box;transform-origin:bottom;animation:grow .8s ease-out both}@keyframes draw{to{stroke-dashoffset:0}}@keyframes appear{to{opacity:1}}@keyframes grow{from{transform:scaleY(0);opacity:.2}to{transform:scaleY(1);opacity:1}}@media(prefers-reduced-motion:reduce){.graph-line,.graph-point,.graph-bar{animation:none;opacity:1;stroke-dashoffset:0}}</style>${title ? `<text x="${width/2}" y="34" text-anchor="middle" fill="#${c.titleColor}" font-size="20" font-weight="700">${escapeXml(title)}</text>` : ""}${chart}</svg>`
+  const height = Math.min(600, Math.max(200, Math.trunc(options.height)))
+  const contributions = normalizeContributions(data)
+  const labels = contributions.map(day => day.date)
+  const values = contributions.map(day => day.count)
+  const maxValue = values.reduce((maximum, value) => Math.max(maximum, value), 0)
+  const daysInterval = Math.max(1, Math.ceil(labels.length / 12))
+  const minimal = options.type === "minimal"
+  const hasTitle = !options.hideTitle
+  const title = hasTitle
+    ? options.customTitle || (
+      options.organization
+        ? options.organization + "'s Organization Activity Graph"
+        : (data.name || options.username) + "'s Contribution Graph"
+    )
+    : ""
+  const chartData = {
+    labels,
+    series: [{ name: "contributions", data: values }]
+  }
+  const chartPadding = {
+    top: hasTitle ? 48 : 22,
+    right: 34,
+    bottom: 22,
+    left: 12
+  }
+  const axisX = {
+    offset: 26,
+    showLabel: true,
+    showGrid: false,
+    labelTransform: (value: string | number | Date, index: number) => (
+      index % daysInterval === 0 || index === labels.length - 1
+        ? String(value)
+        : null
+    )
+  }
+  const axisY = {
+    offset: minimal ? 8 : 48,
+    showLabel: !minimal,
+    showGrid: options.grid && !minimal,
+    low: 0,
+    high: Math.max(1, maxValue),
+    onlyInteger: true,
+    scaleMinSpace: 34
+  }
+
+  const barWidth = Math.max(2, Math.min(24, ((SVG_WIDTH - 120) / labels.length) * 0.68))
+  const chartConfig = options.type === "bar"
+    ? barChartConfig(chartData, {
+      width: SVG_WIDTH,
+      height,
+      chartPadding,
+      seriesBarDistance: 0,
+      axisX,
+      axisY
+    })
+    : lineChartConfig(chartData, {
+      width: SVG_WIDTH,
+      height,
+      chartPadding,
+      fullWidth: true,
+      showLine: true,
+      showPoint: options.type !== "minimal",
+      showArea: options.area || options.type === "mountain" || options.type === "gradient",
+      areaBase: 0,
+      lineSmooth: options.type !== "terminal",
+      axisX,
+      axisY
+    })
+
+  const rawScene = toScene(chartConfig, {
+    width: SVG_WIDTH,
+    height,
+    labels: "svg"
+  })
+
+  const filteredScene = mapNodes(rawScene, current => {
+    if (current.role === "point") {
+      const count = numericValue(current.ctx.value)
+
+      if (options.type === "minimal") {
+        return null
+      }
+
+      if (options.type === "terminal" && current.ctx.valueIndex % 3 !== 0) {
+        return null
+      }
+
+      if (options.type !== "playful" && options.type !== "terminal" && count <= 0) {
+        return null
+      }
+
+      return current.addClass(count > 0 ? "graph-point-active" : "graph-point-empty")
+    }
+
+    if (current.role === "bar") {
+      const count = numericValue(current.ctx.value)
+      return current.addClass(count > 0 ? "graph-point-active" : "graph-point-empty")
+    }
+
+    return undefined
+  })
+
+  const scene = decorateScene(
+    filteredScene ?? rawScene,
+    title,
+    options,
+    height,
+    barWidth
+  )
+
+  return renderToString(scene)
 }
 
 export function invalidGraph(message: string) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="420" height="200" viewBox="0 0 420 200"><rect x=".5" y=".5" width="419" height="199" rx="5" fill="#44475a" stroke="#E4E2E2"/><text x="20" y="100" fill="#bd93f9" font-size="14">${escapeXml(message)}</text></svg>`
+  return "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"420\" height=\"200\" viewBox=\"0 0 420 200\"><rect x=\".5\" y=\".5\" width=\"419\" height=\"199\" rx=\"5\" fill=\"#44475a\" stroke=\"#E4E2E2\"/><text x=\"20\" y=\"100\" fill=\"#bd93f9\" font-size=\"14\">" + escapeXml(message) + "</text></svg>"
 }

@@ -14,6 +14,9 @@ importers:
       '@shadcn/react':
         specifier: ^0.3.1
         version: 0.3.1(@types/react@19.3.0)(react@19.3.1)
+      chartist:
+        specifier: 2.2.0
+        version: 2.2.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1358,6 +1361,10 @@ packages:
 
   character-entities-legacy@3.0.0:
     resolution: {integrity: sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==}
+
+  chartist@2.2.0:
+    resolution: {integrity: sha512-B3OUXchU0hdaDQ1CaAs0sMz2X3GeKSIiO3OmKtQ55hz4NLTkGhLYEgOQGF2hcDhZtAzrAAje+oG3MnOOk6DBFQ==}
+    engines: {node: '>=14'}
 
   class-variance-authority@0.7.1:
     resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
@@ -4572,6 +4579,8 @@ snapshots:
   character-entities-html4@2.1.0: {}
 
   character-entities-legacy@3.0.0: {}
+
+  chartist@2.2.0: {}
 
   class-variance-authority@0.7.1:
     dependencies:
