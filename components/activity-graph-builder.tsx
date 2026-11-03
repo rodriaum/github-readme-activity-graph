@@ -1,7 +1,7 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import { ArrowUpRight, Check, Clipboard, Code2, Github, Palette, SlidersHorizontal, Sparkles } from "lucide-react"
+import { useEffect, useMemo, useState } from "react"
+import { ArrowUpRight, Check, Clipboard, Code2, GitBranch, Palette, SlidersHorizontal, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -95,7 +95,7 @@ export function ActivityGraphBuilder() {
   const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
   const markdown = `[![${form.username}'s GitHub activity graph](${graphUrl})](https://github.com/${form.username})`
 
-  React.useEffect(() => setOrigin(window.location.origin), [])
+  useEffect(() => setOrigin(window.location.origin), [])
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(previous => ({ ...previous, [key]: value }))
@@ -115,7 +115,7 @@ export function ActivityGraphBuilder() {
     <main className="mx-auto w-full max-w-7xl px-5 pb-16 sm:px-8">
       <header className="flex h-20 items-center justify-between border-b border-border">
         <a href="https://github.com/rodriaum/github-readme-activity-graph" className="flex items-center gap-3 font-semibold tracking-tight">
-          <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground"><Github className="size-5" /></span>
+          <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground"><GitBranch className="size-5" /></span>
           <span>Activity Graph <span className="text-muted-foreground">/ Studio</span></span>
         </a>
         <a href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground">GitHub repository <ArrowUpRight className="size-4" /></a>
