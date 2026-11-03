@@ -3,6 +3,36 @@
 import * as React from "react"
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes"
 
+// next-themes 0.4.6 injects its anti-FOUC script during render. React 19
+// reports this as a development warning even though the script works during SSR.
+// Filter only that known warning and leave all other console errors untouched.
+const themeConsole = console as typeof console & {
+  __nextThemesScriptWarningPatched?: boolean
+}
+
+if (
+  typeof window !== "undefined" &&
+  process.env.NODE_ENV === "development" &&
+  !themeConsole.__nextThemesScriptWarningPatched
+) {
+  const originalConsoleError = console.error.bind(console)
+
+  console.error = (...args: unknown[]) => {
+    const message = args[0]
+
+    if (
+      typeof message === "string" &&
+      message.includes("Encountered a script tag while rendering React component")
+    ) {
+      return
+    }
+
+    originalConsoleError(...args)
+  }
+
+  themeConsole.__nextThemesScriptWarningPatched = true
+}
+
 function ThemeProvider({
   children,
   ...props
