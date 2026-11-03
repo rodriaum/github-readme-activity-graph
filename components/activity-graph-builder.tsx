@@ -211,7 +211,7 @@ export function ActivityGraphBuilder() {
               <Button className="mt-3 w-full" variant="outline" onClick={() => copy(graphUrl || `/graph?${query}`)}><Clipboard className="size-4" /> Copy URL</Button>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="flex items-center gap-2 font-semibold"><Github className="size-4 text-primary" /> Markdown embed</div>
+              <div className="flex items-center gap-2 font-semibold"><GitBranch className="size-4 text-primary" /> Markdown embed</div>
               <p className="mt-2 text-xs text-muted-foreground">Paste this snippet into your profile README.</p>
               <pre className="mt-4 min-h-[92px] overflow-x-auto whitespace-pre-wrap break-all rounded-xl bg-muted p-3 font-mono text-xs leading-5 text-muted-foreground">{markdown}</pre>
               <Button className="mt-3 w-full" variant="outline" onClick={() => copy(markdown)}>{copied ? <Check className="size-4" /> : <Clipboard className="size-4" />}{copied ? "Copied" : "Copy Markdown"}</Button>
