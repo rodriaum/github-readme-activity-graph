@@ -1,5 +1,6 @@
 import {
   barChartConfig,
+  Interpolation,
   lineChartConfig,
   mapNodes,
   node,
@@ -264,7 +265,7 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
       showPoint: style.points.mode !== "none",
       showArea: options.area || style.area.enabled,
       areaBase: 0,
-      lineSmooth: style.line.smooth,
+      lineSmooth: options.type === "terminal" ? Interpolation.step() : style.line.smooth,
       axisX,
       axisY
     })
