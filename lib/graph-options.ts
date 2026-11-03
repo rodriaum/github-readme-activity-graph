@@ -1,9 +1,9 @@
 import type { GraphOptions, GraphQuery, GraphType, Colors } from "./types"
+import { graphStyleNames } from "./graph-styles"
 import { getTheme } from "./themes"
 
 const loginPattern = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/
 const colorPattern = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
-const graphTypes: GraphType[] = ["default", "playful", "bar", "mountain", "neon", "minimal", "terminal", "gradient"]
 
 const getValue = (query: GraphQuery, key: string) => {
   const value = query[key]
@@ -52,7 +52,7 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
   }
 
   const requestedType = getValue(query, "type") ?? "default"
-  const type = requestedType === "cartoon" ? "playful" : graphTypes.includes(requestedType as GraphType) ? requestedType as GraphType : "default"
+  const type = requestedType === "cartoon" ? "playful" : graphStyleNames.includes(requestedType as GraphType) ? requestedType as GraphType : "default"
   const radius = getNumber(getValue(query, "radius"), 0, 0, 16)
   const height = getNumber(getValue(query, "height"), 420, 200, 600)
   const customTitle = getValue(query, "custom_title")?.replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 120)

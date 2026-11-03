@@ -7,18 +7,8 @@ import {Input} from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {Switch} from "@/components/ui/switch"
 import {themeNames} from "@/lib/themes"
+import {graphStyleNames, graphStyles} from "@/lib/graph-styles"
 import type {GraphType} from "@/lib/types"
-
-const graphTypes: { value: GraphType; label: string }[] = [
-    {value: "default", label: "Default"},
-    {value: "playful", label: "Playful"},
-    {value: "bar", label: "Bar"},
-    {value: "mountain", label: "Mountain"},
-    {value: "neon", label: "Neon"},
-    {value: "minimal", label: "Minimal"},
-    {value: "terminal", label: "Terminal"},
-    {value: "gradient", label: "Gradient"}
-]
 
 const themeLabels: Record<string, string> = {
     github: "GitHub",
@@ -218,8 +208,8 @@ export function ActivityGraphBuilder() {
                             <Field label="Graph type">
                                 <Select value={form.type} onValueChange={value => update("type", value as GraphType)}>
                                     <SelectTrigger className="w-full"><SelectValue/></SelectTrigger>
-                                    <SelectContent>{graphTypes.map(item => <SelectItem key={item.value}
-                                                                                       value={item.value}>{item.label}</SelectItem>)}</SelectContent>
+                                    <SelectContent>{graphStyleNames.map(value => <SelectItem key={value}
+                                                                                       value={value}>{graphStyles[value].label}</SelectItem>)}</SelectContent>
                                 </Select>
                             </Field>
                         </div>

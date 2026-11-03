@@ -6,6 +6,7 @@ import {
   toScene
 } from "chartist"
 import { renderToString } from "chartist/server"
+import { getGraphStyle } from "./graph-styles"
 import type { ActivityData, GraphOptions } from "./types"
 
 const SVG_WIDTH = 1200
@@ -54,54 +55,59 @@ function normalizeContributions(data: ActivityData) {
 }
 
 function createChartCss(options: GraphOptions, barWidth: number) {
-  const terminal = options.type === "terminal"
-  const playful = options.type === "playful"
-  const neon = options.type === "neon"
-  const mountain = options.type === "mountain"
-  const gradient = options.type === "gradient"
-  const minimal = options.type === "minimal"
-
+  const style = getGraphStyle(options.type)
   const labelColor = safeColor(options.colors.color, "9e4c98")
-  const lineColor = terminal ? "7CFF8A" : safeColor(options.colors.lineColor, "9e4c98")
-  const pointColor = terminal ? "B6FFBE" : safeColor(options.colors.pointColor, "403d3d")
+  const lineColor = safeColor(style.line.color ?? options.colors.lineColor, "9e4c98")
+  const pointColor = safeColor(style.points.color ?? options.colors.pointColor, "403d3d")
   const areaColor = safeColor(options.colors.areaColor, "9e4c98")
-  const fontFamily = terminal
-    ? "ui-monospace, SFMono-Regular, Consolas, monospace"
-    : "Segoe UI, Ubuntu, sans-serif"
-  const areaFill = gradient || mountain
+  const areaFill = style.area.fill === "gradient"
     ? "url(#activity-area-gradient)"
     : "#" + areaColor
-  const areaOpacity = gradient ? "0.92" : mountain ? "0.7" : "0.22"
-  const gridOpacity = options.grid && !minimal ? "0.18" : "0"
+  const gridOpacity = options.grid && style.grid.enabled
+    ? String(style.grid.opacity)
+    : "0"
+
+  const animationStyles = style.animation.enabled
+    ? [
+      style.line.dashArray
+        ? ""
+        : ".ct-line{stroke-dasharray:5000;stroke-dashoffset:5000;animation:activity-line-draw " + style.animation.lineDuration + "ms ease-in-out forwards;}",
+      ".ct-point,.ct-bar{animation:activity-mark-appear " + style.animation.markDuration + "ms ease-out both;}",
+      "@keyframes activity-line-draw{to{stroke-dashoffset:0;}}",
+      "@keyframes activity-mark-appear{from{opacity:0.15;}to{opacity:1;}}",
+      "@media(prefers-reduced-motion:reduce){.ct-line,.ct-point,.ct-bar{animation:none;opacity:1;stroke-dashoffset:0;}}"
+    ]
+    : []
 
   return [
-    "svg{overflow:hidden;font-family:" + fontFamily + ";}",
-    ".ct-label{fill:#" + labelColor + ";color:#" + labelColor + ";font-size:11px;font-family:" + fontFamily + ";}",
-    ".ct-grid{stroke:#" + labelColor + ";stroke-opacity:" + gridOpacity + ";stroke-dasharray:4 6;}",
-    ".ct-line{fill:none;stroke:#" + lineColor + ";stroke-width:" + (playful ? "3.8" : "2.8") + ";stroke-linecap:round;stroke-linejoin:round;}",
-    ".ct-point{stroke:#" + pointColor + ";stroke-width:" + (playful ? "9" : "6") + ";stroke-linecap:round;}",
+    "svg{overflow:hidden;font-family:" + style.fontFamily + ";}",
+    ".ct-label{fill:#" + labelColor + ";color:#" + labelColor + ";font-size:11px;font-family:" + style.fontFamily + ";}",
+    ".ct-grid{stroke:#" + labelColor + ";stroke-opacity:" + gridOpacity + ";stroke-dasharray:" + style.grid.dashArray + ";}",
+    ".ct-line{fill:none;stroke:#" + lineColor + ";stroke-width:" + style.line.width + ";stroke-linecap:round;stroke-linejoin:round;}",
+    style.line.dashArray ? ".ct-line{stroke-dasharray:" + style.line.dashArray + ";}" : "",
+    style.line.glow ? ".ct-line{filter:drop-shadow(0 0 " + style.line.glow + "px #" + lineColor + ");}" : "",
+    ".ct-point{stroke:#" + pointColor + ";stroke-width:" + style.points.width + ";stroke-linecap:round;}",
     ".ct-point.graph-point-empty{opacity:0.28;}",
-    playful ? ".ct-point.graph-point-active:nth-of-type(2n){stroke:#" + areaColor + ";}" : "",
-    ".ct-area{fill:" + areaFill + ";fill-opacity:" + areaOpacity + ";}",
+    style.points.alternateColor ? ".ct-point.graph-point-active:nth-of-type(2n){stroke:#" + areaColor + ";}" : "",
+    ".ct-area{fill:" + areaFill + ";fill-opacity:" + style.area.opacity + ";}",
     ".ct-bar{stroke:#" + pointColor + ";stroke-width:" + barWidth + ";stroke-linecap:round;}",
     ".ct-bar.graph-point-empty{opacity:0.28;}",
-    neon ? ".ct-line{filter:drop-shadow(0 0 5px #" + lineColor + ");}" : "",
-    terminal ? ".ct-line{stroke-dasharray:8 4;}" : "",
-    ".graph-title{font-family:" + fontFamily + ";}",
-    ".ct-line{stroke-dasharray:5000;stroke-dashoffset:5000;animation:activity-line-draw 2.8s ease-in-out forwards;}",
-    ".ct-point,.ct-bar{animation:activity-mark-appear 0.7s ease-out both;}",
-    "@keyframes activity-line-draw{to{stroke-dashoffset:0;}}",
-    "@keyframes activity-mark-appear{from{opacity:0.15;}to{opacity:1;}}",
-    "@media(prefers-reduced-motion:reduce){.ct-line,.ct-point,.ct-bar{animation:none;opacity:1;stroke-dashoffset:0;}}"
+    ".graph-title{font-family:" + style.fontFamily + ";}",
+    ...animationStyles
   ].filter(Boolean).join("\n")
 }
 
-function addAreaGradient(scene: ReturnType<typeof toScene>, options: GraphOptions) {
-  if (options.type !== "gradient" && options.type !== "mountain") {
+function addAreaGradient(
+  scene: ReturnType<typeof toScene>,
+  options: GraphOptions
+) {
+  const style = getGraphStyle(options.type)
+
+  if (style.area.fill !== "gradient" || (!style.area.enabled && !options.area)) {
     return scene
   }
 
-  const lineColor = safeColor(options.colors.lineColor, "9e4c98")
+  const lineColor = safeColor(style.line.color ?? options.colors.lineColor, "9e4c98")
   const areaColor = safeColor(options.colors.areaColor, "9e4c98")
 
   const gradient = node("linearGradient", {
@@ -187,13 +193,13 @@ function decorateScene(
 }
 
 export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
+  const style = getGraphStyle(options.type)
   const height = Math.min(600, Math.max(200, Math.trunc(options.height)))
   const contributions = normalizeContributions(data)
   const labels = contributions.map(day => day.date)
   const values = contributions.map(day => day.count)
   const maxValue = values.reduce((maximum, value) => Math.max(maximum, value), 0)
   const daysInterval = Math.max(1, Math.ceil(labels.length / 12))
-  const minimal = options.type === "minimal"
   const hasTitle = !options.hideTitle
   const title = hasTitle
     ? options.customTitle || (
@@ -223,17 +229,24 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
     )
   }
   const axisY = {
-    offset: minimal ? 8 : 48,
-    showLabel: !minimal,
-    showGrid: options.grid && !minimal,
+    offset: style.axisY.offset,
+    showLabel: style.axisY.showLabels,
+    showGrid: options.grid && style.grid.enabled,
     low: 0,
     high: Math.max(1, maxValue),
     onlyInteger: true,
     scaleMinSpace: 34
   }
 
-  const barWidth = Math.max(2, Math.min(24, ((SVG_WIDTH - 120) / labels.length) * 0.68))
-  const chartConfig = options.type === "bar"
+  const barWidth = Math.max(
+    style.bar.minWidth,
+    Math.min(
+      style.bar.maxWidth,
+      ((SVG_WIDTH - 120) / labels.length) * style.bar.widthRatio
+    )
+  )
+
+  const chartConfig = style.chart === "bar"
     ? barChartConfig(chartData, {
       width: SVG_WIDTH,
       height,
@@ -248,10 +261,10 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
       chartPadding,
       fullWidth: true,
       showLine: true,
-      showPoint: options.type !== "minimal",
-      showArea: options.area || options.type === "mountain" || options.type === "gradient",
+      showPoint: style.points.mode !== "none",
+      showArea: options.area || style.area.enabled,
       areaBase: 0,
-      lineSmooth: options.type !== "terminal",
+      lineSmooth: style.line.smooth,
       axisX,
       axisY
     })
@@ -265,16 +278,17 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
   const filteredScene = mapNodes(rawScene, current => {
     if (current.role === "point") {
       const count = numericValue(current.ctx.value)
+      const pointIndex = current.ctx.valueIndex
 
-      if (options.type === "minimal") {
+      if (style.points.mode === "none") {
         return null
       }
 
-      if (options.type === "terminal" && current.ctx.valueIndex % 3 !== 0) {
+      if (style.points.mode === "every-third" && pointIndex % 3 !== 0) {
         return null
       }
 
-      if (options.type !== "playful" && options.type !== "terminal" && count <= 0) {
+      if (style.points.mode === "positive" && count <= 0) {
         return null
       }
 

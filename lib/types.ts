@@ -1,3 +1,7 @@
+import type { GraphType } from "./graph-styles"
+
+export type { GraphType } from "./graph-styles"
+
 export type ContributionDay = { date: string; contributionCount: number }
 
 export type Colors = {
@@ -9,8 +13,6 @@ export type Colors = {
   lineColor: string
   pointColor: string
 }
-
-export type GraphType = "default" | "playful" | "bar" | "mountain" | "neon" | "minimal" | "terminal" | "gradient"
 
 export type GraphOptions = {
   username: string
