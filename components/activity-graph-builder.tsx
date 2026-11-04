@@ -9,6 +9,7 @@ import {Switch} from "@/components/ui/switch"
 import {themeNames} from "@/lib/themes"
 import {graphStyleNames, graphStyles} from "@/lib/graph-styles"
 import type {GraphType} from "@/lib/types"
+import Image from "next/image";
 
 const themeLabels: Record<string, string> = {
     github: "GitHub",
@@ -149,9 +150,16 @@ export function ActivityGraphBuilder() {
             <header className="flex h-20 items-center justify-between border-b border-border">
                 <a href="https://github.com/rodriaum/github-readme-activity-graph"
                    className="flex items-center gap-3 font-semibold tracking-tight">
-                    <span
-                        className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground"><GitBranch
-                        className="size-5"/></span>
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl">
+                        <Image
+                            src="/logo.svg"
+                            alt="Activity Graph"
+                            width={64}
+                            height={64}
+                            className="size-10 object-contain"
+                            priority
+                        />
+                    </span>
                     <span>Activity Graph <span className="text-muted-foreground">/ Studio</span></span>
                 </a>
                 <a href="https://github.com/rodriaum/github-readme-activity-graph" target="_blank" rel="noreferrer"

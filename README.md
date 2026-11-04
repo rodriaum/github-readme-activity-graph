@@ -1,17 +1,17 @@
 <p align="center">
-    <img src="public/logo.png" width="384" alt="Activity Graph logo">
+    <img src="public/logo.svg" width="256" alt="Activity Graph logo">
 </p>
 
 <h1 align="center">GITHUB README ACTIVITY GRAPH</h1>
 
 > [!NOTE]
-> This project is being moved to a new version based on **Next.js**.
+> This repository is the **v2** of the project, rebuilt from the ground up using **Next.js** with a new architecture and an updated tech stack.
 
-### DEPLOYMENT
+### Deployment
 
-The deployment is `github-act-graph.rodriaum.com`.
+The project is deployed at `github-act-graph.rodriaum.com`
 
-Please refer to the updated link [here](#how-to-use)
+Visit the deployment using the link [here](https://github-act-graph.rodriaum.com).
 
 ## Table of contents
 
@@ -25,9 +25,9 @@ Please refer to the updated link [here](#how-to-use)
 - [Graph Types](#graph-types)
 - [Customization](#customization)
     - [Common Options](#common-options)
-- [Shadcn Style](#shadcn-template)
+- [Project Template](#project-template)
 - [Contributing](#contributing)
-- [Core Team 💻](#core-team-)
+- [Team](#core-team-)
 - [Star History](#star-history)
     - [Made with ❤ and TypeScript ](#made-with--and-typescript-)
 
@@ -44,6 +44,9 @@ Just paste the following URL in your profile readme and you are good to go.
 ### [Attention ⚠](#deploy-on-your-own-vercel-instance)
 
 ### Organization Activity Graph
+
+> [!WARNING]
+> Organization activity data retrieval is not fully optimized yet. Large organizations with extensive activity histories may experience slow responses or errors during data retrieval.
 
 You can also generate an activity graph for a GitHub organization. Use the `organization` parameter with the organization's GitHub login:
 
@@ -170,15 +173,15 @@ Example:
 [![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
 
-## Shadcn Template
+## Project Template
 
-This project use the template [b5JgwDAjy](https://ui.shadcn.com/create?preset=b5JgwDAjy) with the style **Maia**.
+This project is built using the [Next.js Template](https://github.com/SaturnixStudio/nextjs-template), developed by **Saturnix Studio**.
 
 ## Contributing
 
 Please read through our [contributing guidelines](https://github.com/rodriaum/github-readme-activity-graph/blob/main/CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
 
-## Core Team 💻
+## Team
 
 <table>
     <tr>
@@ -189,11 +192,7 @@ Please read through our [contributing guidelines](https://github.com/rodriaum/gi
             <sub><b>rodriaum</b></sub>
         </a>
         <br />
-        <a href="#projectManagement" title="Project Management">📆</a>
-        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=rodriaum" title="Code">💻</a>
-        <a href="#documentation" title="Documentation">📖</a>
-        <a href="#ideas" title="Ideas & Planning">🤔</a>
-        <a href="#testing" title="Testing">⚠</a>
+        <a href="https://github.com/rodriaum/github-readme-activity-graph/commits?author=rodriaum" title="Commits">🚀</a>
     </td>
     </tr>
 </table>
@@ -213,4 +212,4 @@ Please read through our [contributing guidelines](https://github.com/rodriaum/gi
   </tr>
 </table>
 
-### Made with ❤ and TypeScript <img src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" width="25">
+### Made with ❤ and Next.js <img src="https://www.vectorlogo.zone/logos/nextjs/nextjs-icon.svg" width="25">

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  <defs>
+    <linearGradient id="bar1" x1="175" y1="650" x2="410" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFC247"/>
+      <stop offset=".52" stop-color="#FF9A1F"/>
+      <stop offset="1" stop-color="#FF6A1A"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="370" y1="500" x2="600" y2="730" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF9B20"/>
+      <stop offset=".55" stop-color="#FF5B16"/>
+      <stop offset="1" stop-color="#F43B22"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="590" y1="300" x2="850" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF8A1C"/>
+      <stop offset=".42" stop-color="#F83B27"/>
+      <stop offset="1" stop-color="#D50045"/>
+    </linearGradient>
+  </defs>
+  <path d="M151 721 259 488c14-30 38-46 70-46h99c27 0 40 23 28 48L348 723c-13 28-36 43-67 43h-99c-28 0-43-20-31-45Z" fill="url(#bar1)"/>
+  <path d="m347 721 151-329c14-30 39-46 71-46h100c27 0 41 23 29 48L550 723c-13 28-37 43-68 43H378c-28 0-43-20-31-45Z" fill="url(#bar2)"/>
+  <path d="m562 721 207-452c14-30 39-46 71-46h100c28 0 42 23 30 48L766 723c-13 28-37 43-68 43H593c-28 0-43-20-31-45Z" fill="url(#bar3)"/>
+</svg>
