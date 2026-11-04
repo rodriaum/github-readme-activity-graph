@@ -19,6 +19,7 @@
     - [Common Options](#common-options)
 - [Project Template](#project-template)
 - [Contributing](#contributing)
+- [License](#license)
 - [Team](#core-team-)
 - [Star History](#star-history)
     - [Made with ❤ and TypeScript ](#made-with--and-typescript-)
@@ -192,6 +193,10 @@ This project is built using the [Next.js Template](https://github.com/SaturnixSt
 ## Contributing
 
 Please read through our [contributing guidelines](https://github.com/rodriaum/github-readme-activity-graph/blob/main/CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ## Team
 
