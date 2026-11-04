@@ -5,108 +5,108 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-sans);
-  --font-heading: var(--font-heading);
-  --font-mono: var(--font-mono);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) * .6);
-  --radius-md: calc(var(--radius) * .8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
+    --font-sans: var(--font-sans);
+    --font-heading: var(--font-heading);
+    --font-mono: var(--font-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --radius-sm: calc(var(--radius) * .6);
+    --radius-md: calc(var(--radius) * .8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
 }
 
 :root {
-  color-scheme: light;
-  --background: oklch(1 0 0);
-  --foreground: oklch(.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(.145 0 0);
-  --primary: oklch(.646 .222 41.116);
-  --primary-foreground: oklch(.985 0 0);
-  --secondary: oklch(.96 .01 45);
-  --secondary-foreground: oklch(.25 .04 35);
-  --muted: oklch(.97 0 0);
-  --muted-foreground: oklch(.556 0 0);
-  --accent: oklch(.95 .04 45);
-  --accent-foreground: oklch(.25 .04 35);
-  --destructive: oklch(.577 .245 27.325);
-  --border: oklch(.922 0 0);
-  --input: oklch(.922 0 0);
-  --ring: oklch(.646 .222 41.116);
-  --radius: .75rem;
+    color-scheme: light;
+    --background: oklch(1 0 0);
+    --foreground: oklch(.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(.145 0 0);
+    --primary: oklch(.646 .222 41.116);
+    --primary-foreground: oklch(.985 0 0);
+    --secondary: oklch(.96 .01 45);
+    --secondary-foreground: oklch(.25 .04 35);
+    --muted: oklch(.97 0 0);
+    --muted-foreground: oklch(.556 0 0);
+    --accent: oklch(.95 .04 45);
+    --accent-foreground: oklch(.25 .04 35);
+    --destructive: oklch(.577 .245 27.325);
+    --border: oklch(.922 0 0);
+    --input: oklch(.922 0 0);
+    --ring: oklch(.646 .222 41.116);
+    --radius: .75rem;
 }
 
 .dark {
-  color-scheme: dark;
-  --background: oklch(.145 0 0);
-  --foreground: oklch(.985 0 0);
-  --card: oklch(.205 0 0);
-  --card-foreground: oklch(.985 0 0);
-  --popover: oklch(.205 0 0);
-  --popover-foreground: oklch(.985 0 0);
-  --primary: oklch(.646 .222 41.116);
-  --primary-foreground: oklch(.985 0 0);
-  --secondary: oklch(.269 .025 40);
-  --secondary-foreground: oklch(.985 0 0);
-  --muted: oklch(.269 0 0);
-  --muted-foreground: oklch(.708 0 0);
-  --accent: oklch(.30 .06 40);
-  --accent-foreground: oklch(.95 .04 45);
-  --destructive: oklch(.704 .191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(.646 .222 41.116);
+    color-scheme: dark;
+    --background: oklch(.145 0 0);
+    --foreground: oklch(.985 0 0);
+    --card: oklch(.205 0 0);
+    --card-foreground: oklch(.985 0 0);
+    --popover: oklch(.205 0 0);
+    --popover-foreground: oklch(.985 0 0);
+    --primary: oklch(.646 .222 41.116);
+    --primary-foreground: oklch(.985 0 0);
+    --secondary: oklch(.269 .025 40);
+    --secondary-foreground: oklch(.985 0 0);
+    --muted: oklch(.269 0 0);
+    --muted-foreground: oklch(.708 0 0);
+    --accent: oklch(.30 .06 40);
+    --accent-foreground: oklch(.95 .04 45);
+    --destructive: oklch(.704 .191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(.646 .222 41.116);
 }
 
 * {
-  border-color: var(--border);
+    border-color: var(--border);
 }
 
 html {
-  min-width: 360px;
-  background: var(--background);
-  scroll-behavior: smooth;
+    min-width: 360px;
+    background: var(--background);
+    scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, sans-serif;
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), Arial, sans-serif;
 }
 
 button, input, select, textarea {
-  font: inherit;
+    font: inherit;
 }
 
 ::selection {
-  background: color-mix(in oklch, var(--primary) 18%, transparent);
+    background: color-mix(in oklch, var(--primary) 18%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
 }

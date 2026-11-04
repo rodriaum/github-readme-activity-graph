@@ -9,12 +9,18 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-heading" })
 
 export const metadata: Metadata = {
   title: "GitHub Activity Graph",
-  description: "Create and customize GitHub contribution graphs."
+  description: "Create and customize GitHub contribution graphs.",
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${geistMono.variable} ${geist.variable} antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${geistMono.variable} ${geist.variable} antialiased`}
+    >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

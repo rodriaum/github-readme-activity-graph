@@ -46,17 +46,17 @@ export type GraphStyle = {
 }
 
 const defaultGraphStyle = {
-    label: "Default",
-    chart: "line",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
-    line: { width: 2.8, smooth: true },
-    points: { width: 6, mode: "positive" },
-    area: { enabled: false, fill: "solid", opacity: 0.22 },
-    grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
-    axisY: { showLabels: true, offset: 48 },
-    bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
-  } as const satisfies GraphStyle
+  label: "Default",
+  chart: "line",
+  fontFamily: "Segoe UI, Ubuntu, sans-serif",
+  line: { width: 2.8, smooth: true },
+  points: { width: 6, mode: "positive" },
+  area: { enabled: false, fill: "solid", opacity: 0.22 },
+  grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
+  axisY: { showLabels: true, offset: 48 },
+  bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
+  animation: { enabled: true, lineDuration: 6000, markDuration: 700 },
+} as const satisfies GraphStyle
 
 export const graphStyles = {
   default: defaultGraphStyle,
@@ -70,7 +70,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 },
   },
   neon: {
     label: "Neon",
@@ -82,7 +82,7 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 },
   },
   minimal: {
     label: "Minimal",
@@ -94,11 +94,11 @@ export const graphStyles = {
     grid: { enabled: false, opacity: 0, dashArray: "4 6" },
     axisY: { showLabels: false, offset: 8 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 },
   },
   terminal: {
     ...defaultGraphStyle,
-    label: "Terminal"
+    label: "Terminal",
   },
   gradient: {
     label: "Gradient",
@@ -110,8 +110,8 @@ export const graphStyles = {
     grid: { enabled: true, opacity: 0.18, dashArray: "4 6" },
     axisY: { showLabels: true, offset: 48 },
     bar: { widthRatio: 0.68, minWidth: 2, maxWidth: 24 },
-    animation: { enabled: true, lineDuration: 6000, markDuration: 700 }
-  }
+    animation: { enabled: true, lineDuration: 6000, markDuration: 700 },
+  },
 } as const satisfies Record<string, GraphStyle>
 
 export type GraphType = keyof typeof graphStyles

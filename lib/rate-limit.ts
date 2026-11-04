@@ -25,5 +25,7 @@ export function checkRateLimit(key: string, isOrganization: boolean) {
     }
   }
 
-  return entry.count <= limit ? 0 : Math.max(1, Math.ceil((entry.startedAt + windowMs - now) / 1000))
+  return entry.count <= limit
+    ? 0
+    : Math.max(1, Math.ceil((entry.startedAt + windowMs - now) / 1000))
 }
