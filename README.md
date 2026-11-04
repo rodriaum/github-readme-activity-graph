@@ -4,13 +4,11 @@
 
 <h1 align="center">GITHUB README ACTIVITY GRAPH</h1>
 
-> [!NOTE]
-> This repository is the **v2** of the project, rebuilt from the ground up using **Next.js** with a new architecture and an updated tech stack.
-
 ## Table of contents
 
 - [Table of contents](#table-of-contents)
 - [Fork Differences](#fork-differences)
+    - [Deployment](#deployment-)
 - [How to Use](#how-to-use)
     - [Attention ⚠](#attention-)
     - [Organization Activity Graph](#organization-activity-graph)
