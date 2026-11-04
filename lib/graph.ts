@@ -147,7 +147,7 @@ function createChartCss(options: GraphOptions, barWidth: number) {
       pointColor +
       ";stroke-width:" +
       barWidth +
-      ";stroke-linecap:round;}",
+      ";stroke-linecap:butt;}",
     ".ct-bar.graph-point-empty{opacity:0.28;}",
     ".graph-title{font-family:" + style.fontFamily + ";}",
     ...animationStyles,
@@ -322,7 +322,7 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
     showLabel: style.axisY.showLabels,
     showGrid: options.grid && style.grid.enabled,
     low: 0,
-    high: Math.max(1, maxValue),
+    high: Math.max(1, maxValue) * 1.15,
     onlyInteger: true,
     scaleMinSpace: 34,
   }
