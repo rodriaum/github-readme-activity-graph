@@ -108,10 +108,13 @@ function Field({label, children}: { label: string; children: React.ReactNode }) 
 
 export function ActivityGraphBuilder() {
     const [form, setForm] = useState(initial)
+    const [previewForm, setPreviewForm] = useState(initial)
+    const previewTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [copiedAction, setCopiedAction] = useState<"url" | "markdown" | null>(null)
     const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [origin, setOrigin] = useState("")
     const query = useMemo(() => toQuery(form), [form])
+    const previewQuery = useMemo(() => toQuery(previewForm), [previewForm])
     const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
     const markdown = `[![${form.username}'s GitHub activity graph](${graphUrl})](https://github.com/${form.username})`
 
@@ -120,11 +123,20 @@ export function ActivityGraphBuilder() {
     useEffect(() => {
         return () => {
             if (copyTimeout.current) clearTimeout(copyTimeout.current)
+            if (previewTimeout.current) clearTimeout(previewTimeout.current)
         }
     }, [])
 
     function update<K extends keyof FormState>(key: K, value: FormState[K]) {
-        setForm(previous => ({...previous, [key]: value}))
+        setForm(previous => {
+            const next = {...previous, [key]: value}
+            if (previewTimeout.current) clearTimeout(previewTimeout.current)
+            previewTimeout.current = setTimeout(() => {
+                setPreviewForm(next)
+                previewTimeout.current = null
+            }, 500)
+            return next
+        })
         setCopiedAction(null)
         if (copyTimeout.current) clearTimeout(copyTimeout.current)
     }
@@ -283,7 +295,12 @@ export function ActivityGraphBuilder() {
                         <Field label="Custom title"><Input value={form.customTitle}
                                                            onChange={event => update("customTitle", event.target.value)}
                                                            placeholder="My contribution graph" maxLength={120}/></Field>
-                        <Button variant="outline" className="w-full" onClick={() => setForm(initial)}>Reset
+                        <Button variant="outline" className="w-full" onClick={() => {
+                                if (previewTimeout.current) clearTimeout(previewTimeout.current)
+                                previewTimeout.current = null
+                                setForm(initial)
+                                setPreviewForm(initial)
+                            }}>Reset
                             settings</Button>
                     </div>
                 </aside>
@@ -297,7 +314,7 @@ export function ActivityGraphBuilder() {
                         <div
                             className="flex min-h-[330px] items-center justify-center overflow-x-auto bg-[radial-gradient(var(--border)_0.7px,transparent_0.7px)] bg-[size:14px_14px] p-4 sm:p-7">
                             {form.username.trim() ?
-                                <img key={query} src={`/graph?${query}`} alt="GitHub activity graph preview"
+                                <img key={previewQuery} src={`/graph?${previewQuery}`} alt="GitHub activity graph preview"
                                      className="h-auto w-full min-w-[560px] rounded-lg shadow-sm"/> :
                                 <p className="text-sm text-muted-foreground">Enter a GitHub username to preview the
                                     graph.</p>}
