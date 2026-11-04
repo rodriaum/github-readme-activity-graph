@@ -8,7 +8,7 @@
 
 - [Table of contents](#table-of-contents)
 - [Fork Differences](#fork-differences)
-    - [Deployment](#deployment-)
+    - [Deployment](#deployment)
 - [How to Use](#how-to-use)
     - [Attention ⚠](#attention-)
     - [Organization Activity Graph](#organization-activity-graph)
