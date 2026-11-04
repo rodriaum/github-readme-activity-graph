@@ -7,6 +7,21 @@
 > [!NOTE]
 > This repository is the **v2** of the project, rebuilt from the ground up using **Next.js** with a new architecture and an updated tech stack.
 
+## Fork Differences
+
+This project is a modernized fork of [github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph), rebuilt from the ground up as **v2**.
+
+While preserving the original concept and core functionality, this version introduces:
+
+- **Modern Stack:** Migrated from Express to Next.js using recent versions of React and TypeScript.
+- **Updated Chartist:** New rendering engine with improved SVG generation and handling.
+- **SVG Security:** Fixes and improvements to prevent unsafe SVG injection.
+- **Activity Graph Studio:** A web-based builder for visual customization, live previews and automatic Markdown generation.
+- **Advanced Customization:** New graph styles, themes and additional visual options.
+- **Improved API:** Better validation, error handling, caching and rate limiting.
+
+The original project remains the foundation, while this fork follows an independent development direction with a modern architecture and expanded capabilities.
+
 ### Deployment
 
 The project is deployed at `github-act-graph.rodriaum.com`
@@ -16,6 +31,7 @@ Visit the deployment using the link [here](https://github-act-graph.rodriaum.com
 ## Table of contents
 
 - [Table of contents](#table-of-contents)
+- [Fork Differences](#fork-differences)
 - [How to Use](#how-to-use)
     - [Attention ⚠](#attention-)
     - [Organization Activity Graph](#organization-activity-graph)
@@ -145,18 +161,18 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&them
 |     `line`     |              graph's line color               |             hex code (without `#`)             |
 |    `point`     |         color of points on line graph         |             hex code (without `#`)             |
 |  `area_color`  |       color of the area under the graph       |             hex code (without `#`)             |
-|     `area`     |          shows area under the graph           |           boolean (default: `false`)           |
-| `hide_border`  |   makes the border of the graph transparent   |           boolean (default: `false`)           |
-|  `hide_title`  |       sets the title to an empty string       |           boolean (default: `false`)           |
+|     `area`     |          shows area under the graph           |           boolean (default: `false`)            |
+| `hide_border`  |   makes the border of the graph transparent   |           boolean (default: `false`)            |
+| `hide_title`   |       sets the title to an empty string       |           boolean (default: `false`)            |
 | `custom_title` |          set the title to any string          |                     string                     |
 |    `theme`     | name of [available themes](#available-themes) |                     string                     |
 |    `radius`    |            border radius of graph             |            number (0-16 inclusive)             |
-|    `height`    |              height of the graph              |           number (200-600 inclusive)           |
-|     `days`     |      number of to days display on graph       | number between (1 - 90) [Recommended below 40] |
-|     `from`     |       date from which the graph starts        |              format `YYYY-MM-DD`               |
-|      `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
-|     `type`     | name of [graph types](#graph-types)           |                     string                     |
-|     `grid`     |                   show grid                   |           boolean (default: `true`)            |
+|    `height`    |              height of the graph              |           number (200-600 inclusive)            |
+|    `days`      |      number of to days display on graph       | number between (1 - 90) [Recommended below 40] |
+|    `from`      |       date from which the graph starts        |              format `YYYY-MM-DD`               |
+|     `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
+|    `type`     | name of [graph types](#graph-types)           |                     string                     |
+|    `grid`     |                   show grid                   |           boolean (default: `true`)             |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
 
