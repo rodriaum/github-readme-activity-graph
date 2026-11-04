@@ -25,6 +25,7 @@ Please refer to the updated link [here](#how-to-use)
 - [Graph Types](#graph-types)
 - [Customization](#customization)
     - [Common Options](#common-options)
+- [Shadcn Style](#shadcn-template)
 - [Contributing](#contributing)
 - [Core Team 💻](#core-team-)
 - [Star History](#star-history)
@@ -168,6 +169,10 @@ Example:
 ```md
 [![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
+
+## Shadcn Template
+
+This project use the template [b5JgwDAjy](https://ui.shadcn.com/create?preset=b5JgwDAjy) with the style **Maia**.
 
 ## Contributing
 
