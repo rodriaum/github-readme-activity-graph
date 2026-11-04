@@ -200,7 +200,7 @@ export function ActivityGraphBuilder() {
                                     <SelectTrigger className="w-full"><SelectValue>{form.organization ? "Organization" : "User"}</SelectValue></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="user">User</SelectItem>
-                                        <SelectItem value="organization">Organization</SelectItem>
+                                        <SelectItem value="organization" disabled>Organization</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </Field>

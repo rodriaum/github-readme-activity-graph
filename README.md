@@ -46,7 +46,7 @@ Just paste the following URL in your profile readme and you are good to go.
 ### Organization Activity Graph
 
 > [!WARNING]
-> Organization activity data retrieval is not fully optimized yet. Large organizations with extensive activity histories may experience slow responses or errors during data retrieval.
+> Organization activity dates are no longer supported. As a result, the graph will be displayed without contribution data. This limitation exists because GitHub does not provide an efficient way to retrieve organization contribution activity.
 
 You can also generate an activity graph for a GitHub organization. Use the `organization` parameter with the organization's GitHub login:
 

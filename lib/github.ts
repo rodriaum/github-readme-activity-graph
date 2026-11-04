@@ -131,6 +131,11 @@ export async function fetchOrganizationActivity(
   from?: string,
   to?: string
 ): Promise<ActivityData> {
+
+  const contributions: ContributionDay[] = []
+  return { name: login, contributions }
+
+  /*
   const end = to ? new Date(`${to}T23:59:59.999Z`) : new Date()
 
   const start = from
@@ -215,4 +220,5 @@ export async function fetchOrganizationActivity(
     })
   )
   return { name: login, contributions }
+   */
 }
