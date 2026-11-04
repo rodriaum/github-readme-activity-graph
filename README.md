@@ -7,6 +7,25 @@
 > [!NOTE]
 > This repository is the **v2** of the project, rebuilt from the ground up using **Next.js** with a new architecture and an updated tech stack.
 
+## Table of contents
+
+- [Table of contents](#table-of-contents)
+- [Fork Differences](#fork-differences)
+- [How to Use](#how-to-use)
+    - [Attention ⚠](#attention-)
+    - [Organization Activity Graph](#organization-activity-graph)
+    - [Optional Private Activity](#optional-private-activity)
+- [Use themes](#use-themes)
+- [Available Themes](#available-themes)
+- [Graph Types](#graph-types)
+- [Customization](#customization)
+    - [Common Options](#common-options)
+- [Project Template](#project-template)
+- [Contributing](#contributing)
+- [Team](#core-team-)
+- [Star History](#star-history)
+    - [Made with ❤ and TypeScript ](#made-with--and-typescript-)
+
 ## Fork Differences
 
 This project is a modernized fork of [github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph), rebuilt from the ground up as **v2**.
@@ -27,25 +46,6 @@ The original project remains the foundation, while this fork follows an independ
 The project is deployed at `github-act-graph.rodriaum.com`
 
 Visit the deployment using the link [here](https://github-act-graph.rodriaum.com).
-
-## Table of contents
-
-- [Table of contents](#table-of-contents)
-- [Fork Differences](#fork-differences)
-- [How to Use](#how-to-use)
-    - [Attention ⚠](#attention-)
-    - [Organization Activity Graph](#organization-activity-graph)
-    - [Optional Private Activity](#optional-private-activity)
-- [Use themes](#use-themes)
-- [Available Themes](#available-themes)
-- [Graph Types](#graph-types)
-- [Customization](#customization)
-    - [Common Options](#common-options)
-- [Project Template](#project-template)
-- [Contributing](#contributing)
-- [Team](#core-team-)
-- [Star History](#star-history)
-    - [Made with ❤ and TypeScript ](#made-with--and-typescript-)
 
 ## How to Use
 
