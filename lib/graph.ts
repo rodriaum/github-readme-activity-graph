@@ -8,16 +8,59 @@ import {
 } from "chartist"
 import { renderToString } from "chartist/server"
 import { getGraphStyle } from "./graph-styles"
+import type { GraphStyle, InterpolationName } from "./graph-styles"
 import type { ActivityData, GraphOptions } from "./types"
 
 const SVG_WIDTH = 1200
+const CHART_HORIZONTAL_PADDING = 120
+const MIN_HEIGHT = 200
+const MAX_HEIGHT = 600
+const MAX_RADIUS = 16
 const MAX_CONTRIBUTION_DAYS = 90
+const DEFAULT_COLOR = "9e4c98"
+const DEFAULT_POINT_COLOR = "403d3d"
+const DEFAULT_BACKGROUND = "ffffff"
+const DEFAULT_BORDER = "ffffff"
+
 const HEX_COLOR_PATTERN =
   /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
 
+const INTERPOLATIONS: Record<InterpolationName, () => unknown> = {
+  none: () => Interpolation.none(),
+  simple: () => Interpolation.simple(),
+  step: () => Interpolation.step(),
+  cardinal: () => Interpolation.cardinal(),
+  monotoneCubic: () => Interpolation.monotoneCubic(),
+}
+
+type Scene = ReturnType<typeof toScene>
 type ChartistValue = number | { x?: number; y?: number } | undefined
 
-function escapeXml(value: unknown) {
+interface Contribution {
+  date: string
+  count: number
+}
+
+/* Helpers */
+
+const clampInt = (value: number, min: number, max: number): number =>
+  Number.isFinite(value) ? Math.min(max, Math.max(min, Math.trunc(value))) : min
+
+const safeColor = (value: string | undefined, fallback: string): string =>
+  value && HEX_COLOR_PATTERN.test(value) ? value : fallback
+
+const hex = (color: string): string => `#${color}`
+
+/** Replaces {{key}} / {key} placeholders. Unknown keys are left empty. */
+const fill = (
+  template: string,
+  vars: Record<string, string | number>
+): string =>
+  template.replace(/\{\{?(\w+)\}?\}/g, (_, key: string) =>
+    String(vars[key] ?? "")
+  )
+
+function escapeXml(value: unknown): string {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -26,154 +69,157 @@ function escapeXml(value: unknown) {
     .replace(/'/g, "&apos;")
 }
 
-function safeColor(value: string, fallback: string) {
-  return HEX_COLOR_PATTERN.test(value) ? value : fallback
-}
-
-function numericValue(value: ChartistValue) {
-  if (typeof value === "number") {
-    return Number.isFinite(value) ? value : 0
-  }
-
-  if (!value) {
-    return 0
-  }
-
-  const candidate = value.y ?? value.x
-
+function numericValue(value: ChartistValue): number {
+  const candidate = typeof value === "object" ? (value.y ?? value.x) : value
   return typeof candidate === "number" && Number.isFinite(candidate)
     ? candidate
     : 0
 }
 
-function normalizeContributions(data: ActivityData) {
-  const contributions = data.contributions
-    .slice(-MAX_CONTRIBUTION_DAYS)
-    .map((day) => ({
-      date: String(day.date).slice(0, 10),
-      count: Number.isFinite(day.contributionCount)
-        ? Math.max(0, Math.trunc(day.contributionCount))
-        : 0,
-    }))
+function normalizeContributions(data: ActivityData): Contribution[] {
+  const days = data.contributions.slice(-MAX_CONTRIBUTION_DAYS).map((day) => ({
+    date: String(day.date).slice(0, 10),
+    count: Number.isFinite(day.contributionCount)
+      ? Math.max(0, Math.trunc(day.contributionCount))
+      : 0,
+  }))
 
-  return contributions.length > 0 ? contributions : [{ date: "", count: 0 }]
+  return days.length > 0 ? days : [{ date: "", count: 0 }]
 }
 
-function createChartCss(options: GraphOptions, barWidth: number) {
-  const style = getGraphStyle(options.type)
+function resolveTitle(data: ActivityData, options: GraphOptions): string {
+  if (options.hideTitle) return ""
+  if (options.customTitle) return options.customTitle
+  if (options.organization) {
+    return `${options.organization}'s Organization Activity Graph`
+  }
+  return `${data.name || options.username}'s Contribution Graph`
+}
 
-  const labelColor = safeColor(options.colors.color, "9e4c98")
+/* Theme */
 
-  const lineColor = safeColor(
-    style.line.color ?? options.colors.lineColor,
-    "9e4c98"
-  )
+function resolveTheme(options: GraphOptions, style: GraphStyle) {
+  const c = options.colors
 
-  const pointColor = safeColor(
-    style.points.color ?? options.colors.pointColor,
-    "403d3d"
-  )
+  return {
+    label: safeColor(c.color, DEFAULT_COLOR),
+    line: safeColor(style.line.color ?? c.lineColor, DEFAULT_COLOR),
+    point: safeColor(style.points.color ?? c.pointColor, DEFAULT_POINT_COLOR),
+    area: safeColor(c.areaColor, DEFAULT_COLOR),
+    title: safeColor(c.titleColor, DEFAULT_COLOR),
+    background: safeColor(c.bgColor, DEFAULT_BACKGROUND),
+    border: safeColor(c.borderColor, DEFAULT_BORDER),
+    radius: clampInt(options.radius, 0, MAX_RADIUS),
+    showArea: options.area || style.area.enabled,
+    showGrid: options.grid && style.grid.enabled,
+  }
+}
+type Theme = ReturnType<typeof resolveTheme>
 
-  const areaColor = safeColor(options.colors.areaColor, "9e4c98")
+/* CSS */
 
+function createChartCss(
+  style: GraphStyle,
+  theme: Theme,
+  barWidth: number
+): string {
+  const { animation, line, points, area, grid, fontFamily } = style
   const areaFill =
-    style.area.fill === "gradient"
-      ? "url(#activity-area-gradient)"
-      : "#" + areaColor
+    area.fill === "gradient" ? "url(#activity-area-gradient)" : hex(theme.area)
 
-  const gridOpacity =
-    options.grid && style.grid.enabled ? String(style.grid.opacity) : "0"
+  const rule = (selector: string, declarations: string[]): string =>
+    `${selector} {\n${declarations.map((declaration) => `  ${declaration};`).join("\n")}\n}`
 
-  const animationStyles = style.animation.enabled
-    ? [
-        style.line.dashArray
-          ? ""
-          : ".ct-line{stroke-dasharray:5000;stroke-dashoffset:5000;animation:activity-line-draw " +
-            style.animation.lineDuration +
-            "ms ease-in-out forwards;}",
-        ".ct-point,.ct-bar{animation:activity-mark-appear " +
-          style.animation.markDuration +
-          "ms ease-out both;}",
-        "@keyframes activity-line-draw{to{stroke-dashoffset:0;}}",
-        "@keyframes activity-mark-appear{from{opacity:0.15;}to{opacity:1;}}",
-        "@media(prefers-reduced-motion:reduce){.ct-line,.ct-point,.ct-bar{animation:none;opacity:1;stroke-dashoffset:0;}}",
-      ]
-    : []
-
-  return [
-    "svg{overflow:hidden;font-family:" + style.fontFamily + ";}",
-    ".ct-label{fill:#" +
-      labelColor +
-      ";color:#" +
-      labelColor +
-      ";font-size:11px;font-family:" +
-      style.fontFamily +
-      ";}",
-    ".ct-grid{stroke:#" +
-      labelColor +
-      ";stroke-opacity:" +
-      gridOpacity +
-      ";stroke-dasharray:" +
-      style.grid.dashArray +
-      ";}",
-    ".ct-line{fill:none;stroke:#" +
-      lineColor +
-      ";stroke-width:" +
-      style.line.width +
-      ";stroke-linecap:round;stroke-linejoin:round;}",
-    style.line.dashArray
-      ? ".ct-line{stroke-dasharray:" + style.line.dashArray + ";}"
-      : "",
-    style.line.glow
-      ? ".ct-line{filter:drop-shadow(0 0 " +
-        style.line.glow +
-        "px #" +
-        lineColor +
-        ");}"
-      : "",
-    ".ct-point{stroke:#" +
-      pointColor +
-      ";stroke-width:" +
-      style.points.width +
-      ";stroke-linecap:round;}",
-    ".ct-point.graph-point-empty{opacity:0.28;}",
-    style.points.alternateColor
-      ? ".ct-point.graph-point-active:nth-of-type(2n){stroke:#" +
-        areaColor +
-        ";}"
-      : "",
-    ".ct-area{fill:" + areaFill + ";fill-opacity:" + style.area.opacity + ";}",
-    ".ct-bar{stroke:#" +
-      pointColor +
-      ";stroke-width:" +
-      barWidth +
-      ";stroke-linecap:butt;}",
-    ".ct-bar.graph-point-empty{opacity:0.28;}",
-    ".graph-title{font-family:" + style.fontFamily + ";}",
-    ...animationStyles,
+  const rules = [
+    rule("svg", [`overflow: hidden`, `font-family: ${fontFamily}`]),
+    rule(".ct-label", [
+      `fill: ${hex(theme.label)}`,
+      `color: ${hex(theme.label)}`,
+      `font-size: 11px`,
+      `font-family: ${fontFamily}`,
+    ]),
+    rule(".ct-grid", [
+      `stroke: ${hex(theme.label)}`,
+      `stroke-opacity: ${theme.showGrid ? grid.opacity : 0}`,
+      `stroke-dasharray: ${grid.dashArray}`,
+    ]),
+    rule(".ct-line", [
+      `fill: none`,
+      `stroke: ${hex(theme.line)}`,
+      `stroke-width: ${line.width}`,
+      `stroke-linecap: round`,
+      `stroke-linejoin: round`,
+    ]),
+    line.dashArray && rule(".ct-line", [`stroke-dasharray: ${line.dashArray}`]),
+    line.glow &&
+      rule(".ct-line", [
+        `filter: drop-shadow(0 0 ${line.glow}px ${hex(theme.line)})`,
+      ]),
+    rule(".ct-point", [
+      `stroke: ${hex(theme.point)}`,
+      `stroke-width: ${points.width}`,
+      `stroke-linecap: round`,
+    ]),
+    points.alternateColor &&
+      rule(".ct-point.graph-point-active:nth-of-type(2n)", [
+        `stroke: ${hex(theme.area)}`,
+      ]),
+    rule(".ct-area", [`fill: ${areaFill}`, `fill-opacity: ${area.opacity}`]),
+    rule(".ct-bar", [
+      `stroke: ${hex(theme.point)}`,
+      `stroke-width: ${barWidth}`,
+      `stroke-linecap: butt`,
+    ]),
+    rule(".ct-point.graph-point-empty, .ct-bar.graph-point-empty", [
+      `opacity: ${style.inactiveOpacity}`,
+    ]),
+    rule(".graph-title", [`font-family: ${fontFamily}`]),
   ]
-    .filter(Boolean)
-    .join("\n")
-}
 
-function addAreaGradient(
-  scene: ReturnType<typeof toScene>,
-  options: GraphOptions
-) {
-  const style = getGraphStyle(options.type)
-
-  if (
-    style.area.fill !== "gradient" ||
-    (!style.area.enabled && !options.area)
-  ) {
-    return scene
+  if (animation.enabled) {
+    const len = animation.lineDashLength
+    rules.push(
+      !line.dashArray &&
+        rule(".ct-line", [
+          `stroke-dasharray: ${len}`,
+          `stroke-dashoffset: ${len}`,
+          `animation: activity-line-draw ${animation.lineDuration}ms ease-in-out forwards`,
+        ]),
+      rule(".ct-point, .ct-bar", [
+        `animation: activity-mark-appear ${animation.markDuration}ms ease-out both`,
+      ]),
+      `@keyframes activity-line-draw {\n  to {\n    stroke-dashoffset: 0;\n  }\n}`,
+      `@keyframes activity-mark-appear {\n  from {\n    opacity: 0.15;\n  }\n\n  to {\n    opacity: 1;\n  }\n}`,
+      `@media (prefers-reduced-motion: reduce) {\n  .ct-line,\n  .ct-point,\n  .ct-bar {\n    animation: none;\n    opacity: 1;\n    stroke-dashoffset: 0;\n  }\n}`
+    )
   }
 
-  const lineColor = safeColor(
-    style.line.color ?? options.colors.lineColor,
-    "9e4c98"
-  )
-  const areaColor = safeColor(options.colors.areaColor, "9e4c98")
+  if (style.css) {
+    rules.push(
+      fill(style.css, {
+        line: theme.line,
+        point: theme.point,
+        area: theme.area,
+        label: theme.label,
+        background: theme.background,
+      })
+    )
+  }
+
+  return rules.filter(Boolean).join("\n")
+}
+
+/* Decoration */
+
+function addAreaGradient(scene: Scene, style: GraphStyle, theme: Theme): Scene {
+  if (style.area.fill !== "gradient" || !theme.showArea) return scene
+
+  const stop = (offset: string, color: string, opacity: number) =>
+    node("stop", {
+      offset,
+      "stop-color": hex(color),
+      "stop-opacity": opacity,
+    })
 
   const gradient = node("linearGradient", {
     id: "activity-area-gradient",
@@ -182,58 +228,53 @@ function addAreaGradient(
     x2: "0%",
     y2: "100%",
   })
-    .append(
-      node("stop", {
-        offset: "0%",
-        "stop-color": "#" + lineColor,
-        "stop-opacity": "0.78",
-      })
-    )
-    .append(
-      node("stop", {
-        offset: "100%",
-        "stop-color": "#" + areaColor,
-        "stop-opacity": "0.04",
-      })
-    )
+    .append(stop("0%", theme.line, style.area.gradient.from))
+    .append(stop("100%", theme.area, style.area.gradient.to))
 
   return scene.append(node("defs").append(gradient), true)
 }
 
 function decorateScene(
-  initialScene: ReturnType<typeof toScene>,
+  initialScene: Scene,
   title: string,
-  options: GraphOptions,
+  style: GraphStyle,
+  theme: Theme,
   height: number,
   barWidth: number
 ) {
-  const backgroundColor = safeColor(options.colors.bgColor, "ffffff")
-  const borderColor = safeColor(options.colors.borderColor, "ffffff")
-  const titleColor = safeColor(options.colors.titleColor, "9e4c98")
-  const radius = Math.min(16, Math.max(0, Math.trunc(options.radius)))
+  const label = title || "GitHub activity graph"
 
-  let scene = addAreaGradient(initialScene, options)
-
-  scene = scene.append(
-    node(
-      "rect",
-      {
-        x: 0,
-        y: 0,
-        width: SVG_WIDTH,
-        height,
-        rx: radius,
-        fill: "#" + backgroundColor,
-      },
-      "graph-background"
-    ),
-    true
+  const background = node(
+    "rect",
+    {
+      x: 0,
+      y: 0,
+      width: SVG_WIDTH,
+      height,
+      rx: theme.radius,
+      fill: hex(theme.background),
+    },
+    "graph-background"
   )
 
-  scene = scene.append(
-    node("title").text(title || "GitHub activity graph"),
-    true
+  const border = node(
+    "rect",
+    {
+      x: 0.5,
+      y: 0.5,
+      width: SVG_WIDTH - 1,
+      height: height - 1,
+      rx: theme.radius,
+      fill: "none",
+      stroke: hex(theme.border),
+      "stroke-width": 1,
+    },
+    "graph-border"
   )
+
+  let scene = addAreaGradient(initialScene, style, theme)
+    .append(background, true)
+    .append(node("title").text(label), true)
 
   if (title) {
     scene = scene.append(
@@ -241,227 +282,188 @@ function decorateScene(
         "text",
         {
           x: SVG_WIDTH / 2,
-          y: 48,
+          y: style.title.y,
           "text-anchor": "middle",
-          fill: "#" + titleColor,
-          "font-size": 20,
-          "font-weight": 700,
+          fill: hex(theme.title),
+          "font-size": style.title.fontSize,
+          "font-weight": style.title.fontWeight,
         },
         "graph-title"
       ).text(title)
     )
   }
 
-  scene = scene.append(
-    node(
-      "rect",
-      {
-        x: 0.5,
-        y: 0.5,
-        width: SVG_WIDTH - 1,
-        height: height - 1,
-        rx: radius,
-        fill: "none",
-        stroke: "#" + borderColor,
-        "stroke-width": 1,
-      },
-      "graph-border"
-    )
+  return scene
+    .append(border)
+    .append(node("style").text(createChartCss(style, theme, barWidth)))
+    .attr({
+      width: SVG_WIDTH,
+      height,
+      viewBox: `0 0 ${SVG_WIDTH} ${height}`,
+      role: "img",
+      "aria-label": label,
+    })
+}
+
+/* Chart Config */
+
+function buildChartConfig(
+  style: GraphStyle,
+  theme: Theme,
+  contributions: Contribution[],
+  hasTitle: boolean,
+  height: number
+) {
+  const labels = contributions.map((d) => d.date)
+  const values = contributions.map((d) => d.count)
+  const maxValue = Math.max(1, ...values)
+  const labelStep = Math.max(
+    1,
+    Math.ceil(labels.length / style.axisX.maxLabels)
   )
+  const lastIndex = labels.length - 1
 
-  scene = scene.append(node("style").text(createChartCss(options, barWidth)))
+  const data = { labels, series: [{ name: "contributions", data: values }] }
 
-  return scene.attr({
+  const base = {
     width: SVG_WIDTH,
     height,
-    viewBox: "0 0 " + SVG_WIDTH + " " + height,
-    role: "img",
-    "aria-label": title || "GitHub activity graph",
+    chartPadding: {
+      ...style.padding,
+      top: hasTitle ? style.title.topPadding : style.padding.top,
+    },
+    axisX: {
+      offset: style.axisX.offset,
+      showLabel: true,
+      showGrid: false,
+      labelTransform: (value: string | number | Date, index: number) =>
+        index % labelStep === 0 || index === lastIndex ? String(value) : null,
+    },
+    axisY: {
+      offset: style.axisY.offset,
+      showLabel: style.axisY.showLabels,
+      showGrid: theme.showGrid,
+      low: 0,
+      high: maxValue * style.axisY.headroom,
+      onlyInteger: true,
+      scaleMinSpace: style.axisY.scaleMinSpace,
+    },
+  }
+
+  if (style.chart === "bar") {
+    return barChartConfig(data, { ...base, seriesBarDistance: 0 })
+  }
+
+  return lineChartConfig(data, {
+    ...base,
+    fullWidth: true,
+    showLine: true,
+    showPoint: style.points.mode !== "none",
+    showArea: theme.showArea,
+    areaBase: 0,
+    lineSmooth: INTERPOLATIONS[style.line.interpolation]() as never,
   })
 }
+
+function shouldKeepPoint(
+  style: GraphStyle,
+  index: number,
+  count: number
+): boolean {
+  switch (style.points.mode) {
+    case "none":
+      return false
+    case "every-nth":
+      return index % Math.max(1, style.points.every ?? 3) === 0
+    case "positive":
+      return count > 0
+    default:
+      return true
+  }
+}
+
+function getBarWidth(style: GraphStyle, contributionCount: number): number {
+  const availableWidth =
+    (SVG_WIDTH - CHART_HORIZONTAL_PADDING) / contributionCount
+
+  return Math.max(
+    style.bar.minWidth,
+    Math.min(style.bar.maxWidth, availableWidth * style.bar.widthRatio)
+  )
+}
+
+/* Public */
 
 export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
   const style = getGraphStyle(options.type)
-  const height = Math.min(600, Math.max(200, Math.trunc(options.height)))
+  const theme = resolveTheme(options, style)
+  const height = clampInt(options.height, MIN_HEIGHT, MAX_HEIGHT)
   const contributions = normalizeContributions(data)
-  const labels = contributions.map((day) => day.date)
-  const values = contributions.map((day) => day.count)
-  const maxValue = values.reduce(
-    (maximum, value) => Math.max(maximum, value),
-    0
+  const title = resolveTitle(data, options)
+  const barWidth = getBarWidth(style, contributions.length)
+
+  const rawScene = toScene(
+    buildChartConfig(style, theme, contributions, Boolean(title), height),
+    { width: SVG_WIDTH, height, labels: "svg" }
   )
-  const daysInterval = Math.max(1, Math.ceil(labels.length / 12))
-  const hasTitle = !options.hideTitle
-  const title = hasTitle
-    ? options.customTitle ||
-      (options.organization
-        ? options.organization + "'s Organization Activity Graph"
-        : (data.name || options.username) + "'s Contribution Graph")
-    : ""
-  const chartData = {
-    labels,
-    series: [{ name: "contributions", data: values }],
-  }
-  const chartPadding = {
-    top: hasTitle ? 85 : 22,
-    right: 34,
-    bottom: 22,
-    left: 12,
-  }
-  const axisX = {
-    offset: 26,
-    showLabel: true,
-    showGrid: false,
-    labelTransform: (value: string | number | Date, index: number) =>
-      index % daysInterval === 0 || index === labels.length - 1
-        ? String(value)
-        : null,
-  }
-  const axisY = {
-    offset: style.axisY.offset,
-    showLabel: style.axisY.showLabels,
-    showGrid: options.grid && style.grid.enabled,
-    low: 0,
-    high: Math.max(1, maxValue) * 1.15,
-    onlyInteger: true,
-    scaleMinSpace: 34,
-  }
-
-  const barWidth = Math.max(
-    style.bar.minWidth,
-    Math.min(
-      style.bar.maxWidth,
-      ((SVG_WIDTH - 120) / labels.length) * style.bar.widthRatio
-    )
-  )
-
-  const chartConfig =
-    style.chart === "bar"
-      ? barChartConfig(chartData, {
-          width: SVG_WIDTH,
-          height,
-          chartPadding,
-          seriesBarDistance: 0,
-          axisX,
-          axisY,
-        })
-      : lineChartConfig(chartData, {
-          width: SVG_WIDTH,
-          height,
-          chartPadding,
-          fullWidth: true,
-          showLine: true,
-          showPoint: style.points.mode !== "none",
-          showArea: options.area || style.area.enabled,
-          areaBase: 0,
-          lineSmooth: style.line.step
-            ? Interpolation.step()
-            : style.line.smooth,
-          axisX,
-          axisY,
-        })
-
-  const rawScene = toScene(chartConfig, {
-    width: SVG_WIDTH,
-    height,
-    labels: "svg",
-  })
 
   const filteredScene = mapNodes(rawScene, (current) => {
-    if (current.role === "point") {
-      const count = numericValue(current.ctx.value)
-      const pointIndex = current.ctx.valueIndex
+    if (current.role !== "point" && current.role !== "bar") return undefined
 
-      if (style.points.mode === "none") {
-        return null
-      }
+    const count = numericValue(current.ctx.value)
+    const index = current.ctx.valueIndex
 
-      if (style.points.mode === "every-third" && pointIndex % 3 !== 0) {
-        return null
-      }
-
-      if (style.points.mode === "positive" && count <= 0) {
-        return null
-      }
-
-      return current.addClass(
-        count > 0 ? "graph-point-active" : "graph-point-empty"
-      )
+    if (current.role === "point" && !shouldKeepPoint(style, index, count)) {
+      return null
     }
 
-    if (current.role === "bar") {
-      const count = numericValue(current.ctx.value)
-      return current.addClass(
-        count > 0 ? "graph-point-active" : "graph-point-empty"
-      )
-    }
+    const marked = current.addClass(
+      count > 0 ? "graph-point-active" : "graph-point-empty"
+    )
 
-    return undefined
+    if (!style.tooltip) return marked
+
+    const date = contributions[index]?.date ?? ""
+    return marked.append(
+      node("title").text(
+        fill(style.tooltip, { count, date, s: count === 1 ? "" : "s" })
+      )
+    )
   })
 
-  const scene = decorateScene(
-    filteredScene ?? rawScene,
-    title,
-    options,
-    height,
-    barWidth
+  return renderToString(
+    decorateScene(
+      filteredScene ?? rawScene,
+      title,
+      style,
+      theme,
+      height,
+      barWidth
+    )
   )
-
-  return renderToString(scene)
 }
 
 export function invalidGraph(message: string, options: GraphOptions) {
-  const width = 1200
-  const height = Math.min(600, Math.max(200, Math.trunc(options.height)))
+  const width = SVG_WIDTH
+  const height = clampInt(options.height, MIN_HEIGHT, MAX_HEIGHT)
+  const cx = width / 2
+  const cy = height / 2
 
   return `
-    <svg xmlns="http://www.w3.org/2000/svg"
-         width="${width}"
-         height="${height}"
-         viewBox="0 0 ${width} ${height}"
-         fill="none">
-
-      <rect
-        x="0.5"
-        y="0.5"
-        width="${width - 1}"
-        height="${height - 1}"
-        rx="8"
-        fill="#09090b"
-        stroke="#27272a"
-      />
-
-      <circle cx="${width / 2}" cy="${height / 2 - 30}" r="24" fill="#27272a"/>
-
-      <path
-        d="M600 ${height / 2 - 42}V${height / 2 - 29}M600 ${height / 2 - 21}V${height / 2 - 20}"
-        stroke="#a1a1aa"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-
-      <text
-        x="${width / 2}"
-        y="${height / 2 + 22}"
-        fill="#fafafa"
-        font-family="Inter, Arial, sans-serif"
-        font-size="16"
-        font-weight="600"
-        text-anchor="middle"
-      >
-        Unable to display graph
-      </text>
-
-      <text
-        x="${width / 2}"
-        y="${height / 2 + 46}"
-        fill="#a1a1aa"
-        font-family="Inter, Arial, sans-serif"
-        font-size="13"
-        text-anchor="middle"
-      >
-        ${escapeXml(message)}
-      </text>
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"
+         viewBox="0 0 ${width} ${height}" fill="none" role="img"
+         aria-label="Unable to display graph">
+      <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="8"
+            fill="#09090b" stroke="#27272a"/>
+      <circle cx="${cx}" cy="${cy - 30}" r="24" fill="#27272a"/>
+      <path d="M${cx} ${cy - 42}V${cy - 29}M${cx} ${cy - 21}V${cy - 20}"
+            stroke="#a1a1aa" stroke-width="2" stroke-linecap="round"/>
+      <text x="${cx}" y="${cy + 22}" fill="#fafafa"
+            font-family="Inter, Arial, sans-serif" font-size="16"
+            font-weight="600" text-anchor="middle">Unable to display graph</text>
+      <text x="${cx}" y="${cy + 46}" fill="#a1a1aa"
+            font-family="Inter, Arial, sans-serif" font-size="13"
+            text-anchor="middle">${escapeXml(message)}</text>
     </svg>
   `
 }
