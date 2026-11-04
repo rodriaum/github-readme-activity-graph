@@ -354,10 +354,9 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
           showPoint: style.points.mode !== "none",
           showArea: options.area || style.area.enabled,
           areaBase: 0,
-          lineSmooth:
-            options.type === "terminal"
-              ? Interpolation.step()
-              : style.line.smooth,
+          lineSmooth: style.line.step
+            ? Interpolation.step()
+            : style.line.smooth,
           axisX,
           axisY,
         })
@@ -411,36 +410,39 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
   return renderToString(scene)
 }
 
-export function invalidGraph(message: string) {
+export function invalidGraph(message: string, options: GraphOptions) {
+  const width = 1200
+  const height = Math.min(600, Math.max(200, Math.trunc(options.height)))
+
   return `
     <svg xmlns="http://www.w3.org/2000/svg"
-         width="600"
-         height="280"
-         viewBox="0 0 600 280"
+         width="${width}"
+         height="${height}"
+         viewBox="0 0 ${width} ${height}"
          fill="none">
 
       <rect
         x="0.5"
         y="0.5"
-        width="599"
-        height="279"
+        width="${width - 1}"
+        height="${height - 1}"
         rx="8"
         fill="#09090b"
         stroke="#27272a"
       />
 
-      <circle cx="300" cy="105" r="24" fill="#27272a"/>
+      <circle cx="${width / 2}" cy="${height / 2 - 30}" r="24" fill="#27272a"/>
 
       <path
-        d="M300 93V106M300 114V115"
+        d="M600 ${height / 2 - 42}V${height / 2 - 29}M600 ${height / 2 - 21}V${height / 2 - 20}"
         stroke="#a1a1aa"
         stroke-width="2"
         stroke-linecap="round"
       />
 
       <text
-        x="300"
-        y="157"
+        x="${width / 2}"
+        y="${height / 2 + 22}"
         fill="#fafafa"
         font-family="Inter, Arial, sans-serif"
         font-size="16"
@@ -451,8 +453,8 @@ export function invalidGraph(message: string) {
       </text>
 
       <text
-        x="300"
-        y="181"
+        x="${width / 2}"
+        y="${height / 2 + 46}"
         fill="#a1a1aa"
         font-family="Inter, Arial, sans-serif"
         font-size="13"

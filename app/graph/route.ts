@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   const login = options.organization || options.username
   if (!isValidGitHubLogin(login))
     return response(
-      invalidGraph("Invalid GitHub username or organization."),
+      invalidGraph("Invalid GitHub username or organization.", options),
       400
     )
 
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
   )
   if (retryAfter > 0) {
     return new NextResponse(
-      invalidGraph("Rate limit exceeded. Please try again later."),
+      invalidGraph("Rate limit exceeded. Please try again later.", options),
       {
         status: 429,
         headers: {
@@ -77,6 +77,6 @@ export async function GET(request: NextRequest) {
       : message.includes("rate limit")
         ? 429
         : 400
-    return response(invalidGraph(message), status)
+    return response(invalidGraph(message, options), status)
   }
 }

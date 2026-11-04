@@ -12,6 +12,7 @@ export type GraphStyle = {
     color?: string
     dashArray?: string
     glow?: number
+    step?: boolean
   }
   points: {
     width: number
@@ -48,7 +49,7 @@ export type GraphStyle = {
 const defaultGraphStyle = {
   label: "Default",
   chart: "line",
-  fontFamily: "Segoe UI, Ubuntu, sans-serif",
+  fontFamily: "Inter, Arial, sans-serif",
   line: { width: 2.8, smooth: true },
   points: { width: 6, mode: "positive" },
   area: { enabled: false, fill: "solid", opacity: 0.22 },
@@ -63,7 +64,7 @@ export const graphStyles = {
   bar: {
     label: "Bar",
     chart: "bar",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
+    fontFamily: "Inter, Arial, sans-serif",
     line: { width: 2.8, smooth: true },
     points: { width: 6, mode: "none" },
     area: { enabled: false, fill: "solid", opacity: 0.22 },
@@ -75,7 +76,7 @@ export const graphStyles = {
   neon: {
     label: "Neon",
     chart: "line",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
+    fontFamily: "Inter, Arial, sans-serif",
     line: { width: 2.8, smooth: true, glow: 5 },
     points: { width: 6, mode: "positive" },
     area: { enabled: false, fill: "solid", opacity: 0.22 },
@@ -87,7 +88,7 @@ export const graphStyles = {
   minimal: {
     label: "Minimal",
     chart: "line",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
+    fontFamily: "Inter, Arial, sans-serif",
     line: { width: 2.8, smooth: true },
     points: { width: 6, mode: "none" },
     area: { enabled: false, fill: "solid", opacity: 0.22 },
@@ -98,12 +99,17 @@ export const graphStyles = {
   },
   terminal: {
     ...defaultGraphStyle,
+    fontFamily: "VT323, monospace",
     label: "Terminal",
+    line: {
+      ...defaultGraphStyle.line,
+      step: true,
+    },
   },
   gradient: {
     label: "Gradient",
     chart: "line",
-    fontFamily: "Segoe UI, Ubuntu, sans-serif",
+    fontFamily: "Inter, Arial, sans-serif",
     line: { width: 2.8, smooth: true },
     points: { width: 6, mode: "positive" },
     area: { enabled: true, fill: "gradient", opacity: 0.92 },
