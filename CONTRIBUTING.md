@@ -1,4 +1,4 @@
-# Contributing to Github Readme Activity Graph
+# Contributing to GitHub Readme Activity Graph
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
@@ -10,127 +10,141 @@ We love your input! We want to make contributing to this project as easy and tra
 
 ## Before you contribute
 
-Our aim is to **keep it simple** for the developers to contribute to this project. See the folder structure (with concise description)
+Our aim is to **keep it simple** for developers to contribute to this project. The folder structure below provides an overview of the main directories and their responsibilities.
 
 ## How to contribute
 
-1. First up you need to fork (make a copy) of this repo to your Github account.
+1. Fork this repository to your GitHub account.
+2. Clone your fork to your computer.
+3. Add the original repository as an upstream remote and sync your local branch:
 
-2. Clone (download) your fork to your computer
-
-3. Set your streams so you can sync your clone with the original repo (get the latest updates)
-
-   - `git remote add upstream https://github.com/rodriaum/github-readme-activity-graph`
-   - `git pull upstream main`
-   - The above 2 commands will synchronize your forked version of the project with the actual repository.
-
-4. Create a branch `git checkout -b <your_branch_name>`.
-
-5. [Generate your personal access token](https://github.com/settings/tokens)
-
-6. Create a `.env` file in the root directory and in there write
-   `TOKEN=<your_generated_token>`
-
-   Now, open your terminal and write the following commands:
-
-   - `npm install` (install the dependencies)
-   - `npm start` (run the project on localhost)
-
-7. Get a screenshot of your finished work! (if there are any UI changes) Try to crop it so that it looks good as a smallish (preferably squarish) image.
-
-8. Pull from the upstream again before you commit your changes as you did in step 3. This is to ensure you still have the latest code.
-
-9. If you see an error like
-
-   ```md
-   Your local changes to the following files would be overwritten by merge. Please commit your changes or stash them before you merge
+   ```bash
+   git remote add upstream https://github.com/rodriaum/github-readme-activity-graph.git
+   git pull upstream main
    ```
 
-   on using `git pull upstream main` use:
+4. Create a branch for your changes:
 
-   - `git stash`
-   - `git pull upstream main`
-   - `git stash pop`
+   ```bash
+   git checkout -b <your-branch-name>
+   ```
 
-   for more info on this [visit](https://bluecast.tech/blog/git-stash/)
+5. [Generate a GitHub personal access token](https://github.com/settings/tokens) with the permissions required by the project.
+6. Create a `.env` file in the project root and add your token:
 
-10. Commit and push the code to your fork
+   ```env
+   TOKEN=<your_generated_token>
+   ```
 
-11. Create a pull request to have the changes merged from your fork into the origin.
+7. Install the dependencies and start the development server:
+
+   ```bash
+   pnpm install
+   pnpm dev
+   ```
+
+   The application will be available at the local URL printed by the development server.
+
+8. Take a screenshot of your finished work if your contribution changes the UI. Crop it so the relevant changes are easy to review.
+9. Sync with upstream before committing your changes:
+
+   ```bash
+   git pull upstream main
+   ```
+
+10. If Git reports that your local changes would be overwritten by the merge, stash them first:
+
+    ```bash
+    git stash
+    git pull upstream main
+    git stash pop
+    ```
+
+    See the [Git stash guide](https://git-scm.com/docs/git-stash) for more information.
+
+11. Commit and push your changes to your fork.
+12. Open a pull request from your branch to the `main` branch of this repository.
 
 ### Folder Structure
 
+The project is built with Next.js and TypeScript. Its main structure is:
+
+```text
+├── app
+│   ├── data/                         # Application data
+│   ├── graph/
+│   │   └── route.ts                  # Graph image/API route
+│   ├── favicon.ico                   # Application favicon
+│   ├── globals.css                   # Global styles
+│   ├── layout.tsx                    # Root layout
+│   └── page.tsx                      # Home page
+├── components
+│   ├── ui/                           # Reusable UI components
+│   ├── activity-graph-builder.tsx    # Activity graph customizer/builder
+│   └── theme-provider.tsx            # Theme context provider
+├── hooks
+│   ├── use-highlighted-code.ts       # Code highlighting hook
+│   └── use-mobile.ts                 # Mobile viewport hook
+├── lib
+│   ├── github.ts                     # GitHub API integration
+│   ├── graph-options.ts              # Graph configuration options
+│   ├── graph-styles.ts               # Graph styling definitions
+│   ├── graph.ts                      # Graph generation logic
+│   ├── highlighter.tsx               # Code highlighting utilities
+│   ├── rate-limit.ts                 # Rate limiting utilities
+│   ├── themes.ts                     # Graph themes
+│   ├── types.ts                      # Shared TypeScript types
+│   └── utils.ts                      # Shared utility functions
+├── public
+│   ├── themes/                       # Static theme assets
+│   ├── types/                        # Static type-related assets
+│   ├── customizer-preview.png        # Customizer preview image
+│   └── logo.svg                      # Project logo
+├── .env.example                      # Example environment variables
+├── components.json                   # UI components configuration
+├── next.config.ts                    # Next.js configuration
+├── package.json                      # Scripts and dependencies
+├── pnpm-lock.yaml                    # Locked dependency versions
+├── pnpm-workspace.yaml               # pnpm workspace configuration
+└── tsconfig.json                     # TypeScript configuration
 ```
 
-├── ...
-├── .github                          #conatins issues and pull request templates
-│ ├── ISSUE_TEMPLATE
-│ │ ├── bug_report.md
-│ │ └── feature_request.md
-│ └── PULL_REQUEST_TEMPLATE.md
-├── __test__                         #conatins test for the project
-│ ├── utils.test.js                  #tests for functions in src/utils.ts
-│ ├── svgs.test.js                   #tests for functions in src/svgs.ts
-│ ├── mockFunctions.js               #contains mock functions for fetching.test.js
-│ ├── fetching.test.js               #tests for functions in src/fetching.ts
-│ └── fakeInputs.js                  #conatins fake inputs for tests
-├── asset                            #contains logo and screenshots of graphs
-├── interfaces
-│ └── interface.ts                   #contains all used interfaces throughout the code
-├── types
-│ └── types.ts                       #contains all used types throughout the code
-├── src
-│ ├── createChart.ts                 #creation of graph with chartist.js and node-chartist
-│ ├── GraphChards.ts                 #class of Graph Cards
-│ ├── main.ts                        #everything starts from here
-│ ├── svgs.ts                        #contains svgs used or created throughout the project
-│ └── utils.ts                       #contains utility functions
-├── styles
-│ ├── graphAnimation.ts              #contains all the animations of the graph
-│ ├── graphStyle.ts                  #contains style(CSS) of the graph
-│ └── themes.ts                      #all the themes are here
-├── ...
+## We use GitHub Flow, so all code changes happen through pull requests
 
-```
+Pull requests are the best way to propose changes to the codebase. We actively welcome your contributions:
 
-## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
-
-Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
-
-1. Fork the repo and create your branch from `main`.
-2. If you've added code that should be tested, add tests.
-3. If your change needs an explanation to the user, update the documentation.
-4. Ensure the test suite passes.
-5. Make sure your code lints.
-6. Issue that pull request!
+1. Fork the repository and create your branch from `main`.
+2. Add tests when your changes introduce or modify behaviour that should be tested.
+3. Update the documentation when your changes affect how the project is used.
+4. Ensure the relevant checks pass.
+5. Make sure your code follows the project's linting and formatting conventions.
+6. Open your pull request.
 
 ## Any contributions you make will be under the MIT Software License
 
-In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
+When you submit code changes, your contributions are understood to be licensed under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers this project. Feel free to contact the maintainers if that's a concern.
 
-## Report bugs using Github's [issues](../../issues)
+## Report bugs using GitHub Issues
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](../../issues); it's that easy!
+We use GitHub Issues to track public bugs. Report a bug by [opening a new issue](../../issues).
 
 ## Write bug reports with detail, background, and sample code
 
-**Great Bug Reports** tend to have:
+**Great bug reports** tend to include:
 
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give a sample code if you can.
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+- A quick summary and relevant background
+- Steps to reproduce the issue, with specific details
+- A minimal code sample when possible
+- What you expected to happen
+- What actually happened
+- Any additional notes or troubleshooting steps
 
-People _love_ thorough bug reports. I'm not even kidding.
+Thorough reports make it much easier to understand and resolve issues.
 
-## Use a Consistent Coding Style
+## Use a consistent coding style
 
-Observe the coding style of the project and add your code also in the same style.
-**Don't make major changes** (Like changing the complete folder structure)
+Follow the existing coding style and conventions when adding or changing code. Keep changes focused and avoid unrelated structural changes.
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its MIT License.
+By contributing, you agree that your contributions will be licensed under the project's MIT License.
