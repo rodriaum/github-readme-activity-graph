@@ -123,7 +123,7 @@ function deepMerge<T>(base: T, overrides: DeepPartial<T>): T {
 const baseStyle: GraphStyle = {
   label: "Default",
   chart: "line",
-  fontFamily: "Segoe UI, Ubuntu, sans-serif",
+  fontFamily: "'Segoe UI', Ubuntu, sans-serif",
   inactiveOpacity: 0.28,
   tooltip: "{count} contribution{s} on {date}",
   padding: {
