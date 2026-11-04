@@ -414,41 +414,36 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
 export function invalidGraph(message: string) {
   return `
     <svg xmlns="http://www.w3.org/2000/svg"
-         width="420"
-         height="200"
-         viewBox="0 0 420 200"
+         width="600"
+         height="280"
+         viewBox="0 0 600 280"
          fill="none">
 
       <rect
         x="0.5"
         y="0.5"
-        width="419"
-        height="199"
+        width="599"
+        height="279"
         rx="8"
         fill="#09090b"
         stroke="#27272a"
       />
 
-      <circle
-        cx="210"
-        cy="76"
-        r="22"
-        fill="#27272a"
-      />
+      <circle cx="300" cy="105" r="24" fill="#27272a"/>
 
       <path
-        d="M210 65V78M210 86V87"
+        d="M300 93V106M300 114V115"
         stroke="#a1a1aa"
         stroke-width="2"
         stroke-linecap="round"
       />
 
       <text
-        x="210"
-        y="124"
+        x="300"
+        y="157"
         fill="#fafafa"
         font-family="Inter, Arial, sans-serif"
-        font-size="14"
+        font-size="16"
         font-weight="600"
         text-anchor="middle"
       >
@@ -456,11 +451,11 @@ export function invalidGraph(message: string) {
       </text>
 
       <text
-        x="210"
-        y="148"
+        x="300"
+        y="181"
         fill="#a1a1aa"
         font-family="Inter, Arial, sans-serif"
-        font-size="11"
+        font-size="13"
         text-anchor="middle"
       >
         ${escapeXml(message)}
