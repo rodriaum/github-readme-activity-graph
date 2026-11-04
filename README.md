@@ -10,7 +10,6 @@
 - [Fork Differences](#fork-differences)
     - [Deployment](#deployment)
 - [How to Use](#how-to-use)
-    - [Attention ⚠](#attention-)
     - [Organization Activity Graph](#organization-activity-graph)
     - [Optional Private Activity](#optional-private-activity)
 - [Use themes](#use-themes)
@@ -54,8 +53,6 @@ Just paste the following URL in your profile readme and you are good to go.
 ```md
 [![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum)](https://github.com/rodriaum/github-readme-activity-graph)
 ```
-
-### [Attention ⚠](#deploy-on-your-own-vercel-instance)
 
 ### Organization Activity Graph
 
