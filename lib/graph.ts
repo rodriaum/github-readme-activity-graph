@@ -178,19 +178,54 @@ function createChartCss(
 
   if (animation.enabled) {
     const len = animation.lineDashLength
+    const isBarChart = style.chart === "bar"
+
     rules.push(
-      !line.dashArray &&
+      !isBarChart &&
+        !line.dashArray &&
         rule(".ct-line", [
           `stroke-dasharray: ${len}`,
           `stroke-dashoffset: ${len}`,
           `animation: activity-line-draw ${animation.lineDuration}ms ease-in-out forwards`,
         ]),
-      rule(".ct-point, .ct-bar", [
-        `animation: activity-mark-appear ${animation.markDuration}ms ease-out both`,
-      ]),
-      `@keyframes activity-line-draw {\n  to {\n    stroke-dashoffset: 0;\n  }\n}`,
-      `@keyframes activity-mark-appear {\n  from {\n    opacity: 0.15;\n  }\n\n  to {\n    opacity: 1;\n  }\n}`,
-      `@media (prefers-reduced-motion: reduce) {\n  .ct-line,\n  .ct-point,\n  .ct-bar {\n    animation: none;\n    opacity: 1;\n    stroke-dashoffset: 0;\n  }\n}`
+      isBarChart &&
+        rule(".ct-bar", [
+          "stroke-dasharray: 1000",
+          "stroke-dashoffset: 1000",
+          `animation: ct-draw ${animation.lineDuration}ms ease-in-out forwards`,
+        ]),
+      !isBarChart &&
+        rule(".ct-point", [
+          `animation: activity-mark-appear ${animation.markDuration}ms ease-out both`,
+        ]),
+      `@keyframes activity-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}`,
+      `@keyframes ct-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}`,
+      `@keyframes activity-mark-appear {
+  from {
+    opacity: 0.15;
+  }
+
+  to {
+    opacity: 1;
+  }
+}`,
+      `@media (prefers-reduced-motion: reduce) {
+  .ct-line,
+  .ct-point,
+  .ct-bar {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}`
     )
   }
 
