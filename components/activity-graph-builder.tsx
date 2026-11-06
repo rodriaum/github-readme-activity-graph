@@ -3,6 +3,7 @@
 import {useEffect, useMemo, useRef, useState} from "react"
 import {ArrowUpRight, Check, Clipboard, Code2, GitBranch, Palette, SlidersHorizontal} from "lucide-react"
 import {Button} from "@/components/ui/button"
+import {Skeleton} from "@/components/ui/skeleton"
 import {Input} from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {Switch} from "@/components/ui/switch"
@@ -113,12 +114,17 @@ export function ActivityGraphBuilder() {
     const [copiedAction, setCopiedAction] = useState<"url" | "markdown" | null>(null)
     const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [origin, setOrigin] = useState("")
+    const [isPreviewLoading, setIsPreviewLoading] = useState(true)
     const query = useMemo(() => toQuery(form), [form])
     const previewQuery = useMemo(() => toQuery(previewForm), [previewForm])
     const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
     const markdown = `[![${form.username}'s GitHub activity graph](${graphUrl})](https://github.com/${form.username})`
 
     useEffect(() => setOrigin(window.location.origin), [])
+
+    useEffect(() => {
+        setIsPreviewLoading(Boolean(previewForm.username.trim()))
+    }, [previewQuery, previewForm.username])
 
     useEffect(() => {
         return () => {
@@ -314,8 +320,17 @@ export function ActivityGraphBuilder() {
                         <div
                             className="flex min-h-[330px] items-center justify-center overflow-x-auto bg-[radial-gradient(var(--border)_0.7px,transparent_0.7px)] bg-[size:14px_14px] p-4 sm:p-7">
                             {form.username.trim() ?
-                                <img key={previewQuery} src={`/graph?${previewQuery}`} alt="GitHub activity graph preview"
-                                     className="h-auto w-full min-w-[560px] rounded-lg shadow-sm"/> :
+                                <div className="relative w-full min-w-[560px]">
+                                    {isPreviewLoading && <Skeleton className="h-[260px] w-full rounded-lg"/>}
+                                    <img
+                                        key={previewQuery}
+                                        src={`/graph?${previewQuery}`}
+                                        alt="GitHub activity graph preview"
+                                        onLoad={() => setIsPreviewLoading(false)}
+                                        onError={() => setIsPreviewLoading(false)}
+                                        className={`h-auto w-full rounded-lg shadow-sm ${isPreviewLoading ? "hidden" : "block"}`}
+                                    />
+                                </div> :
                                 <p className="text-sm text-muted-foreground">Enter a GitHub username to preview the
                                     graph.</p>}
                         </div>
