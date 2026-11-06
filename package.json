@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "@base-ui/react": "^1.9.0",
     "@shadcn/react": "^0.3.1",
     "chartist": "2.2.0",
