@@ -462,6 +462,10 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
         showGrid: theme.showGrid,
         showYAxis: theme.showYAxis,
       },
+      axis: {
+        headroom: style.axisY.headroom,
+        scaleMinSpace: style.axisY.scaleMinSpace,
+      },
     }).render(contributions)
   }
 

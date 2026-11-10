@@ -15,11 +15,23 @@ export interface PixelCityTheme {
   showYAxis: boolean
 }
 
+export interface PixelCityAxisSettings {
+  headroom: number
+  scaleMinSpace: number
+}
+
+export interface PixelCityAxisScale {
+  step: number
+  maximum: number
+  values: number[]
+}
+
 export interface PixelCityRendererOptions {
   width: number
   height: number
   title: string
   theme: PixelCityTheme
+  axis: PixelCityAxisSettings
 }
 
 export interface PixelCityLayout {

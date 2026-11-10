@@ -1,7 +1,9 @@
 import { PixelCityBuilding } from "./pixel-city-building"
 import { PixelCityPalette } from "./pixel-city-palette"
 import { PixelCityScene } from "./pixel-city-scene"
+import { PixelCityAxis } from "./pixel-city-axis"
 import type {
+  PixelCityAxisScale,
   PixelCityContribution,
   PixelCityLayout,
   PixelCityRendererOptions,
@@ -22,15 +24,21 @@ export class PixelCityRenderer {
     )
     const layout = this.createLayout(days.length)
     const palette = new PixelCityPalette(this.options.theme)
+    const axisScale = PixelCityAxis.createScale(
+      maxContribution,
+      layout.groundY - layout.top,
+      this.options.axis
+    )
     const buildings = this.createBuildings(
       days,
       layout,
       palette,
-      maxContribution
+      maxContribution,
+      axisScale.maximum
     )
     const scene = new PixelCityScene(this.options, layout, palette)
 
-    return scene.render(days, buildings, maxContribution)
+    return scene.render(days, buildings, axisScale)
   }
 
   private createLayout(dayCount: number): PixelCityLayout {
@@ -55,12 +63,12 @@ export class PixelCityRenderer {
     contributions: PixelCityContribution[],
     layout: PixelCityLayout,
     palette: PixelCityPalette,
-    maxContribution: number
+    maxContribution: number,
+    axisMaximum: number
   ): string[] {
-    const minBuildingHeight = Math.min(
-      18,
-      layout.maxBuildingHeight * 0.28
-    )
+    const tallestBuildingHeight =
+      layout.maxBuildingHeight * (maxContribution / Math.max(1, axisMaximum))
+    const minBuildingHeight = Math.min(18, tallestBuildingHeight * 0.28)
     const logarithmicMaximum = Math.log1p(maxContribution)
 
     return contributions.map((contribution, index) => {
@@ -71,7 +79,7 @@ export class PixelCityRenderer {
       const height =
         contribution.count > 0
           ? minBuildingHeight +
-            intensity * (layout.maxBuildingHeight - minBuildingHeight)
+            intensity * (tallestBuildingHeight - minBuildingHeight)
           : 0
       const width = Math.min(42, Math.max(3, layout.slotWidth * 0.72))
       const x =

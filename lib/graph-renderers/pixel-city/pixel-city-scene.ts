@@ -1,9 +1,11 @@
 import type {
   PixelCityContribution,
   PixelCityLayout,
+  PixelCityAxisScale,
   PixelCityRendererOptions,
 } from "./pixel-city-types"
 import { PixelCityPalette } from "./pixel-city-palette"
+import { PixelCityAxis } from "./pixel-city-axis"
 
 export class PixelCityScene {
   constructor(
@@ -15,7 +17,7 @@ export class PixelCityScene {
   render(
     contributions: PixelCityContribution[],
     buildings: string[],
-    maxContribution: number
+    axisScale: PixelCityAxisScale
   ): string {
     const { width, height, title, theme } = this.options
     const accessibleTitle = title || "GitHub contribution city"
@@ -44,7 +46,7 @@ export class PixelCityScene {
         '"/>',
       this.renderTitle(),
       this.renderSkyline(),
-      this.renderGuides(maxContribution),
+      this.renderGuides(axisScale),
       buildings.join(""),
       this.renderStreet(),
       this.renderDateLabels(contributions),
@@ -99,46 +101,15 @@ export class PixelCityScene {
     return towers.join("")
   }
 
-  private renderGuides(maxContribution: number): string {
-    const { left, right, top, groundY } = this.layout
+  private renderGuides(scale: PixelCityAxisScale): string {
     const { showGrid, showYAxis } = this.options.theme
-    const plotHeight = groundY - top
-    const guides: string[] = []
 
-    for (let step = 0; step <= 4; step++) {
-      const y = groundY - (plotHeight * step) / 4
-      const value = Math.round((maxContribution * step) / 4)
-
-      if (showGrid) {
-        guides.push(
-          '<path d="M' +
-            left +
-            " " +
-            y +
-            " H" +
-            right +
-            '" fill="none" stroke="' +
-            this.palette.label +
-            '" stroke-opacity="0.16" stroke-dasharray="3 6"/>'
-        )
-      }
-
-      if (showYAxis) {
-        guides.push(
-          '<text x="' +
-            (left - 12) +
-            '" y="' +
-            (y + 4) +
-            '" text-anchor="end" fill="' +
-            this.palette.label +
-            '" font-family="Arial, sans-serif" font-size="11">' +
-            value +
-            "</text>"
-        )
-      }
-    }
-
-    return guides.join("")
+    return new PixelCityAxis(
+      this.layout,
+      this.palette,
+      showGrid,
+      showYAxis
+    ).render(scale)
   }
 
   private renderStreet(): string {
