@@ -7,7 +7,7 @@ import {Skeleton} from "@/components/ui/skeleton"
 import {Input} from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {Switch} from "@/components/ui/switch"
-import {themeNames} from "@/lib/themes"
+import {getTheme, themeNames} from "@/lib/themes"
 import {graphStyleNames, graphStyles} from "@/lib/graph-styles"
 import type {GraphType} from "@/lib/types"
 import Image from "next/image";
@@ -30,6 +30,91 @@ function formatThemeLabel(name: string) {
         .split("-")
         .map(part => themeLabels[part] ?? `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
         .join(" ")
+}
+
+const themeColorKeys = {
+    bgColor: "bgColor",
+    borderColor: "borderColor",
+    titleColor: "titleColor",
+    color: "color",
+    line: "lineColor",
+    point: "pointColor",
+    areaColor: "areaColor"
+} as const
+
+function toColorInputValue(color: string) {
+    let hex = color.replace(/^#/, "")
+    if (hex.length === 8) hex = hex.slice(0, 6)
+    if (hex.length === 4) hex = hex.slice(0, 3)
+    if (hex.length === 3) hex = [...hex].map(channel => channel + channel).join("")
+    return `#${hex}`
+}
+
+function getBooleanParam(params: URLSearchParams, key: string, fallback: boolean) {
+    const value = params.get(key)
+    if (value === "true") return true
+    if (value === "false") return false
+    return fallback
+}
+
+function getIntegerParam(params: URLSearchParams, key: string, fallback: number, min: number, max: number) {
+    const raw = params.get(key)
+    if (raw === null || raw.trim() === "") return fallback
+
+    const value = Number(raw)
+    return Number.isInteger(value) ? Math.min(max, Math.max(min, value)) : fallback
+}
+
+function getBuilderState(search: string): FormState {
+    const params = new URLSearchParams(search)
+    const next: FormState = {...initial}
+
+    const username = params.get("username")
+    const organization = params.get("organization")
+    if (username !== null) {
+        next.username = username
+        next.organization = false
+    } else if (organization !== null) {
+        next.username = organization
+        next.organization = true
+    }
+
+    const theme = params.get("theme")
+    if (theme && themeNames.includes(theme)) next.theme = theme
+
+    const type = params.get("type")
+    if (type && graphStyleNames.includes(type as GraphType)) next.type = type as GraphType
+
+    next.days = String(getIntegerParam(params, "days", Number(initial.days), 1, 90))
+    next.height = String(getIntegerParam(params, "height", Number(initial.height), 200, 600))
+    next.radius = String(getIntegerParam(params, "radius", Number(initial.radius), 0, 16))
+
+    next.area = getBooleanParam(params, "area", initial.area)
+    next.grid = getBooleanParam(params, "grid", initial.grid)
+    next.showPoint = getBooleanParam(params, "show_point", initial.showPoint)
+    next.hideTitle = getBooleanParam(params, "hide_title", initial.hideTitle)
+    next.hideYAxis = getBooleanParam(params, "hide_y_axis", initial.hideYAxis)
+    next.hideBorder = getBooleanParam(params, "hide_border", initial.hideBorder)
+
+    next.customTitle = (params.get("custom_title") ?? "").slice(0, 120)
+
+    const colorParams = {
+        bgColor: "bg_color",
+        borderColor: "border_color",
+        titleColor: "title_color",
+        areaColor: "area_color",
+        color: "color",
+        line: "line",
+        point: "point"
+    } as const
+    const colorPattern = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
+
+    for (const [key, param] of Object.entries(colorParams) as [keyof typeof colorParams, string][]) {
+        const value = params.get(param)?.replace(/^#/, "")
+        if (value && colorPattern.test(value)) next[key] = `#${value}`
+    }
+
+    return next
 }
 
 type FormState = {
@@ -121,12 +206,37 @@ export function ActivityGraphBuilder() {
     const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [origin, setOrigin] = useState("")
     const [isPreviewLoading, setIsPreviewLoading] = useState(true)
+    const [isUrlInitialized, setIsUrlInitialized] = useState(false)
+    const lastSyncedQuery = useRef("")
     const query = useMemo(() => toQuery(form), [form])
     const previewQuery = useMemo(() => toQuery(previewForm), [previewForm])
     const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
     const markdown = `[![${form.username}'s GitHub activity graph](${graphUrl})](https://github.com/${form.username})`
+    const themeColors = getTheme(form.theme)
 
     useEffect(() => setOrigin(window.location.origin), [])
+
+    useEffect(() => {
+        const next = window.location.search
+            ? getBuilderState(window.location.search)
+            : initial
+
+        setForm(next)
+        setPreviewForm(next)
+        lastSyncedQuery.current = toQuery(next)
+        setIsUrlInitialized(true)
+    }, [])
+
+    useEffect(() => {
+        if (!isUrlInitialized) return
+
+        const nextQuery = toQuery(form)
+        if (nextQuery === lastSyncedQuery.current) return
+
+        const nextUrl = `${window.location.pathname}?${nextQuery}${window.location.hash}`
+        window.history.replaceState(window.history.state, "", nextUrl)
+        lastSyncedQuery.current = nextQuery
+    }, [form, isUrlInitialized])
 
     useEffect(() => {
         setIsPreviewLoading(Boolean(previewForm.username.trim()))
@@ -141,7 +251,16 @@ export function ActivityGraphBuilder() {
 
     function update<K extends keyof FormState>(key: K, value: FormState[K]) {
         setForm(previous => {
-            const next = {...previous, [key]: value}
+            const next: FormState = {...previous, [key]: value}
+            if (key === "theme") {
+                next.bgColor = ""
+                next.borderColor = ""
+                next.titleColor = ""
+                next.areaColor = ""
+                next.color = ""
+                next.line = ""
+                next.point = ""
+            }
             if (previewTimeout.current) clearTimeout(previewTimeout.current)
             previewTimeout.current = setTimeout(() => {
                 setPreviewForm(next)
@@ -299,15 +418,7 @@ export function ActivityGraphBuilder() {
                                         point: "Points",
                                         areaColor: "Area"
                                     })[key]}
-                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={form[key] || ({
-                                            bgColor: "#ffcfe9",
-                                            borderColor: "#ffffff",
-                                            titleColor: "#9e4c98",
-                                            color: "#9e4c98",
-                                            line: "#9e4c98",
-                                            point: "#403d3d",
-                                            areaColor: "#9e4c98"
-                                        })[key]} onChange={event => update(key, event.target.value)}/>
+                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={toColorInputValue(form[key] || themeColors[themeColorKeys[key]])} onChange={event => update(key, event.target.value)}/>
                                     </label>
                                 ))}
                             </div>
