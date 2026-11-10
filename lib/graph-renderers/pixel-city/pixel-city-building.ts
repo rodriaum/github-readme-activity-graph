@@ -62,7 +62,7 @@ export class PixelCityBuilding {
         '" fill="' +
         palette.buildingRoof +
         '"/>',
-      this.renderRoof(top, frontWidth, roofHeight),
+      this.renderRoof(top, frontWidth),
       this.renderWindows(top + roofHeight, frontWidth, bodyHeight),
       "</g>",
     ]
@@ -81,7 +81,7 @@ export class PixelCityBuilding {
     return "<title>" + this.escapeXml(label) + "</title>"
   }
 
-  private renderRoof(top: number, frontWidth: number, roofHeight: number) {
+  private renderRoof(top: number, frontWidth: number) {
     const { x, width, index, palette } = this.options
     const variant = index % 4
     const details: string[] = []

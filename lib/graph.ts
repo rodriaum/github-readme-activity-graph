@@ -10,7 +10,7 @@ import { renderToString } from "chartist/server"
 import { getGraphStyle } from "./graph-styles"
 import type { GraphStyle, InterpolationName } from "./graph-styles"
 import type { ActivityData, GraphOptions } from "./types"
-import { PixelCityRenderer } from "./graph-renderers/pixel-city/pixel-city-renderer"
+import { PixelCityRenderer } from "./graph-renderers/pixel-city"
 
 const SVG_WIDTH = 1200
 const CHART_HORIZONTAL_PADDING = 120
