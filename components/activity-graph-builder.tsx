@@ -7,7 +7,7 @@ import {Skeleton} from "@/components/ui/skeleton"
 import {Input} from "@/components/ui/input"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {Switch} from "@/components/ui/switch"
-import {themeNames} from "@/lib/themes"
+import {getTheme, themeNames} from "@/lib/themes"
 import {graphStyleNames, graphStyles} from "@/lib/graph-styles"
 import type {GraphType} from "@/lib/types"
 import Image from "next/image";
@@ -30,6 +30,23 @@ function formatThemeLabel(name: string) {
         .split("-")
         .map(part => themeLabels[part] ?? `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
         .join(" ")
+}
+
+const themeColorKeys = {
+    bgColor: "bgColor",
+    borderColor: "borderColor",
+    titleColor: "titleColor",
+    color: "color",
+    line: "lineColor",
+    point: "pointColor",
+    areaColor: "areaColor"
+} as const
+
+function toColorInputValue(color: string) {
+    const hex = color.replace(/^#/, "")
+    const rgb = hex.length === 8 ? hex.slice(0, 6) : hex.length === 4 ? hex.slice(0, 3) : hex
+    const normalized = rgb.length === 3 ? [...rgb].map(channel => channel + channel).join("") : rgb
+    return `#${normalized}`
 }
 
 type FormState = {
@@ -125,6 +142,7 @@ export function ActivityGraphBuilder() {
     const previewQuery = useMemo(() => toQuery(previewForm), [previewForm])
     const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
     const markdown = `[![${form.username}'s GitHub activity graph](${graphUrl})](https://github.com/${form.username})`
+    const themeColors = getTheme(form.theme)
 
     useEffect(() => setOrigin(window.location.origin), [])
 
@@ -141,7 +159,16 @@ export function ActivityGraphBuilder() {
 
     function update<K extends keyof FormState>(key: K, value: FormState[K]) {
         setForm(previous => {
-            const next = {...previous, [key]: value}
+            const next: FormState = {...previous, [key]: value}
+            if (key === "theme") {
+                next.bgColor = ""
+                next.borderColor = ""
+                next.titleColor = ""
+                next.areaColor = ""
+                next.color = ""
+                next.line = ""
+                next.point = ""
+            }
             if (previewTimeout.current) clearTimeout(previewTimeout.current)
             previewTimeout.current = setTimeout(() => {
                 setPreviewForm(next)
@@ -299,15 +326,7 @@ export function ActivityGraphBuilder() {
                                         point: "Points",
                                         areaColor: "Area"
                                     })[key]}
-                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={form[key] || ({
-                                            bgColor: "#ffcfe9",
-                                            borderColor: "#ffffff",
-                                            titleColor: "#9e4c98",
-                                            color: "#9e4c98",
-                                            line: "#9e4c98",
-                                            point: "#403d3d",
-                                            areaColor: "#9e4c98"
-                                        })[key]} onChange={event => update(key, event.target.value)}/>
+                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={form[key] || toColorInputValue(themeColors[themeColorKeys[key]])} onChange={event => update(key, event.target.value)}/>
                                     </label>
                                 ))}
                             </div>
