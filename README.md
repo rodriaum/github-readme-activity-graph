@@ -113,15 +113,21 @@ For more themes click [here](https://github.com/rodriaum/github-readme-activity-
 
 ## Graph Types
 
-Choose the graph style independently from the theme:
+Choose the graph style independently from the theme.
 
-|            Type              |                             Preview                              |
-| :--------------------------: |:----------------------------------------------------------------:|
-|          **default**         |  <img src="./public/types/default.svg" height=250 alt="graph"/>  |
-|            **bar**           |    <img src="./public/types/bar.svg" height=250 alt="graph"/>    |
-|            **neon**          |   <img src="./public/types/neon.svg" height=250 alt="graph"/>    |
-|          **terminal**        | <img src="./public/types/terminal.svg" height=250 alt="graph"/>  |
-|          **gradient**        | <img src="./public/types/gradient.svg" height=250 alt="graph"/>  |
+```text
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=pixel-city&theme=github-dark
+```
+
+|            Type              |                             Preview                               |
+| :--------------------------: |:-----------------------------------------------------------------:|
+|          **default**         |  <img src="./public/types/default.svg" height=250 alt="graph"/>   |
+|            **bar**           |    <img src="./public/types/bar.svg" height=250 alt="graph"/>     |
+|            **neon**          |   <img src="./public/types/neon.svg" height=250 alt="graph"/>     |
+|          **terminal**        | <img src="./public/types/terminal.svg" height=250 alt="graph"/>   |
+|          **gradient**        | <img src="./public/types/gradient.svg" height=250 alt="graph"/>   |
+|        **pixel-city**        | <img src="./public/types/pixel-city.svg" height=250 alt="graph"/> |
+|           **snowy**          | <img src="./public/types/snowy.svg" height=250 alt="graph"/>      |
 
 ## Customization
 
