@@ -10,6 +10,7 @@ import { renderToString } from "chartist/server"
 import { getGraphStyle } from "./graph-styles"
 import type { GraphStyle, InterpolationName } from "./graph-styles"
 import type { ActivityData, GraphOptions } from "./types"
+import { PixelCityRenderer } from "./graph-renderers/pixel-city/pixel-city-renderer"
 
 const SVG_WIDTH = 1200
 const CHART_HORIZONTAL_PADDING = 120
@@ -444,6 +445,25 @@ export function renderActivityGraph(data: ActivityData, options: GraphOptions) {
   const contributions = normalizeContributions(data)
   const title = resolveTitle(data, options)
   const barWidth = getBarWidth(style, contributions.length)
+
+  if (options.type === "pixel-city") {
+    return new PixelCityRenderer({
+      width: SVG_WIDTH,
+      height,
+      title,
+      theme: {
+        background: theme.background,
+        border: theme.border,
+        label: theme.label,
+        title: theme.title,
+        point: theme.point,
+        area: theme.area,
+        radius: theme.radius,
+        showGrid: theme.showGrid,
+        showYAxis: theme.showYAxis,
+      },
+    }).render(contributions)
+  }
 
   const rawScene = toScene(
     buildChartConfig(style, theme, contributions, Boolean(title), height),

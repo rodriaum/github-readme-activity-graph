@@ -219,6 +219,13 @@ export const graphStyles = {
     area: { enabled: true, fill: "gradient", opacity: 0.92 },
   }),
 
+  "pixel-city": definePreset("Pixel City", {
+    chart: "bar",
+    points: { mode: "none" },
+    area: { enabled: false },
+    animation: { enabled: false },
+  }),
+
 } as const satisfies Record<string, GraphStyle>
 
 /* Lookups */

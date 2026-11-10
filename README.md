@@ -113,7 +113,7 @@ For more themes click [here](https://github.com/rodriaum/github-readme-activity-
 
 ## Graph Types
 
-Choose the graph style independently from the theme:
+Choose the graph style independently from the theme. **Pixel City** turns each contribution day into a small building. More activity creates taller buildings while quiet days become tiny green spaces. It works with the existing themes, title, grid and axis options.
 
 |            Type              |                             Preview                              |
 | :--------------------------: |:----------------------------------------------------------------:|
@@ -122,6 +122,7 @@ Choose the graph style independently from the theme:
 |            **neon**          |   <img src="./public/types/neon.svg" height=250 alt="graph"/>    |
 |          **terminal**        | <img src="./public/types/terminal.svg" height=250 alt="graph"/>  |
 |          **gradient**        | <img src="./public/types/gradient.svg" height=250 alt="graph"/>  |
+|        **pixel-city**       | <img src="./public/types/pixel-city.svg" height=250 alt="Pixel City graph"/> |
 
 ## Customization
 
