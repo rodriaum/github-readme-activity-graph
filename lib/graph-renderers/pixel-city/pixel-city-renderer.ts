@@ -1,4 +1,3 @@
-import type { GraphAxisScale } from "../shared/graph-axis"
 import { PixelCityBuilding } from "./pixel-city-building"
 import { PixelCityPalette } from "./pixel-city-palette"
 import { PixelCityScene } from "./pixel-city-scene"

@@ -104,35 +104,40 @@ export class SnowyScene {
 
   private renderMountains(): string {
     const { width } = this.options
-    const { groundY } = this.layout
+    const { groundY, top } = this.layout
+    const mountainHeight = Math.max(
+      30,
+      Math.min(168, (groundY - top) * 0.72)
+    )
+    const nearHeight = mountainHeight * 0.69
 
     return [
       '<path d="M0 ' +
-        (groundY - 72) +
+        (groundY - mountainHeight * 0.43) +
         " L" +
         width * 0.16 +
         " " +
-        (groundY - 168) +
+        (groundY - mountainHeight) +
         " L" +
         width * 0.31 +
         " " +
-        (groundY - 72) +
+        (groundY - mountainHeight * 0.43) +
         " L" +
         width * 0.46 +
         " " +
-        (groundY - 142) +
+        (groundY - mountainHeight * 0.845) +
         " L" +
         width * 0.64 +
         " " +
-        (groundY - 70) +
+        (groundY - mountainHeight * 0.417) +
         " L" +
         width * 0.82 +
         " " +
-        (groundY - 154) +
+        (groundY - mountainHeight * 0.917) +
         " L" +
         width +
         " " +
-        (groundY - 66) +
+        (groundY - mountainHeight * 0.393) +
         " V" +
         groundY +
         " H0 Z" +
@@ -140,36 +145,48 @@ export class SnowyScene {
         this.palette.mountainFar +
         '" opacity="0.36"/>',
       '<path d="M0 ' +
-        (groundY - 40) +
+        (groundY - nearHeight * 0.345) +
         " L" +
         width * 0.2 +
         " " +
-        (groundY - 106) +
+        (groundY - nearHeight * 0.914) +
         " L" +
         width * 0.38 +
         " " +
-        (groundY - 46) +
+        (groundY - nearHeight * 0.397) +
         " L" +
         width * 0.6 +
         " " +
-        (groundY - 116) +
+        (groundY - nearHeight) +
         " L" +
         width * 0.81 +
         " " +
-        (groundY - 48) +
+        (groundY - nearHeight * 0.414) +
         " L" +
         width +
         " " +
-        (groundY - 95) +
+        (groundY - nearHeight * 0.819) +
         " V" +
         groundY +
         " H0 Z" +
         '" fill="' +
         this.palette.mountainNear +
         '" opacity="0.5"/>',
-      this.renderMountainSnow(width * 0.16, groundY - 168, width * 0.045),
-      this.renderMountainSnow(width * 0.46, groundY - 142, width * 0.04),
-      this.renderMountainSnow(width * 0.82, groundY - 154, width * 0.04),
+      this.renderMountainSnow(
+        width * 0.16,
+        groundY - mountainHeight,
+        width * 0.045
+      ),
+      this.renderMountainSnow(
+        width * 0.46,
+        groundY - mountainHeight * 0.845,
+        width * 0.04
+      ),
+      this.renderMountainSnow(
+        width * 0.82,
+        groundY - mountainHeight * 0.917,
+        width * 0.04
+      ),
     ].join("")
   }
 
