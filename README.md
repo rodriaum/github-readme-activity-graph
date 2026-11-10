@@ -169,6 +169,7 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&them
 |     `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
 |    `type`     | name of [graph types](#graph-types)           |                     string                     |
 |    `grid`     |                   show grid                   |           boolean (default: `true`)             |
+| `show_point` |             shows line chart points             |           boolean (default: `true`)             |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
 
