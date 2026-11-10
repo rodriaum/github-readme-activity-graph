@@ -44,7 +44,8 @@ const themeColorKeys = {
 
 function toColorInputValue(color: string) {
     let hex = color.replace(/^#/, "")
-    if (hex.length === 4 || hex.length === 8) hex = hex.slice(0, -1)
+    if (hex.length === 8) hex = hex.slice(0, 6)
+    if (hex.length === 4) hex = hex.slice(0, 3)
     if (hex.length === 3) hex = [...hex].map(channel => channel + channel).join("")
     return `#${hex}`
 }
@@ -95,9 +96,7 @@ function getBuilderState(search: string): FormState {
     next.hideYAxis = getBooleanParam(params, "hide_y_axis", initial.hideYAxis)
     next.hideBorder = getBooleanParam(params, "hide_border", initial.hideBorder)
 
-    next.customTitle = (params.get("custom_title") ?? "")
-        .slice(0, 120)
-        .slice(0, 120)
+    next.customTitle = (params.get("custom_title") ?? "").slice(0, 120)
 
     const colorParams = {
         bgColor: "bg_color",
@@ -112,7 +111,7 @@ function getBuilderState(search: string): FormState {
 
     for (const [key, param] of Object.entries(colorParams) as [keyof typeof colorParams, string][]) {
         const value = params.get(param)?.replace(/^#/, "")
-        if (value && colorPattern.test(value)) next[key] = toColorInputValue(value)
+        if (value && colorPattern.test(value)) next[key] = `#${value}`
     }
 
     return next
@@ -403,7 +402,7 @@ export function ActivityGraphBuilder() {
                                         point: "Points",
                                         areaColor: "Area"
                                     })[key]}
-                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={form[key] || toColorInputValue(themeColors[themeColorKeys[key]])} onChange={event => update(key, event.target.value)}/>
+                                        <Input type="color" className="h-10 w-full cursor-pointer overflow-hidden rounded-md border border-input bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-[inherit] [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-[inherit] [&::-moz-color-swatch]:border-0" value={toColorInputValue(form[key] || themeColors[themeColorKeys[key]])} onChange={event => update(key, event.target.value)}/>
                                     </label>
                                 ))}
                             </div>
