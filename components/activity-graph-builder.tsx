@@ -206,6 +206,8 @@ export function ActivityGraphBuilder() {
     const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [origin, setOrigin] = useState("")
     const [isPreviewLoading, setIsPreviewLoading] = useState(true)
+    const [isUrlInitialized, setIsUrlInitialized] = useState(false)
+    const lastSyncedQuery = useRef("")
     const query = useMemo(() => toQuery(form), [form])
     const previewQuery = useMemo(() => toQuery(previewForm), [previewForm])
     const graphUrl = useMemo(() => `${origin}/graph?${query}`, [origin, query])
@@ -215,12 +217,26 @@ export function ActivityGraphBuilder() {
     useEffect(() => setOrigin(window.location.origin), [])
 
     useEffect(() => {
-        if (!window.location.search) return
+        const next = window.location.search
+            ? getBuilderState(window.location.search)
+            : initial
 
-        const next = getBuilderState(window.location.search)
         setForm(next)
         setPreviewForm(next)
+        lastSyncedQuery.current = toQuery(next)
+        setIsUrlInitialized(true)
     }, [])
+
+    useEffect(() => {
+        if (!isUrlInitialized) return
+
+        const nextQuery = toQuery(form)
+        if (nextQuery === lastSyncedQuery.current) return
+
+        const nextUrl = `${window.location.pathname}?${nextQuery}${window.location.hash}`
+        window.history.replaceState(window.history.state, "", nextUrl)
+        lastSyncedQuery.current = nextQuery
+    }, [form, isUrlInitialized])
 
     useEffect(() => {
         setIsPreviewLoading(Boolean(previewForm.username.trim()))
