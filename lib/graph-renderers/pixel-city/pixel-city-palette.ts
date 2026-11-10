@@ -29,7 +29,7 @@ export class PixelCityPalette {
     this.buildingFront = this.mix(theme.point, theme.background, 0.48)
     this.buildingSide = this.mix(theme.point, theme.background, 0.72)
     this.buildingRoof = this.mix(theme.area, theme.point, 0.55)
-    this.windowLit = this.mix(theme.area, theme.background, 0.76)
+    this.windowLit = this.mix(theme.title, theme.background, 0.76)
     this.windowDark = this.mix(theme.point, theme.background, 0.28)
     this.skyline = this.mix(theme.point, theme.background, 0.16)
     this.sidewalk = this.mix(theme.point, theme.background, 0.13)

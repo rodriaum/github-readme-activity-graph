@@ -115,6 +115,10 @@ For more themes click [here](https://github.com/rodriaum/github-readme-activity-
 
 Choose the graph style independently from the theme. **Pixel City** turns each contribution day into a small building. More activity creates taller buildings while quiet days become small parks. It works with the existing themes, title, grid and axis options. Use `type=pixel-city` in the graph URL.
 
+```text
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=pixel-city&theme=github-dark
+```
+
 |            Type              |                             Preview                              |
 | :--------------------------: |:----------------------------------------------------------------:|
 |          **default**         |  <img src="./public/types/default.svg" height=250 alt="graph"/>  |
