@@ -43,10 +43,79 @@ const themeColorKeys = {
 } as const
 
 function toColorInputValue(color: string) {
-    const hex = color.replace(/^#/, "")
-    const rgb = hex.length === 8 ? hex.slice(0, 6) : hex.length === 4 ? hex.slice(0, 3) : hex
-    const normalized = rgb.length === 3 ? [...rgb].map(channel => channel + channel).join("") : rgb
-    return `#${normalized}`
+    let hex = color.replace(/^#/, "")
+    if (hex.length === 4 || hex.length === 8) hex = hex.slice(0, -1)
+    if (hex.length === 3) hex = [...hex].map(channel => channel + channel).join("")
+    return `#${hex}`
+}
+
+function getBooleanParam(params: URLSearchParams, key: string, fallback: boolean) {
+    const value = params.get(key)
+    if (value === "true") return true
+    if (value === "false") return false
+    return fallback
+}
+
+function getIntegerParam(params: URLSearchParams, key: string, fallback: number, min: number, max: number) {
+    const raw = params.get(key)
+    if (raw === null || raw.trim() === "") return fallback
+
+    const value = Number(raw)
+    return Number.isInteger(value) ? Math.min(max, Math.max(min, value)) : fallback
+}
+
+function getBuilderState(search: string): FormState {
+    const params = new URLSearchParams(search)
+    const next: FormState = {...initial}
+
+    const username = params.get("username")
+    const organization = params.get("organization")
+    if (username !== null) {
+        next.username = username
+        next.organization = false
+    } else if (organization !== null) {
+        next.username = organization
+        next.organization = true
+    }
+
+    const theme = params.get("theme")
+    if (theme && themeNames.includes(theme)) next.theme = theme
+
+    const type = params.get("type")
+    if (type && graphStyleNames.includes(type as GraphType)) next.type = type as GraphType
+
+    next.days = String(getIntegerParam(params, "days", Number(initial.days), 1, 90))
+    next.height = String(getIntegerParam(params, "height", Number(initial.height), 200, 600))
+    next.radius = String(getIntegerParam(params, "radius", Number(initial.radius), 0, 16))
+
+    next.area = getBooleanParam(params, "area", initial.area)
+    next.grid = getBooleanParam(params, "grid", initial.grid)
+    next.showPoint = getBooleanParam(params, "show_point", initial.showPoint)
+    next.hideTitle = getBooleanParam(params, "hide_title", initial.hideTitle)
+    next.hideYAxis = getBooleanParam(params, "hide_y_axis", initial.hideYAxis)
+    next.hideBorder = getBooleanParam(params, "hide_border", initial.hideBorder)
+
+    next.customTitle = (params.get("custom_title") ?? "")
+        .replace(/[\\u0000-\\u001f\\u007f]/g, "")
+        .slice(0, 120)
+
+    const colorParams = {
+        bgColor: "bg_color",
+        borderColor: "border_color",
+        titleColor: "title_color",
+        areaColor: "area_color",
+        color: "color",
+        line: "line",
+        point: "point"
+    } as const
+    const colorPattern = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
+
+    for (const [key, param] of Object.entries(colorParams) as [keyof typeof colorParams, string][]) {
+        const value = params.get(param)?.replace(/^#/, "")
+        if (value && colorPattern.test(value)) next[key] = toColorInputValue(value)
+    }
+
+    return next
 }
 
 type FormState = {
@@ -145,6 +214,14 @@ export function ActivityGraphBuilder() {
     const themeColors = getTheme(form.theme)
 
     useEffect(() => setOrigin(window.location.origin), [])
+
+    useEffect(() => {
+        if (!window.location.search) return
+
+        const next = getBuilderState(window.location.search)
+        setForm(next)
+        setPreviewForm(next)
+    }, [])
 
     useEffect(() => {
         setIsPreviewLoading(Boolean(previewForm.username.trim()))
