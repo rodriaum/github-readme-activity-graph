@@ -113,6 +113,7 @@ function resolveTheme(options: GraphOptions, style: GraphStyle) {
     showArea: options.area,
     showGrid: options.grid,
     showPoint: options.showPoint,
+    showYAxis: !options.hideYAxis,
   }
 }
 type Theme = ReturnType<typeof resolveTheme>
@@ -382,8 +383,8 @@ function buildChartConfig(
         index % labelStep === 0 || index === lastIndex ? String(value) : null,
     },
     axisY: {
-      offset: options.hideYAxis ? 8 : style.axisY.offset,
-      showLabel: !options.hideYAxis && style.axisY.showLabels,
+      offset: theme.showYAxis ? style.axisY.offset : 8,
+      showLabel: theme.showYAxis && style.axisY.showLabels,
       showGrid: theme.showGrid && style.grid.enabled,
       low: 0,
       high: maxValue * style.axisY.headroom,
