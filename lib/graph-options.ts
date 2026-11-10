@@ -90,6 +90,7 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
     username,
     organization,
     hideTitle: getBoolean(getValue(query, "hide_title"), false),
+    hideYAxis: getBoolean(getValue(query, "hide_y_axis"), false),
     customTitle: customTitle || undefined,
     radius,
     height,
@@ -98,6 +99,7 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
     to,
     area: getBoolean(getValue(query, "area"), false),
     grid: getBoolean(getValue(query, "grid"), true),
+    showPoint: getBoolean(getValue(query, "show_point"), true),
     type,
     colors,
   }

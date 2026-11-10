@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ct="http://gionkunz.github.com/chartist-js/ct" class="ct-chart-line" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Rodrigo Ferreira&#039;s Contribution Graph"><title>Rodrigo Ferreira&#039;s Contribution Graph</title><rect class="graph-background" x="0" y="0" width="1200" height="420" rx="0" fill="#09090B"/><g class="ct-grids"/><g><g class="ct-series ct-series-a" ct:series-name="contributions"><path class="ct-line" d="M20,372C32.733,361.955,45.467,341.865,58.2,341.865C70.933,341.865,83.667,372,96.4,372C109.133,372,121.867,362.661,134.6,357.65C147.333,352.639,160.067,348.254,172.8,341.865C185.533,335.476,198.267,317.47,211,317.47C223.733,317.47,236.467,372,249.2,372C261.933,372,274.667,372,287.4,372C300.133,372,312.867,341.865,325.6,341.865C338.333,341.865,351.067,354.621,363.8,356.215C376.533,357.809,389.267,357.52,402,359.085C414.733,360.65,427.467,372,440.2,372C452.933,372,465.667,364.21,478.4,363.39C491.133,362.57,503.867,362.878,516.6,361.955C529.333,361.032,542.067,330.687,554.8,323.21C567.533,315.733,580.267,307.425,593,307.425C605.733,307.425,618.467,312.822,631.2,318.905C643.933,324.988,656.667,363.39,669.4,363.39C682.133,363.39,694.867,362.906,707.6,361.955C720.333,361.004,733.067,126.615,745.8,126.615C758.533,126.615,771.267,367.239,784,369.13C796.733,371.021,809.467,372,822.2,372C834.933,372,847.667,358.651,860.4,349.04C873.133,339.429,885.867,310.295,898.6,310.295C911.333,310.295,924.067,366.26,936.8,366.26C949.533,366.26,962.267,365.234,975,363.39C987.733,361.546,1000.467,287.335,1013.2,287.335C1025.933,287.335,1038.667,372,1051.4,372C1064.133,372,1076.867,372,1089.6,372C1102.333,372,1115.067,327.515,1127.8,327.515C1140.533,327.515,1153.267,356.215,1166,370.565"/></g></g><g class="ct-labels"><text class="ct-label ct-horizontal ct-end" x="20" y="387.2" text-anchor="start"><tspan x="20" y="387.2">11</tspan></text><text class="ct-label ct-horizontal ct-end" x="134.6" y="387.2" text-anchor="start"><tspan x="134.6" y="387.2">14</tspan></text><text class="ct-label ct-horizontal ct-end" x="249.2" y="387.2" text-anchor="start"><tspan x="249.2" y="387.2">17</tspan></text><text class="ct-label ct-horizontal ct-end" x="363.8" y="387.2" text-anchor="start"><tspan x="363.8" y="387.2">20</tspan></text><text class="ct-label ct-horizontal ct-end" x="478.4" y="387.2" text-anchor="start"><tspan x="478.4" y="387.2">23</tspan></text><text class="ct-label ct-horizontal ct-end" x="593" y="387.2" text-anchor="start"><tspan x="593" y="387.2">26</tspan></text><text class="ct-label ct-horizontal ct-end" x="707.6" y="387.2" text-anchor="start"><tspan x="707.6" y="387.2">29</tspan></text><text class="ct-label ct-horizontal ct-end" x="822.2" y="387.2" text-anchor="start"><tspan x="822.2" y="387.2">01</tspan></text><text class="ct-label ct-horizontal ct-end" x="936.8" y="387.2" text-anchor="start"><tspan x="936.8" y="387.2">04</tspan></text><text class="ct-label ct-horizontal ct-end" x="1051.4" y="387.2" text-anchor="start"><tspan x="1051.4" y="387.2">07</tspan></text><text class="ct-label ct-horizontal ct-end" x="1166" y="387.2" text-anchor="start"><tspan x="1166" y="387.2">10</tspan></text></g><text class="graph-title" x="600" y="48" text-anchor="middle" fill="#FAFAFA" font-size="20" font-weight="700">Rodrigo Ferreira&#039;s Contribution Graph</text><rect class="graph-border" x="0.5" y="0.5" width="1199" height="419" rx="0" fill="none" stroke="#0000" stroke-width="1"/><style>svg {
+  overflow: hidden;
+  font-family: &#039;Segoe UI&#039;, Ubuntu, sans-serif;
+}
+.ct-label {
+  fill: #FAFAFA;
+  color: #FAFAFA;
+  font-size: 11px;
+  font-family: &#039;Segoe UI&#039;, Ubuntu, sans-serif;
+}
+.ct-grid {
+  stroke: #FAFAFA;
+  stroke-opacity: 0;
+  stroke-dasharray: 4 6;
+}
+.ct-line {
+  fill: none;
+  stroke: #FAFAFA;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ct-point {
+  stroke: #FAFAFA;
+  stroke-width: 6;
+  stroke-linecap: round;
+  display: none;
+}
+.ct-area {
+  fill: #FAFAFA;
+  fill-opacity: 0.22;
+  display: none;
+}
+.ct-bar {
+  stroke: #FAFAFA;
+  stroke-width: 23.690322580645162;
+  stroke-linecap: butt;
+}
+.ct-point.graph-point-empty, .ct-bar.graph-point-empty {
+  opacity: 0.28;
+}
+.graph-title {
+  font-family: &#039;Segoe UI&#039;, Ubuntu, sans-serif;
+}
+.ct-line {
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+  animation: activity-line-draw 6000ms ease-in-out forwards;
+}
+@keyframes activity-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ct-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes activity-mark-appear {
+  from {
+    opacity: 0.15;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-line,
+  .ct-point,
+  .ct-bar {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}</style></svg>

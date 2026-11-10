@@ -121,10 +121,8 @@ Choose the graph style independently from the theme:
 |          **default**         |  <img src="./public/types/default.svg" height=250 alt="graph"/>  |
 |            **bar**           |    <img src="./public/types/bar.svg" height=250 alt="graph"/>    |
 |            **neon**          |   <img src="./public/types/neon.svg" height=250 alt="graph"/>    |
-|          **minimal**         |  <img src="./public/types/minimal.svg" height=250 alt="graph"/>  |
 |          **terminal**        | <img src="./public/types/terminal.svg" height=250 alt="graph"/>  |
 |          **gradient**        | <img src="./public/types/gradient.svg" height=250 alt="graph"/>  |
-|          **sparkline**       | <img src="./public/types/sparkline.svg" height=250 alt="graph"/> |
 
 ## Customization
 
@@ -134,19 +132,25 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 
 You can also configure the graph manually using URL parameters.
 
-Examples:
+### Examples:
 
-```md
-https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=bar&theme=dracula
-https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&theme=github-dark
+#### Minimal
+
+<img src="./public/examples/minimal.svg" width="100%" alt="Minimal graph preview" />
+
+```text
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=shadcn-dark&type=default&area=false&grid=false&show_point=false&hide_y_axis=true&hide_border=true
 ```
 
+#### Sparkline
 
-```md
-[![rodriaum's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
+<img src="./public/examples/sparkline.svg" width="100%" alt="Sparkline graph preview" />
+
+```text
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=github-dark&type=default&area=true&grid=false&show_point=false&hide_y_axis=false&hide_border=true
 ```
 
-#### Common Options
+### Common Options
 
 |   Arguments    |                  Description                  |                 Type of Value                  |
 | :------------: | :-------------------------------------------: | :--------------------------------------------: |
@@ -160,6 +164,7 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&them
 |     `area`     |          shows area under the graph           |           boolean (default: `false`)            |
 | `hide_border`  |   makes the border of the graph transparent   |           boolean (default: `false`)            |
 | `hide_title`   |       sets the title to an empty string       |           boolean (default: `false`)            |
+| `hide_y_axis` | hides the contribution count labels on the vertical axis | boolean (default: `false`) |
 | `custom_title` |          set the title to any string          |                     string                     |
 |    `theme`     | name of [available themes](#available-themes) |                     string                     |
 |    `radius`    |            border radius of graph             |            number (0-16 inclusive)             |
@@ -169,22 +174,9 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&them
 |     `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
 |    `type`     | name of [graph types](#graph-types)           |                     string                     |
 |    `grid`     |                   show grid                   |           boolean (default: `true`)             |
+| `show_point` |             shows line chart points             |           boolean (default: `true`)             |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
-
-Example:
-
-**`custom_title=This%20is%20a%20title`**
-
-```md
-[![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
-```
-
-**Example:**
-
-```md
-[![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
-```
 
 ## Project Template
 
