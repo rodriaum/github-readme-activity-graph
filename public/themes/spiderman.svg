@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ct="http://gionkunz.github.com/chartist-js/ct" class="ct-chart-line" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Rodrigo Ferreira&#039;s Contribution Graph"><title>Rodrigo Ferreira&#039;s Contribution Graph</title><rect class="graph-background" x="0" y="0" width="1200" height="420" rx="0" fill="#080b12"/><g class="ct-grids"><line class="ct-grid ct-vertical" y1="372" y2="372" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="336.125" y2="336.125" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="300.25" y2="300.25" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="264.375" y2="264.375" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="228.5" y2="228.5" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="192.625" y2="192.625" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="156.75" y2="156.75" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="120.875" y2="120.875" x1="60" x2="1166"/><line class="ct-grid ct-vertical" y1="85" y2="85" x1="60" x2="1166"/></g><g><g class="ct-series ct-series-a" ct:series-name="contributions"><path class="ct-area" d="M60,372L60,372C72.289,361.955,84.578,341.865,96.867,341.865C109.156,341.865,121.444,372,133.733,372C146.022,372,158.311,362.661,170.6,357.65C182.889,352.639,195.178,348.254,207.467,341.865C219.756,335.476,232.044,317.47,244.333,317.47C256.622,317.47,268.911,372,281.2,372C293.489,372,305.778,372,318.067,372C330.356,372,342.644,341.865,354.933,341.865C367.222,341.865,379.511,354.621,391.8,356.215C404.089,357.809,416.378,357.52,428.667,359.085C440.956,360.65,453.244,372,465.533,372C477.822,372,490.111,364.21,502.4,363.39C514.689,362.57,526.978,362.878,539.267,361.955C551.556,361.032,563.844,330.687,576.133,323.21C588.422,315.733,600.711,307.425,613,307.425C625.289,307.425,637.578,312.822,649.867,318.905C662.156,324.988,674.444,363.39,686.733,363.39C699.022,363.39,711.311,362.906,723.6,361.955C735.889,361.004,748.178,126.615,760.467,126.615C772.756,126.615,785.044,367.239,797.333,369.13C809.622,371.021,821.911,372,834.2,372C846.489,372,858.778,358.651,871.067,349.04C883.356,339.429,895.644,310.295,907.933,310.295C920.222,310.295,932.511,366.26,944.8,366.26C957.089,366.26,969.378,365.234,981.667,363.39C993.956,361.546,1006.244,287.335,1018.533,287.335C1030.822,287.335,1043.111,372,1055.4,372C1067.689,372,1079.978,372,1092.267,372C1104.556,372,1116.844,327.515,1129.133,327.515C1141.422,327.515,1153.711,350.475,1166,361.955L1166,372Z"/><path class="ct-line" d="M60,372C72.289,361.955,84.578,341.865,96.867,341.865C109.156,341.865,121.444,372,133.733,372C146.022,372,158.311,362.661,170.6,357.65C182.889,352.639,195.178,348.254,207.467,341.865C219.756,335.476,232.044,317.47,244.333,317.47C256.622,317.47,268.911,372,281.2,372C293.489,372,305.778,372,318.067,372C330.356,372,342.644,341.865,354.933,341.865C367.222,341.865,379.511,354.621,391.8,356.215C404.089,357.809,416.378,357.52,428.667,359.085C440.956,360.65,453.244,372,465.533,372C477.822,372,490.111,364.21,502.4,363.39C514.689,362.57,526.978,362.878,539.267,361.955C551.556,361.032,563.844,330.687,576.133,323.21C588.422,315.733,600.711,307.425,613,307.425C625.289,307.425,637.578,312.822,649.867,318.905C662.156,324.988,674.444,363.39,686.733,363.39C699.022,363.39,711.311,362.906,723.6,361.955C735.889,361.004,748.178,126.615,760.467,126.615C772.756,126.615,785.044,367.239,797.333,369.13C809.622,371.021,821.911,372,834.2,372C846.489,372,858.778,358.651,871.067,349.04C883.356,339.429,895.644,310.295,907.933,310.295C920.222,310.295,932.511,366.26,944.8,366.26C957.089,366.26,969.378,365.234,981.667,363.39C993.956,361.546,1006.244,287.335,1018.533,287.335C1030.822,287.335,1043.111,372,1055.4,372C1067.689,372,1079.978,372,1092.267,372C1104.556,372,1116.844,327.515,1129.133,327.515C1141.422,327.515,1153.711,350.475,1166,361.955"/><line class="ct-point graph-point-active" x1="96.86666666666667" y1="341.865" x2="96.87666666666668" y2="341.865" ct:value="21"><title>21 contributions on 12</title></line><line class="ct-point graph-point-active" x1="170.6" y1="357.65" x2="170.60999999999999" y2="357.65" ct:value="10"><title>10 contributions on 14</title></line><line class="ct-point graph-point-active" x1="207.46666666666667" y1="341.865" x2="207.47666666666666" y2="341.865" ct:value="21"><title>21 contributions on 15</title></line><line class="ct-point graph-point-active" x1="244.33333333333334" y1="317.47" x2="244.34333333333333" y2="317.47" ct:value="38"><title>38 contributions on 16</title></line><line class="ct-point graph-point-active" x1="354.93333333333334" y1="341.865" x2="354.9433333333333" y2="341.865" ct:value="21"><title>21 contributions on 19</title></line><line class="ct-point graph-point-active" x1="391.8" y1="356.215" x2="391.81" y2="356.215" ct:value="11"><title>11 contributions on 20</title></line><line class="ct-point graph-point-active" x1="428.6666666666667" y1="359.085" x2="428.6766666666667" y2="359.085" ct:value="9"><title>9 contributions on 21</title></line><line class="ct-point graph-point-active" x1="502.4" y1="363.39" x2="502.40999999999997" y2="363.39" ct:value="6"><title>6 contributions on 23</title></line><line class="ct-point graph-point-active" x1="539.2666666666667" y1="361.955" x2="539.2766666666666" y2="361.955" ct:value="7"><title>7 contributions on 24</title></line><line class="ct-point graph-point-active" x1="576.1333333333333" y1="323.21" x2="576.1433333333333" y2="323.21" ct:value="34"><title>34 contributions on 25</title></line><line class="ct-point graph-point-active" x1="613" y1="307.425" x2="613.01" y2="307.425" ct:value="45"><title>45 contributions on 26</title></line><line class="ct-point graph-point-active" x1="649.8666666666667" y1="318.905" x2="649.8766666666667" y2="318.905" ct:value="37"><title>37 contributions on 27</title></line><line class="ct-point graph-point-active" x1="686.7333333333333" y1="363.39" x2="686.7433333333333" y2="363.39" ct:value="6"><title>6 contributions on 28</title></line><line class="ct-point graph-point-active" x1="723.6" y1="361.955" x2="723.61" y2="361.955" ct:value="7"><title>7 contributions on 29</title></line><line class="ct-point graph-point-active" x1="760.4666666666667" y1="126.61500000000001" x2="760.4766666666667" y2="126.61500000000001" ct:value="171"><title>171 contributions on 30</title></line><line class="ct-point graph-point-active" x1="797.3333333333334" y1="369.13" x2="797.3433333333334" y2="369.13" ct:value="2"><title>2 contributions on 31</title></line><line class="ct-point graph-point-active" x1="871.0666666666667" y1="349.04" x2="871.0766666666667" y2="349.04" ct:value="16"><title>16 contributions on 02</title></line><line class="ct-point graph-point-active" x1="907.9333333333334" y1="310.295" x2="907.9433333333334" y2="310.295" ct:value="43"><title>43 contributions on 03</title></line><line class="ct-point graph-point-active" x1="944.8" y1="366.26" x2="944.81" y2="366.26" ct:value="4"><title>4 contributions on 04</title></line><line class="ct-point graph-point-active" x1="981.6666666666666" y1="363.39" x2="981.6766666666666" y2="363.39" ct:value="6"><title>6 contributions on 05</title></line><line class="ct-point graph-point-active" x1="1018.5333333333333" y1="287.335" x2="1018.5433333333333" y2="287.335" ct:value="59"><title>59 contributions on 06</title></line><line class="ct-point graph-point-active" x1="1129.1333333333334" y1="327.515" x2="1129.1433333333334" y2="327.515" ct:value="31"><title>31 contributions on 09</title></line><line class="ct-point graph-point-active" x1="1166" y1="361.955" x2="1166.01" y2="361.955" ct:value="7"><title>7 contributions on 10</title></line></g></g><g class="ct-labels"><text class="ct-label ct-horizontal ct-end" x="60" y="387.2" text-anchor="start"><tspan x="60" y="387.2">11</tspan></text><text class="ct-label ct-horizontal ct-end" x="170.6" y="387.2" text-anchor="start"><tspan x="170.6" y="387.2">14</tspan></text><text class="ct-label ct-horizontal ct-end" x="281.2" y="387.2" text-anchor="start"><tspan x="281.2" y="387.2">17</tspan></text><text class="ct-label ct-horizontal ct-end" x="391.8" y="387.2" text-anchor="start"><tspan x="391.8" y="387.2">20</tspan></text><text class="ct-label ct-horizontal ct-end" x="502.4" y="387.2" text-anchor="start"><tspan x="502.4" y="387.2">23</tspan></text><text class="ct-label ct-horizontal ct-end" x="613" y="387.2" text-anchor="start"><tspan x="613" y="387.2">26</tspan></text><text class="ct-label ct-horizontal ct-end" x="723.6" y="387.2" text-anchor="start"><tspan x="723.6" y="387.2">29</tspan></text><text class="ct-label ct-horizontal ct-end" x="834.2" y="387.2" text-anchor="start"><tspan x="834.2" y="387.2">01</tspan></text><text class="ct-label ct-horizontal ct-end" x="944.8" y="387.2" text-anchor="start"><tspan x="944.8" y="387.2">04</tspan></text><text class="ct-label ct-horizontal ct-end" x="1055.4" y="387.2" text-anchor="start"><tspan x="1055.4" y="387.2">07</tspan></text><text class="ct-label ct-horizontal ct-end" x="1166" y="387.2" text-anchor="start"><tspan x="1166" y="387.2">10</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="370.2" text-anchor="end"><tspan x="50" y="370.2">0</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="334.33" text-anchor="end"><tspan x="50" y="334.33">25</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="298.45" text-anchor="end"><tspan x="50" y="298.45">50</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="262.58" text-anchor="end"><tspan x="50" y="262.58">75</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="226.7" text-anchor="end"><tspan x="50" y="226.7">100</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="190.83" text-anchor="end"><tspan x="50" y="190.83">125</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="154.95" text-anchor="end"><tspan x="50" y="154.95">150</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="119.08" text-anchor="end"><tspan x="50" y="119.08">175</tspan></text><text class="ct-label ct-vertical ct-start" x="50" y="83.2" text-anchor="end"><tspan x="50" y="83.2">200</tspan></text></g><text class="graph-title" x="600" y="48" text-anchor="middle" fill="#e53935" font-size="20" font-weight="700">Rodrigo Ferreira&#039;s Contribution Graph</text><rect class="graph-border" x="0.5" y="0.5" width="1199" height="419" rx="0" fill="none" stroke="#0000" stroke-width="1"/><style>svg {
+  overflow: hidden;
+  font-family: &#039;Segoe UI&#039;, Ubuntu, sans-serif;
+}
+.ct-label {
+  fill: #ffffff;
+  color: #ffffff;
+  font-size: 11px;
+  font-family: &#039;Segoe UI&#039;, Ubuntu, sans-serif;
+}
+.ct-grid {
+  stroke: #ffffff;
+  stroke-opacity: 0.18;
+  stroke-dasharray: 4 6;
+}
+.ct-line {
+  fill: none;
+  stroke: #e53935;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ct-point {
+  stroke: #1e88e5;
+  stroke-width: 6;
+  stroke-linecap: round;
+  display: initial;
+}
+.ct-area {
+  fill: #e53935;
+  fill-opacity: 0.22;
+  display: initial;
+}
+.ct-bar {
+  stroke: #1e88e5;
+  stroke-width: 23.690322580645162;
+  stroke-linecap: butt;
+}
+.ct-point.graph-point-empty, .ct-bar.graph-point-empty {
+  opacity: 0.28;
+}
+.graph-title {
+  font-family: &#039;Segoe UI&#039;, Ubuntu, sans-serif;
+}
+.ct-line {
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+  animation: activity-line-draw 6000ms ease-in-out forwards;
+}
+.ct-point {
+  animation: activity-mark-appear 700ms ease-out both;
+}
+@keyframes activity-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ct-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes activity-mark-appear {
+  from {
+    opacity: 0.15;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-line,
+  .ct-point,
+  .ct-bar {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}</style></svg>

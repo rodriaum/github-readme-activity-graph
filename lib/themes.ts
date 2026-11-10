@@ -361,6 +361,15 @@ export const themes: Record<string, Colors> = {
     lineColor: "5DA3FA",
     pointColor: "2827CC",
   },
+spiderman: {
+  areaColor: "e53935",
+  bgColor: "080b12",
+  borderColor: "263449",
+  color: "ffffff",
+  titleColor: "e53935",
+  lineColor: "e53935",
+  pointColor: "1e88e5",
+},
 }
 
 export const themeNames = Object.keys(themes)

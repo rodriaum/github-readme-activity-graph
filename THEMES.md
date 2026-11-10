@@ -33,3 +33,4 @@
 |      **nightowl**      |       <img src="./public/themes/nightowl.png" height=250 alt="graph"/>     |
 |   **modern-lilac**     |    <img src="./public/themes/modern-lilac.png" height=250 alt="graph"/>    |
 |      **arctic**        |    <img src="./public/themes/arctic.png" height=250 alt="graph"/>          |
+|     **spiderman**      |    <img src="./public/themes/spiderman.svg" height=250 alt="graph"/>       |
