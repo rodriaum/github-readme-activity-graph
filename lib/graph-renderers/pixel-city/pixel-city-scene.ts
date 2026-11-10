@@ -1,7 +1,6 @@
 import type {
   PixelCityContribution,
   PixelCityLayout,
-  GraphAxisScale,
   PixelCityRendererOptions,
 } from "./pixel-city-types"
 import { PixelCityPalette } from "./pixel-city-palette"
