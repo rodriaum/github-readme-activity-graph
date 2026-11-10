@@ -18,6 +18,7 @@ export type GraphOptions = {
   username: string
   organization: string
   hideTitle: boolean
+  hideYAxis: boolean
   customTitle?: string
   radius: number
   height: number

@@ -382,8 +382,8 @@ function buildChartConfig(
         index % labelStep === 0 || index === lastIndex ? String(value) : null,
     },
     axisY: {
-      offset: style.axisY.offset,
-      showLabel: style.axisY.showLabels,
+      offset: options.hideYAxis ? 8 : style.axisY.offset,
+      showLabel: !options.hideYAxis && style.axisY.showLabels,
       showGrid: theme.showGrid && style.grid.enabled,
       low: 0,
       high: maxValue * style.axisY.headroom,

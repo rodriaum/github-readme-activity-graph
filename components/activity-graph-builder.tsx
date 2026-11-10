@@ -42,6 +42,7 @@ type FormState = {
     grid: boolean
     showPoint: boolean
     hideTitle: boolean
+    hideYAxis: boolean
     hideBorder: boolean
     customTitle: string
     height: string
@@ -65,6 +66,7 @@ const initial: FormState = {
     grid: true,
     showPoint: true,
     hideTitle: false,
+    hideYAxis: false,
     hideBorder: true,
     customTitle: "",
     height: "420",
@@ -88,6 +90,7 @@ function toQuery(state: FormState) {
     params.set("grid", String(state.grid))
     params.set("show_point", String(state.showPoint))
     params.set("hide_title", String(state.hideTitle))
+    params.set("hide_y_axis", String(state.hideYAxis))
     params.set("hide_border", String(state.hideBorder))
     params.set("height", state.height)
     params.set("radius", state.radius)
@@ -271,6 +274,10 @@ export function ActivityGraphBuilder() {
                             <div className="flex items-center justify-between"><span
                                 className="text-sm">Hide title</span><Switch checked={form.hideTitle}
                                                                              onCheckedChange={value => update("hideTitle", value)}/>
+                            </div>
+                            <div className="flex items-center justify-between"><span
+                                className="text-sm">Hide contribution counts</span><Switch checked={form.hideYAxis}
+                                                                             onCheckedChange={value => update("hideYAxis", value)}/>
                             </div>
                             <div className="flex items-center justify-between"><span
                                 className="text-sm">Hide border</span><Switch checked={form.hideBorder}

@@ -158,6 +158,7 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&them
 |     `area`     |          shows area under the graph           |           boolean (default: `false`)            |
 | `hide_border`  |   makes the border of the graph transparent   |           boolean (default: `false`)            |
 | `hide_title`   |       sets the title to an empty string       |           boolean (default: `false`)            |
+| `hide_y_axis` | hides the contribution count labels on the vertical axis | boolean (default: `false`) |
 | `custom_title` |          set the title to any string          |                     string                     |
 |    `theme`     | name of [available themes](#available-themes) |                     string                     |
 |    `radius`    |            border radius of graph             |            number (0-16 inclusive)             |
