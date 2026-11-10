@@ -121,10 +121,8 @@ Choose the graph style independently from the theme:
 |          **default**         |  <img src="./public/types/default.svg" height=250 alt="graph"/>  |
 |            **bar**           |    <img src="./public/types/bar.svg" height=250 alt="graph"/>    |
 |            **neon**          |   <img src="./public/types/neon.svg" height=250 alt="graph"/>    |
-|          **minimal**         |  <img src="./public/types/minimal.svg" height=250 alt="graph"/>  |
 |          **terminal**        | <img src="./public/types/terminal.svg" height=250 alt="graph"/>  |
 |          **gradient**        | <img src="./public/types/gradient.svg" height=250 alt="graph"/>  |
-|          **sparkline**       | <img src="./public/types/sparkline.svg" height=250 alt="graph"/> |
 
 ## Customization
 

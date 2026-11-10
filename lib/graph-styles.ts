@@ -208,12 +208,6 @@ export const graphStyles = {
     line: { glow: 5 },
   }),
 
-  minimal: definePreset("Minimal", {
-    points: { mode: "none" },
-    grid: { enabled: false, opacity: 0 },
-    axisY: { showLabels: false, offset: 8 },
-  }),
-
   terminal: definePreset("Terminal", {
     fontFamily: "VT323, monospace",
     line: { interpolation: "step" },
@@ -225,12 +219,6 @@ export const graphStyles = {
     area: { enabled: true, fill: "gradient", opacity: 0.92 },
   }),
 
-  sparkline: definePreset("Sparkline", {
-    line: { width: 2 },
-    points: { mode: "none" },
-    area: { enabled: true, opacity: 0.15 },
-    grid: { enabled: false, opacity: 0 },
-  }),
 } as const satisfies Record<string, GraphStyle>
 
 /* Lookups */
