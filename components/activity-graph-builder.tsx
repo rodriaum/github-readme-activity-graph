@@ -198,6 +198,29 @@ function Field({label, children}: { label: string; children: React.ReactNode }) 
     return <label className="grid gap-2 text-sm font-medium text-foreground"><span>{label}</span>{children}</label>
 }
 
+function PreviewImage({query}: {query: string}) {
+    const [isLoading, setIsLoading] = useState(true)
+    const imageRef = useRef<HTMLImageElement>(null)
+
+    useEffect(() => {
+        if (imageRef.current?.complete) setIsLoading(false)
+    }, [])
+
+    return (
+        <div className="relative w-full min-w-[560px]">
+            {isLoading && <Skeleton className="h-[260px] w-full rounded-lg"/>}
+            <img
+                ref={imageRef}
+                src={`/graph?${query}`}
+                alt="GitHub activity graph preview"
+                onLoad={() => setIsLoading(false)}
+                onError={() => setIsLoading(false)}
+                className={`h-auto w-full rounded-lg shadow-sm ${isLoading ? "hidden" : "block"}`}
+            />
+        </div>
+    )
+}
+
 export function ActivityGraphBuilder() {
     const [form, setForm] = useState(initial)
     const [previewForm, setPreviewForm] = useState(initial)
@@ -205,7 +228,6 @@ export function ActivityGraphBuilder() {
     const [copiedAction, setCopiedAction] = useState<"url" | "markdown" | null>(null)
     const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [origin, setOrigin] = useState("")
-    const [isPreviewLoading, setIsPreviewLoading] = useState(true)
     const [isUrlInitialized, setIsUrlInitialized] = useState(false)
     const lastSyncedQuery = useRef("")
     const query = useMemo(() => toQuery(form), [form])
@@ -237,10 +259,6 @@ export function ActivityGraphBuilder() {
         window.history.replaceState(window.history.state, "", nextUrl)
         lastSyncedQuery.current = nextQuery
     }, [form, isUrlInitialized])
-
-    useEffect(() => {
-        setIsPreviewLoading(Boolean(previewForm.username.trim()))
-    }, [previewQuery, previewForm.username])
 
     useEffect(() => {
         return () => {
@@ -444,18 +462,8 @@ export function ActivityGraphBuilder() {
                         </div>
                         <div
                             className="flex min-h-[330px] items-center justify-center overflow-x-auto bg-[radial-gradient(var(--border)_0.7px,transparent_0.7px)] bg-[size:14px_14px] p-4 sm:p-7">
-                            {form.username.trim() ?
-                                <div className="relative w-full min-w-[560px]">
-                                    {isPreviewLoading && <Skeleton className="h-[260px] w-full rounded-lg"/>}
-                                    <img
-                                        key={previewQuery}
-                                        src={`/graph?${previewQuery}`}
-                                        alt="GitHub activity graph preview"
-                                        onLoad={() => setIsPreviewLoading(false)}
-                                        onError={() => setIsPreviewLoading(false)}
-                                        className={`h-auto w-full rounded-lg shadow-sm ${isPreviewLoading ? "hidden" : "block"}`}
-                                    />
-                                </div> :
+                            {previewForm.username.trim() ?
+                                <PreviewImage key={previewQuery} query={previewQuery}/> :
                                 <p className="text-sm text-muted-foreground">Enter a GitHub username to preview the
                                     graph.</p>}
                         </div>
