@@ -172,29 +172,61 @@ export class SnowyScene {
         '" fill="' +
         this.palette.mountainNear +
         '" opacity="0.5"/>',
-      this.renderMountainSnow(
-        width * 0.16,
-        groundY - mountainHeight,
-        width * 0.045
-      ),
-      this.renderMountainSnow(
-        width * 0.46,
-        groundY - mountainHeight * 0.845,
-        width * 0.04
-      ),
-      this.renderMountainSnow(
-        width * 0.82,
-        groundY - mountainHeight * 0.917,
-        width * 0.04
-      ),
+      ...this.renderMountainSnowCaps(width, groundY, mountainHeight),
     ].join("")
+  }
+
+  private renderMountainSnowCaps(
+    width: number,
+    groundY: number,
+    mountainHeight: number
+  ): string[] {
+    const coverage = 0.68
+    const peaks = [
+      {
+        x: 0.16,
+        y: 1,
+        leftWidth: 0.16,
+        rightWidth: 0.15,
+        leftRise: 0.57,
+        rightRise: 0.57,
+      },
+      {
+        x: 0.46,
+        y: 0.845,
+        leftWidth: 0.15,
+        rightWidth: 0.18,
+        leftRise: 0.415,
+        rightRise: 0.428,
+      },
+      {
+        x: 0.82,
+        y: 0.917,
+        leftWidth: 0.18,
+        rightWidth: 0.18,
+        leftRise: 0.5,
+        rightRise: 0.524,
+      },
+    ]
+
+    return peaks.map((peak) =>
+      this.renderMountainSnow(
+        width * peak.x,
+        groundY - mountainHeight * peak.y,
+        width * Math.min(peak.leftWidth, peak.rightWidth) * coverage,
+        mountainHeight * Math.min(peak.leftRise, peak.rightRise) * coverage
+      )
+    )
   }
 
   private renderMountainSnow(
     peakX: number,
     peakY: number,
-    halfWidth: number
+    halfWidth: number,
+    depth: number
   ): string {
+    const lowerY = peakY + depth
+
     return (
       '<path d="M' +
       peakX +
@@ -203,23 +235,23 @@ export class SnowyScene {
       " L" +
       (peakX - halfWidth) +
       " " +
-      (peakY + halfWidth * 1.2) +
+      lowerY +
       " L" +
-      (peakX - halfWidth * 0.18) +
+      (peakX - halfWidth * 0.26) +
       " " +
-      (peakY + halfWidth * 0.72) +
+      (peakY + depth * 0.56) +
       " L" +
-      peakX +
+      (peakX + halfWidth * 0.04) +
       " " +
-      (peakY + halfWidth * 0.95) +
+      (peakY + depth * 0.88) +
       " L" +
-      (peakX + halfWidth * 0.22) +
+      (peakX + halfWidth * 0.24) +
       " " +
-      (peakY + halfWidth * 0.7) +
+      (peakY + depth * 0.58) +
       " L" +
       (peakX + halfWidth) +
       " " +
-      (peakY + halfWidth * 1.2) +
+      lowerY +
       ' Z" fill="' +
       this.palette.snow +
       '" opacity="0.9"/>'
