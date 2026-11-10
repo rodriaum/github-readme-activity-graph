@@ -40,6 +40,7 @@ type FormState = {
     type: GraphType
     area: boolean
     grid: boolean
+    showPoint: boolean
     hideTitle: boolean
     hideBorder: boolean
     customTitle: string
@@ -62,6 +63,7 @@ const initial: FormState = {
     type: "default",
     area: false,
     grid: true,
+    showPoint: true,
     hideTitle: false,
     hideBorder: true,
     customTitle: "",
@@ -84,6 +86,7 @@ function toQuery(state: FormState) {
     params.set("type", state.type)
     params.set("area", String(state.area))
     params.set("grid", String(state.grid))
+    params.set("show_point", String(state.showPoint))
     params.set("hide_title", String(state.hideTitle))
     params.set("hide_border", String(state.hideBorder))
     params.set("height", state.height)
@@ -260,6 +263,10 @@ export function ActivityGraphBuilder() {
                             <div className="flex items-center justify-between"><span
                                 className="text-sm">Show grid</span><Switch checked={form.grid}
                                                                             onCheckedChange={value => update("grid", value)}/>
+                            </div>
+                            <div className="flex items-center justify-between"><span
+                                className="text-sm">Show point</span><Switch checked={form.showPoint}
+                                                                             onCheckedChange={value => update("showPoint", value)}/>
                             </div>
                             <div className="flex items-center justify-between"><span
                                 className="text-sm">Hide title</span><Switch checked={form.hideTitle}

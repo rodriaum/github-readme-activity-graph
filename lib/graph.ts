@@ -103,15 +103,16 @@ function resolveTheme(options: GraphOptions, style: GraphStyle) {
 
   return {
     label: safeColor(c.color, DEFAULT_COLOR),
-    line: safeColor(style.line.color ?? c.lineColor, DEFAULT_COLOR),
+    line: safeColor(c.lineColor, DEFAULT_COLOR),
     point: safeColor(style.points.color ?? c.pointColor, DEFAULT_POINT_COLOR),
     area: safeColor(c.areaColor, DEFAULT_COLOR),
     title: safeColor(c.titleColor, DEFAULT_COLOR),
     background: safeColor(c.bgColor, DEFAULT_BACKGROUND),
     border: safeColor(c.borderColor, DEFAULT_BORDER),
     radius: clampInt(options.radius, 0, MAX_RADIUS),
-    showArea: options.area || style.area.enabled,
-    showGrid: options.grid && style.grid.enabled,
+    showArea: options.area,
+    showGrid: options.grid,
+    showPoint: options.showPoint,
   }
 }
 type Theme = ReturnType<typeof resolveTheme>
@@ -140,7 +141,7 @@ function createChartCss(
     ]),
     rule(".ct-grid", [
       `stroke: ${hex(theme.label)}`,
-      `stroke-opacity: ${theme.showGrid ? grid.opacity : 0}`,
+      `stroke-opacity: ${theme.showGrid && grid.enabled ? grid.opacity : 0}`,
       `stroke-dasharray: ${grid.dashArray}`,
     ]),
     rule(".ct-line", [
@@ -159,12 +160,17 @@ function createChartCss(
       `stroke: ${hex(theme.point)}`,
       `stroke-width: ${points.width}`,
       `stroke-linecap: round`,
+      `display: ${theme.showPoint ? "initial" : "none"}`,
     ]),
     points.alternateColor &&
       rule(".ct-point.graph-point-active:nth-of-type(2n)", [
         `stroke: ${hex(theme.area)}`,
       ]),
-    rule(".ct-area", [`fill: ${areaFill}`, `fill-opacity: ${area.opacity}`]),
+    rule(".ct-area", [
+      `fill: ${areaFill}`,
+      `fill-opacity: ${area.opacity}`,
+      `display: ${theme.showArea ? "initial" : "none"}`,
+    ]),
     rule(".ct-bar", [
       `stroke: ${hex(theme.point)}`,
       `stroke-width: ${barWidth}`,
@@ -195,6 +201,7 @@ function createChartCss(
           `animation: ct-draw ${animation.lineDuration}ms ease-in-out forwards`,
         ]),
       !isBarChart &&
+        theme.showPoint &&
         rule(".ct-point", [
           `animation: activity-mark-appear ${animation.markDuration}ms ease-out both`,
         ]),
@@ -377,7 +384,7 @@ function buildChartConfig(
     axisY: {
       offset: style.axisY.offset,
       showLabel: style.axisY.showLabels,
-      showGrid: theme.showGrid,
+      showGrid: theme.showGrid && style.grid.enabled,
       low: 0,
       high: maxValue * style.axisY.headroom,
       onlyInteger: true,
@@ -393,7 +400,7 @@ function buildChartConfig(
     ...base,
     fullWidth: true,
     showLine: true,
-    showPoint: style.points.mode !== "none",
+    showPoint: theme.showPoint,
     showArea: theme.showArea,
     areaBase: 0,
     lineSmooth: INTERPOLATIONS[style.line.interpolation]() as never,

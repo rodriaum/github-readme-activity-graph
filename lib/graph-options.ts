@@ -98,6 +98,7 @@ export function parseGraphOptions(query: GraphQuery): GraphOptions {
     to,
     area: getBoolean(getValue(query, "area"), false),
     grid: getBoolean(getValue(query, "grid"), true),
+    showPoint: getBoolean(getValue(query, "show_point"), true),
     type,
     colors,
   }

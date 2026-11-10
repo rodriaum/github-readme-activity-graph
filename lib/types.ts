@@ -26,6 +26,7 @@ export type GraphOptions = {
   to?: string
   area: boolean
   grid: boolean
+  showPoint: boolean
   type: GraphType
   colors: Colors
 }
