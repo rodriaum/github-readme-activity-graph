@@ -96,7 +96,7 @@ function getBuilderState(search: string): FormState {
     next.hideBorder = getBooleanParam(params, "hide_border", initial.hideBorder)
 
     next.customTitle = (params.get("custom_title") ?? "")
-        .replace(/[\\u0000-\\u001f\\u007f]/g, "")
+        .slice(0, 120)
         .slice(0, 120)
 
     const colorParams = {
