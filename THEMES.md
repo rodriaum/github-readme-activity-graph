@@ -27,7 +27,7 @@
 |       **vue**          |        <img src="./public/themes/vue.png" height=250 alt="graph"/>         |
 |     **tokyo-day**      |      <img src="./public/themes/tokyo-day.png" height=250 alt="graph"/>     |
 |    **tokyo-night**     |    <img src="./public/themes/tokyo-night.png" height=250 alt="graph"/>     |
-|   **high-contrast**    |   <img src="./public/themes/high-contrast.png" height=250 alt="graph"/>    |
+|   **high-contrast**    |   <img src="./public/themes/high-contrast.svg" height=250 alt="graph"/>    |
 |      **cobalt**        |        <img src="./public/themes/cobalt.png" height=250 alt="graph"/>      |
 |     **material**       |        <img src="./public/themes/material.png" height=250 alt="graph"/>    |
 |      **nightowl**      |       <img src="./public/themes/nightowl.png" height=250 alt="graph"/>     |

@@ -181,7 +181,7 @@ export const themes: Record<string, Colors> = {
     lineColor: "d3e6fa",
     pointColor: "3f99ed",
   },
-  "shadcn-white": {
+  monochrome: {
     areaColor: "18181B",
     bgColor: "FFFFFF",
     borderColor: "E4E4E7",
@@ -189,15 +189,6 @@ export const themes: Record<string, Colors> = {
     titleColor: "09090B",
     lineColor: "18181B",
     pointColor: "18181B",
-  },
-  "shadcn-dark": {
-    areaColor: "FAFAFA",
-    bgColor: "09090B",
-    borderColor: "27272A",
-    color: "FAFAFA",
-    titleColor: "FAFAFA",
-    lineColor: "FAFAFA",
-    pointColor: "FAFAFA",
   },
   "material-palenight": {
     areaColor: "c792ea",

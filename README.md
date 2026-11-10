@@ -100,15 +100,14 @@ _`username=rodriaum&theme=theme_name`_
 |         **react**          |     <img src="./public/themes/react.png" height=250 alt="graph"/>      |
 |       **react-dark**       |   <img src="./public/themes/react-dark.svg" height=250 alt="graph"/>   |
 |         **github**         |     <img src="./public/themes/github.svg" height=250 alt="graph"/>     |
-|      **shadcn-white**      |  <img src="./public/themes/shadcn-white.png" height=250 alt="graph"/>  |
-|       **shadcn-dark**      |  <img src="./public/themes/shadcn-dark.png" height=250 alt="graph"/>   |
 |     **github-compact**     | <img src="./public/themes/github-compact.svg" height=250 alt="graph"/> |
 |         **xcode**          |     <img src="./public/themes/xcode.svg" height=250 alt="graph"/>      |
 |         **rogue**          |     <img src="./public/themes/rogue.svg" height=250 alt="graph"/>      |
 |         **merko**          |     <img src="./public/themes/merko.png" height=250 alt="graph"/>      |
 |          **vue**           |      <img src="./public/themes/vue.png" height=250 alt="graph"/>       |
 |      **tokyo-night**       |  <img src="./public/themes/tokyo-night.png" height=250 alt="graph"/>   |
-|     **high-contrast**      | <img src="./public/themes/high-contrast.png" height=250 alt="graph"/>  |
+|       **monochrome**       |  <img src="./public/themes/monochrome.svg" height=250 alt="graph"/>  |
+|     **high-contrast**      | <img src="./public/themes/high-contrast.svg" height=250 alt="graph"/>  |
 
 For more themes click [here](https://github.com/rodriaum/github-readme-activity-graph/blob/main/THEMES.md)
 
