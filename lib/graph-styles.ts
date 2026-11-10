@@ -226,6 +226,13 @@ export const graphStyles = {
     animation: { enabled: false },
   }),
 
+  snowy: definePreset("Snowy", {
+    chart: "bar",
+    points: { mode: "none" },
+    area: { enabled: false },
+    animation: { enabled: false },
+  }),
+
 } as const satisfies Record<string, GraphStyle>
 
 /* Lookups */

@@ -1,9 +1,9 @@
+import type { GraphAxisScale } from "../shared/graph-axis"
 import { PixelCityBuilding } from "./pixel-city-building"
 import { PixelCityPalette } from "./pixel-city-palette"
 import { PixelCityScene } from "./pixel-city-scene"
-import { PixelCityAxis } from "./pixel-city-axis"
+import { GraphAxis } from "../shared/graph-axis"
 import type {
-  PixelCityAxisScale,
   PixelCityContribution,
   PixelCityLayout,
   PixelCityRendererOptions,
@@ -24,7 +24,7 @@ export class PixelCityRenderer {
     )
     const layout = this.createLayout(days.length)
     const palette = new PixelCityPalette(this.options.theme)
-    const axisScale = PixelCityAxis.createScale(
+    const axisScale = GraphAxis.createScale(
       maxContribution,
       layout.groundY - layout.top,
       this.options.axis

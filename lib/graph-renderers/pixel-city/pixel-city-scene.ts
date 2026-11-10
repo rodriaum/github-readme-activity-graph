@@ -1,11 +1,12 @@
 import type {
   PixelCityContribution,
   PixelCityLayout,
-  PixelCityAxisScale,
+  GraphAxisScale,
   PixelCityRendererOptions,
 } from "./pixel-city-types"
 import { PixelCityPalette } from "./pixel-city-palette"
-import { PixelCityAxis } from "./pixel-city-axis"
+import { GraphAxis } from "../shared/graph-axis"
+import type { GraphAxisScale } from "../shared/graph-axis"
 
 export class PixelCityScene {
   constructor(
@@ -17,7 +18,7 @@ export class PixelCityScene {
   render(
     contributions: PixelCityContribution[],
     buildings: string[],
-    axisScale: PixelCityAxisScale
+    axisScale: GraphAxisScale
   ): string {
     const { width, height, title, theme } = this.options
     const accessibleTitle = title || "GitHub contribution city"
@@ -101,15 +102,21 @@ export class PixelCityScene {
     return towers.join("")
   }
 
-  private renderGuides(scale: PixelCityAxisScale): string {
+  private renderGuides(scale: GraphAxisScale): string {
     const { showGrid, showYAxis } = this.options.theme
 
-    return new PixelCityAxis(
-      this.layout,
-      this.palette,
+    return new GraphAxis({
+      layout: {
+        left: this.layout.left,
+        right: this.layout.right,
+        top: this.layout.top,
+        bottom: this.layout.groundY,
+      },
+      scale,
       showGrid,
-      showYAxis
-    ).render(scale)
+      showLabels: showYAxis,
+      labelColor: this.palette.label,
+    }).render()
   }
 
   private renderStreet(): string {

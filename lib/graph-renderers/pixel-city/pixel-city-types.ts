@@ -1,3 +1,5 @@
+import type { GraphAxisSettings } from "../shared/graph-axis"
+
 export interface PixelCityContribution {
   date: string
   count: number
@@ -15,23 +17,12 @@ export interface PixelCityTheme {
   showYAxis: boolean
 }
 
-export interface PixelCityAxisSettings {
-  headroom: number
-  scaleMinSpace: number
-}
-
-export interface PixelCityAxisScale {
-  step: number
-  maximum: number
-  values: number[]
-}
-
 export interface PixelCityRendererOptions {
   width: number
   height: number
   title: string
   theme: PixelCityTheme
-  axis: PixelCityAxisSettings
+  axis: GraphAxisSettings
 }
 
 export interface PixelCityLayout {
