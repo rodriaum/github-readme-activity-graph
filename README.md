@@ -132,19 +132,25 @@ Personalize your GitHub activity graph using the [online customizer](https://git
 
 You can also configure the graph manually using URL parameters.
 
-Examples:
+### Examples:
 
-```md
-https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=bar&theme=dracula
-https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&theme=github-dark
+#### Minimal
+
+<img src="./public/examples/minimal.svg" width="100%" alt="Minimal graph preview" />
+
+```text
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=shadcn-dark&type=default&area=false&grid=false&show_point=false&hide_y_axis=true&hide_border=true
 ```
 
+#### Sparkline
 
-```md
-[![rodriaum's GitHub activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=dracula)](https://github.com/rodriaum/github-readme-activity-graph)
+<img src="./public/examples/sparkline.svg" width="100%" alt="Sparkline graph preview" />
+
+```text
+https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=github-dark&type=default&area=true&grid=false&show_point=false&hide_y_axis=false&hide_border=true
 ```
 
-#### Common Options
+### Common Options
 
 |   Arguments    |                  Description                  |                 Type of Value                  |
 | :------------: | :-------------------------------------------: | :--------------------------------------------: |
@@ -171,20 +177,6 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&type=gradient&them
 | `show_point` |             shows line chart points             |           boolean (default: `true`)             |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
-
-Example:
-
-**`custom_title=This%20is%20a%20title`**
-
-```md
-[![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/rodriaum/github-readme-activity-graph)
-```
-
-**Example:**
-
-```md
-[![rodriaum's github activity graph](https://github-act-graph.rodriaum.com/graph?username=rodriaum&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/rodriaum/github-readme-activity-graph)
-```
 
 ## Project Template
 
