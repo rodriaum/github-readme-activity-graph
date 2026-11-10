@@ -42,6 +42,7 @@ export class PixelCityScene {
         '" fill="' +
         this.palette.background +
         '"/>',
+      this.renderTitle(),
       this.renderSkyline(),
       this.renderGuides(maxContribution),
       buildings.join(""),
@@ -188,6 +189,34 @@ export class PixelCityScene {
     return streetParts.join("")
   }
 
+  private renderTitle(): string {
+    const { width, title } = this.options
+
+    if (!title) {
+      return ""
+    }
+
+    return (
+      '<text x="' +
+      width / 2 +
+      '" y="42" text-anchor="middle" fill="' +
+      this.palette.title +
+      '" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="600">' +
+      this.escapeXml(title) +
+      "</text>"
+    )
+  }
+
+  private formatDateLabel(date: string): string {
+    const normalized = date.trim()
+
+    if (/^\\d{4}-\\d{2}-\\d{2}$/.test(normalized)) {
+      return normalized.slice(5).replace("-", "/")
+    }
+
+    return normalized
+  }
+
   private renderDateLabels(
     contributions: PixelCityContribution[]
   ): string {
@@ -217,7 +246,7 @@ export class PixelCityScene {
           '" text-anchor="middle" fill="' +
           this.palette.label +
           '" font-family="Arial, sans-serif" font-size="10">' +
-          this.escapeXml(contribution.date.slice(5)) +
+          this.escapeXml(this.formatDateLabel(contribution.date)) +
           "</text>"
       )
     })
