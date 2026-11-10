@@ -46,9 +46,9 @@ export class PixelCityScene {
         '"/>',
       this.renderTitle(),
       this.renderSkyline(),
+      this.renderStreet(),
       this.renderGuides(axisScale),
       buildings.join(""),
-      this.renderStreet(),
       this.renderDateLabels(contributions),
       '<rect x="0.5" y="0.5" width="' +
         (width - 1) +
