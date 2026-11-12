@@ -185,7 +185,7 @@ https://github-act-graph.rodriaum.com/graph?username=rodriaum&theme=github-dark&
 
 ## Project Template
 
-This project is built using the [Next.js Template](https://github.com/viora-studio/nextjs-template), developed by **Viora Studio**.
+This project is built using the [Next.js Template](https://github.com/viora-studio/nextjs-template/tree/682e82e9b3eb210acaeecce1809073e8c3f75bbd), developed by [Viora Studio](https://github.com/viora-studio).
 
 ## Contributing
 
